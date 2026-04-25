@@ -69,9 +69,9 @@ export default function OfertasPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs items={[{ label: "Inicio", href: "/" }, { label: "Ofertas" }]} />
         </div>
@@ -123,11 +123,11 @@ export default function OfertasPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="mb-6 flex flex-wrap items-center gap-4 rounded-lg border bg-white p-4 shadow-sm"
+          className="mb-6 flex flex-wrap items-center gap-4 rounded-lg border bg-card p-4 shadow-sm"
         >
           {/* Sort */}
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600">Ordenar:</span>
+            <span className="text-sm font-medium text-muted-foreground">Ordenar:</span>
             <div className="flex flex-wrap gap-1.5">
               {sortOptions.map((option) => (
                 <Button
@@ -143,11 +143,11 @@ export default function OfertasPage() {
             </div>
           </div>
 
-          <div className="hidden h-6 w-px bg-gray-300 sm:block" />
+          <div className="hidden h-6 w-px bg-border sm:block" />
 
           {/* Discount Filter */}
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-600">Descuento:</span>
+            <span className="text-sm font-medium text-muted-foreground">Descuento:</span>
             <div className="flex flex-wrap gap-1.5">
               {discountOptions.map((option) => (
                 <Button
@@ -183,7 +183,7 @@ export default function OfertasPage() {
         >
           <div className="mt-10 flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-orange-600" />
-            <h2 className="text-xl font-bold text-gray-900 md:text-2xl">
+            <h2 className="text-xl font-bold text-foreground md:text-2xl">
               Productos destacados
             </h2>
           </div>

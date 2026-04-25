@@ -9,9 +9,9 @@ import { Separator } from "@/components/ui/separator";
 
 export default function PrensaPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Prensa" }]}
@@ -27,7 +27,7 @@ export default function PrensaPage() {
           className="mb-8 flex items-center gap-3"
         >
           <Newspaper className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Prensa y Medios
           </h1>
         </motion.div>
@@ -41,24 +41,24 @@ export default function PrensaPage() {
           <Card>
             <CardContent className="p-6 md:p-8">
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Miss Semi Fashion en los Medios
                 </h2>
-                <p className="mb-4 text-gray-600">
+                <p className="mb-4 text-muted-foreground">
                   Miss Semi Fashion es una marca colombiana de moda femenina que
                   se ha destacado por ofrecer prendas de calidad premium a
                   precios accesibles. Con mas de 73 clientes satisfechos y una
                   presencia creciente en redes sociales, nuestra marca sigue
                   expandiendose en el mercado nacional.
                 </p>
-                <p className="mb-4 text-gray-600">
+                <p className="mb-4 text-muted-foreground">
                   Especializada en pijamas, vestidos deportivos, blusas y
                   prendas casuales, Miss Semi Fashion combina estilo colombiano
                   con comodidad y tendencias actuales. Nuestras colecciones estan
                   disenadas para mujeres que buscan lucir bien sin sacrificar la
                   comodidad.
                 </p>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   Si eres periodista, blogger o influencer y deseas conocer mas
                   sobre nuestra marca, colaborar o realizar entrevistas, no dudes
                   en contactarnos.
@@ -68,7 +68,7 @@ export default function PrensaPage() {
               <Separator className="my-6" />
 
               <div>
-                <h3 className="mb-3 text-lg font-semibold text-gray-900">
+                <h3 className="mb-3 text-lg font-semibold text-foreground">
                   Contacto de prensa
                 </h3>
                 <div className="space-y-3">
@@ -77,8 +77,8 @@ export default function PrensaPage() {
                       <MessageCircle className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">WhatsApp</p>
-                      <p className="font-medium text-gray-900">310 841 6620</p>
+                      <p className="text-sm text-muted-foreground">WhatsApp</p>
+                      <p className="font-medium text-foreground">310 841 6620</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -86,12 +86,12 @@ export default function PrensaPage() {
                       <Instagram className="h-5 w-5 text-pink-600" />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Instagram</p>
+                      <p className="text-sm text-muted-foreground">Instagram</p>
                       <a
                         href="https://instagram.com/misssemifashion"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-gray-900 hover:text-orange-600"
+                        className="font-medium text-foreground hover:text-orange-600"
                       >
                         @misssemifashion
                       </a>
@@ -103,7 +103,7 @@ export default function PrensaPage() {
               <Separator className="my-6" />
 
               <div className="rounded-lg bg-orange-50 p-4">
-                <p className="mb-4 text-sm text-gray-700">
+                <p className="mb-4 text-sm text-foreground">
                   <strong>Nota para medios:</strong> Proporcionamos imagenes de
                   alta calidad, muestras de productos y acceso a entrevistas con
                   el equipo creativo.

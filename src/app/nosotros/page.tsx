@@ -70,9 +70,9 @@ const values = [
 
 export default function NosotrosPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Conocenos" }]}
@@ -129,10 +129,10 @@ export default function NosotrosPage() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl">
+            <h2 className="mb-4 text-2xl font-bold text-foreground md:text-3xl">
               Nuestra Historia
             </h2>
-            <div className="space-y-4 text-gray-600">
+            <div className="space-y-4 text-muted-foreground">
               <p>
                 Miss Semi Fashion nacio de la pasion por la moda colombiana y el
                 deseo de ofrecer prendas de calidad a precios accesibles. Lo que
@@ -157,7 +157,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* Stats */}
-      <section className="bg-white py-16">
+      <section className="bg-card py-16">
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             {stats.map((stat, index) => {
@@ -176,10 +176,10 @@ export default function NosotrosPage() {
                   >
                     <Icon className="h-7 w-7" />
                   </div>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-2xl font-bold text-foreground">
                     {stat.value}
                   </p>
-                  <p className="text-sm text-gray-500">{stat.label}</p>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </motion.div>
               );
             })}
@@ -195,10 +195,10 @@ export default function NosotrosPage() {
           viewport={{ once: true }}
           className="mb-10 text-center"
         >
-          <h2 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
+          <h2 className="mb-2 text-2xl font-bold text-foreground md:text-3xl">
             Nuestros Valores
           </h2>
-          <p className="text-gray-500">Lo que nos define como marca</p>
+          <p className="text-muted-foreground">Lo que nos define como marca</p>
         </motion.div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {values.map((value, index) => {
@@ -218,10 +218,10 @@ export default function NosotrosPage() {
                     >
                       <Icon className="h-7 w-7" />
                     </div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                    <h3 className="mb-2 text-lg font-semibold text-foreground">
                       {value.title}
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       {value.description}
                     </p>
                   </CardContent>

@@ -9,9 +9,9 @@ import { Separator } from "@/components/ui/separator";
 
 export default function VenderPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -30,7 +30,7 @@ export default function VenderPage() {
           className="mb-8 flex items-center gap-3"
         >
           <Store className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Vende en Miss Semi Fashion
           </h1>
         </motion.div>
@@ -43,10 +43,10 @@ export default function VenderPage() {
           <Card>
             <CardContent className="space-y-6 p-6 md:p-8">
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Asociate como vendedor
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   Quieres vender tus productos a traves de Miss Semi Fashion?
                   Ofrecemos una plataforma para que emprendedores y marcas
                   independientes lleguen a nuestros clientes. Beneficiate de
@@ -57,15 +57,15 @@ export default function VenderPage() {
               <Separator />
 
               <div>
-                <h3 className="mb-3 text-lg font-semibold text-gray-900">
+                <h3 className="mb-3 text-lg font-semibold text-foreground">
                   Beneficios de vender con nosotros
                 </h3>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <DollarSign className="h-5 w-5 shrink-0 text-green-500" />
                     <div>
-                      <p className="font-medium text-gray-900">Comisiones justas</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-foreground">Comisiones justas</p>
+                      <p className="text-sm text-muted-foreground">
                         Las mejores comisiones del mercado.
                       </p>
                     </div>
@@ -73,8 +73,8 @@ export default function VenderPage() {
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <Package className="h-5 w-5 shrink-0 text-blue-500" />
                     <div>
-                      <p className="font-medium text-gray-900">Logistica</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-foreground">Logistica</p>
+                      <p className="text-sm text-muted-foreground">
                         Nos encargamos del envio.
                       </p>
                     </div>
@@ -82,8 +82,8 @@ export default function VenderPage() {
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <Truck className="h-5 w-5 shrink-0 text-purple-500" />
                     <div>
-                      <p className="font-medium text-gray-900">Alcance nacional</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-foreground">Alcance nacional</p>
+                      <p className="text-sm text-muted-foreground">
                         Llega a clientes en toda Colombia.
                       </p>
                     </div>
@@ -91,8 +91,8 @@ export default function VenderPage() {
                   <div className="flex items-start gap-3 rounded-lg border p-3">
                     <Store className="h-5 w-5 shrink-0 text-orange-500" />
                     <div>
-                      <p className="font-medium text-gray-900">Soporte</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="font-medium text-foreground">Soporte</p>
+                      <p className="text-sm text-muted-foreground">
                         Atencion personalizada constante.
                       </p>
                     </div>
@@ -103,10 +103,10 @@ export default function VenderPage() {
               <Separator />
 
               <div>
-                <h3 className="mb-3 text-lg font-semibold text-gray-900">
+                <h3 className="mb-3 text-lg font-semibold text-foreground">
                   Como comenzar
                 </h3>
-                <ol className="space-y-2 text-gray-600">
+                <ol className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-600">
                       1
@@ -135,7 +135,7 @@ export default function VenderPage() {
               </div>
 
               <div className="rounded-lg bg-orange-50 p-4">
-                <p className="mb-4 text-sm text-gray-700">
+                <p className="mb-4 text-sm text-foreground">
                   <strong>Interesado?</strong> Escribenos y cuéntanos sobre tus
                   productos. Estamos buscando marcas que compartan nuestra
                   pasion por la calidad.

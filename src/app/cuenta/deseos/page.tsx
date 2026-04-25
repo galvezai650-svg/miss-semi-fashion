@@ -34,9 +34,9 @@ export default function DeseosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Lista de Deseos" }]}
@@ -52,7 +52,7 @@ export default function DeseosPage() {
           className="mb-8 flex items-center gap-3"
         >
           <Heart className="h-7 w-7 text-pink-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Tu Lista de Deseos
           </h1>
           {items.length > 0 && (
@@ -74,7 +74,7 @@ export default function DeseosPage() {
                 <Card className="group overflow-hidden">
                   <CardContent className="p-0">
                     {/* Image */}
-                    <div className="relative aspect-square overflow-hidden bg-gray-100">
+                    <div className="relative aspect-square overflow-hidden bg-muted">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -84,13 +84,13 @@ export default function DeseosPage() {
 
                     {/* Info */}
                     <div className="p-4">
-                      <p className="mb-1 truncate text-sm font-medium text-gray-900">
+                      <p className="mb-1 truncate text-sm font-medium text-foreground">
                         {item.name}
                       </p>
                       <p className="mb-1 text-lg font-bold text-orange-600">
                         ${item.price.toLocaleString("es-CO")}
                       </p>
-                      <p className="mb-3 text-xs text-gray-400">
+                      <p className="mb-3 text-xs text-muted-foreground">
                         Agregado:{" "}
                         {new Date(item.addedAt).toLocaleDateString("es-CO", {
                           day: "numeric",
@@ -111,7 +111,7 @@ export default function DeseosPage() {
                           variant="outline"
                           size="sm"
                           onClick={() => handleRemove(item.productId)}
-                          className="border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+                          className="border-red-200 text-red-600 hover:bg-red-500/10 hover:text-red-700"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>
@@ -129,11 +129,11 @@ export default function DeseosPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="py-16 text-center"
           >
-            <Heart className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-            <h2 className="mb-2 text-xl font-semibold text-gray-700">
+            <Heart className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+            <h2 className="mb-2 text-xl font-semibold text-foreground">
               Tu lista de deseos esta vacia
             </h2>
-            <p className="mb-6 text-gray-500">
+            <p className="mb-6 text-muted-foreground">
               Explora nuestros productos y guarda tus favoritos aqui.
             </p>
             <Link href="/">

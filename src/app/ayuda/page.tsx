@@ -78,9 +78,9 @@ export default function AyudaPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Centro de Ayuda" }]}
@@ -96,7 +96,7 @@ export default function AyudaPage() {
           className="mb-8 flex items-center gap-3"
         >
           <HelpCircle className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Centro de Ayuda
           </h1>
         </motion.div>
@@ -109,7 +109,7 @@ export default function AyudaPage() {
           className="mb-8"
         >
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -137,7 +137,7 @@ export default function AyudaPage() {
                       <AccordionTrigger className="text-left">
                         {item.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-gray-500">
+                      <AccordionContent className="text-muted-foreground">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -145,8 +145,8 @@ export default function AyudaPage() {
                 </Accordion>
               ) : (
                 <div className="py-8 text-center">
-                  <Search className="mx-auto mb-3 h-10 w-10 text-gray-300" />
-                  <p className="text-gray-500">
+                  <Search className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
+                  <p className="text-muted-foreground">
                     No se encontraron resultados para &quot;{searchQuery}&quot;
                   </p>
                 </div>
@@ -172,14 +172,14 @@ export default function AyudaPage() {
                   href="https://wa.me/573108416620"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg border bg-white p-4 transition-all hover:border-green-300 hover:shadow-sm"
+                  className="flex items-center gap-3 rounded-lg border bg-card p-4 transition-all hover:border-green-300 hover:shadow-sm"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
                     <MessageCircle className="h-5 w-5 text-green-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">WhatsApp</p>
-                    <p className="text-sm text-gray-500">310 841 6620</p>
+                    <p className="font-medium text-foreground">WhatsApp</p>
+                    <p className="text-sm text-muted-foreground">310 841 6620</p>
                   </div>
                 </a>
 
@@ -187,14 +187,14 @@ export default function AyudaPage() {
                   href="https://wa.me/573137932387"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg border bg-white p-4 transition-all hover:border-green-300 hover:shadow-sm"
+                  className="flex items-center gap-3 rounded-lg border bg-card p-4 transition-all hover:border-green-300 hover:shadow-sm"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                     <Phone className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Telefono</p>
-                    <p className="text-sm text-gray-500">313 793 2387</p>
+                    <p className="font-medium text-foreground">Telefono</p>
+                    <p className="text-sm text-muted-foreground">313 793 2387</p>
                   </div>
                 </a>
 
@@ -202,14 +202,14 @@ export default function AyudaPage() {
                   href="https://instagram.com/misssemifashion"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg border bg-white p-4 transition-all hover:border-pink-300 hover:shadow-sm"
+                  className="flex items-center gap-3 rounded-lg border bg-card p-4 transition-all hover:border-pink-300 hover:shadow-sm"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-100">
                     <Instagram className="h-5 w-5 text-pink-600" />
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Instagram</p>
-                    <p className="text-sm text-gray-500">@misssemifashion</p>
+                    <p className="font-medium text-foreground">Instagram</p>
+                    <p className="text-sm text-muted-foreground">@misssemifashion</p>
                   </div>
                 </a>
               </div>

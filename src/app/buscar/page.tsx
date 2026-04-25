@@ -92,9 +92,9 @@ function SearchContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -115,7 +115,7 @@ function SearchContent() {
           className="mb-6 flex gap-2"
         >
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
@@ -126,7 +126,7 @@ function SearchContent() {
               <button
                 type="button"
                 onClick={() => setSearchInput("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -142,13 +142,13 @@ function SearchContent() {
         <div className="mb-4 flex items-center justify-between">
           <div>
             {query ? (
-              <h1 className="text-lg font-bold text-gray-900 md:text-xl">
+              <h1 className="text-lg font-bold text-foreground md:text-xl">
                 {results.length}{" "}
                 {results.length === 1 ? "resultado" : "resultados"} para &ldquo;
                 <span className="text-orange-600">{query}</span>&rdquo;
               </h1>
             ) : (
-              <h1 className="text-lg font-bold text-gray-900 md:text-xl">
+              <h1 className="text-lg font-bold text-foreground md:text-xl">
                 Buscar productos
               </h1>
             )}
@@ -171,15 +171,15 @@ function SearchContent() {
             animate={{ opacity: 1, scale: 1 }}
             className="py-16 text-center"
           >
-            <Search className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-            <h2 className="mb-2 text-xl font-semibold text-gray-700">
+            <Search className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+            <h2 className="mb-2 text-xl font-semibold text-foreground">
               No se encontraron resultados para &ldquo;{query}&rdquo;
             </h2>
-            <p className="mb-6 text-gray-500">
+            <p className="mb-6 text-muted-foreground">
               Intenta con otras palabras o revisa la ortografia.
             </p>
-            <div className="text-sm text-gray-500">
-              <p className="mb-2 font-medium text-gray-700">Sugerencias:</p>
+            <div className="text-sm text-muted-foreground">
+              <p className="mb-2 font-medium text-foreground">Sugerencias:</p>
               <ul className="space-y-1">
                 <li>Revisa que las palabras esten escritas correctamente</li>
                 <li>Usa palabras mas generales</li>
@@ -201,15 +201,15 @@ function SearchContent() {
                 showFilters ? "block" : "hidden"
               } w-full shrink-0 lg:block lg:w-56`}
             >
-              <div className="sticky top-4 rounded-lg border bg-white p-4 shadow-sm">
-                <h3 className="mb-3 font-semibold text-gray-900">
+              <div className="sticky top-4 rounded-lg border bg-card p-4 shadow-sm">
+                <h3 className="mb-3 font-semibold text-foreground">
                   <SlidersHorizontal className="mr-1.5 inline h-4 w-4" />
                   Filtros
                 </h3>
 
                 {/* Sort */}
                 <div className="mb-5">
-                  <h4 className="mb-2 text-sm font-medium text-gray-600">
+                  <h4 className="mb-2 text-sm font-medium text-muted-foreground">
                     <ArrowUpDown className="mr-1 inline h-3.5 w-3.5" />
                     Ordenar por
                   </h4>
@@ -221,7 +221,7 @@ function SearchContent() {
                         className={`block w-full rounded px-2 py-1.5 text-left text-sm transition-colors ${
                           sortBy === option.value
                             ? "bg-orange-50 font-medium text-orange-700"
-                            : "text-gray-600 hover:bg-gray-50"
+                            : "text-muted-foreground hover:bg-muted/50"
                         }`}
                       >
                         {option.label}
@@ -232,7 +232,7 @@ function SearchContent() {
 
                 {/* Price Range */}
                 <div className="mb-5">
-                  <h4 className="mb-2 text-sm font-medium text-gray-600">
+                  <h4 className="mb-2 text-sm font-medium text-muted-foreground">
                     Rango de precio
                   </h4>
                   <div className="space-y-1">
@@ -243,7 +243,7 @@ function SearchContent() {
                         className={`block w-full rounded px-2 py-1.5 text-left text-sm transition-colors ${
                           priceRange === option.value
                             ? "bg-orange-50 font-medium text-orange-700"
-                            : "text-gray-600 hover:bg-gray-50"
+                            : "text-muted-foreground hover:bg-muted/50"
                         }`}
                       >
                         {option.label}
@@ -255,7 +255,7 @@ function SearchContent() {
                 {/* Categories - using real slugs */}
                 {categoryLinks.length > 0 && (
                   <div>
-                    <h4 className="mb-2 text-sm font-medium text-gray-600">
+                    <h4 className="mb-2 text-sm font-medium text-muted-foreground">
                       Categorias
                     </h4>
                     <div className="space-y-1">
@@ -265,7 +265,7 @@ function SearchContent() {
                           onClick={() =>
                             router.push(`/categoria/${cat.slug}`)
                           }
-                          className="block w-full rounded px-2 py-1.5 text-left text-sm text-gray-600 transition-colors hover:bg-gray-50"
+                          className="block w-full rounded px-2 py-1.5 text-left text-sm text-muted-foreground transition-colors hover:bg-muted/50"
                         >
                           {cat.name}
                         </button>
@@ -279,7 +279,7 @@ function SearchContent() {
             {/* Product Grid */}
             <div className="flex-1">
               {/* Sort indicator on mobile */}
-              <div className="mb-3 flex items-center gap-2 text-sm text-gray-500 lg:hidden">
+              <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground lg:hidden">
                 <ArrowUpDown className="h-3.5 w-3.5" />
                 <span>
                   {sortOptions.find((o) => o.value === sortBy)?.label}
@@ -300,7 +300,7 @@ function SearchContent() {
               </div>
 
               {displayedResults.length === 0 && (
-                <div className="py-12 text-center text-gray-500">
+                <div className="py-12 text-center text-muted-foreground">
                   <p>No hay productos con los filtros seleccionados.</p>
                   <Button
                     variant="outline"
@@ -321,11 +321,11 @@ function SearchContent() {
         {/* No query state */}
         {!query && (
           <div className="py-16 text-center">
-            <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-            <h2 className="mb-2 text-xl font-semibold text-gray-700">
+            <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+            <h2 className="mb-2 text-xl font-semibold text-foreground">
               Escribe algo para buscar
             </h2>
-            <p className="text-gray-500">
+            <p className="text-muted-foreground">
               Encuentra pijamas, vestidos, blusas y mas.
             </p>
           </div>

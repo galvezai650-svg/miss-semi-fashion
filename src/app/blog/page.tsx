@@ -41,9 +41,9 @@ const blogPosts = [
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Blog" }]}
@@ -59,7 +59,7 @@ export default function BlogPage() {
           className="mb-8 flex items-center gap-3"
         >
           <BookOpen className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Blog de Moda
           </h1>
         </motion.div>
@@ -77,9 +77,9 @@ export default function BlogPage() {
                 <Card className="h-full overflow-hidden transition-shadow hover:shadow-lg">
                   <CardContent className="p-0">
                     {/* Image placeholder */}
-                    <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+                    <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-muted to-border">
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <BookOpen className="h-16 w-16 text-gray-300" />
+                        <BookOpen className="h-16 w-16 text-muted-foreground/50" />
                       </div>
                       <div className="absolute left-3 top-3">
                         <Badge className={post.color}>{post.category}</Badge>
@@ -88,14 +88,14 @@ export default function BlogPage() {
 
                     {/* Content */}
                     <div className="p-5">
-                      <div className="mb-2 flex items-center gap-1.5 text-xs text-gray-400">
+                      <div className="mb-2 flex items-center gap-1.5 text-xs text-muted-foreground">
                         <Calendar className="h-3.5 w-3.5" />
                         {post.date}
                       </div>
-                      <h2 className="mb-2 text-lg font-semibold text-gray-900 transition-colors group-hover:text-orange-600">
+                      <h2 className="mb-2 text-lg font-semibold text-foreground transition-colors group-hover:text-orange-600">
                         {post.title}
                       </h2>
-                      <p className="mb-4 text-sm text-gray-500 line-clamp-3">
+                      <p className="mb-4 text-sm text-muted-foreground line-clamp-3">
                         {post.excerpt}
                       </p>
                       <span className="inline-flex items-center text-sm font-medium text-orange-600 transition-colors group-hover:text-orange-700">

@@ -209,8 +209,8 @@ function CheckoutContent() {
   // buyNow=true with empty cart
   if (buyNow && items.length === 0 && !showSuccess) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white">
+      <div className="min-h-screen bg-background">
+        <div className="border-b bg-card">
           <div className="mx-auto max-w-7xl px-4 py-3">
             <Breadcrumbs
               items={[
@@ -221,11 +221,11 @@ function CheckoutContent() {
           </div>
         </div>
         <div className="py-20 text-center">
-          <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-          <h2 className="mb-2 text-xl font-semibold text-gray-700">
+          <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+          <h2 className="mb-2 text-xl font-semibold text-foreground">
             Agrega productos al carrito antes de pagar
           </h2>
-          <p className="mb-6 text-gray-500">
+          <p className="mb-6 text-muted-foreground">
             Tu carrito esta vacio. Explora nuestros productos.
           </p>
           <Button asChild className="bg-orange-500 hover:bg-orange-600">
@@ -239,8 +239,8 @@ function CheckoutContent() {
   // Empty cart state (not buyNow)
   if (items.length === 0 && !showSuccess) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white">
+      <div className="min-h-screen bg-background">
+        <div className="border-b bg-card">
           <div className="mx-auto max-w-7xl px-4 py-3">
             <Breadcrumbs
               items={[
@@ -252,11 +252,11 @@ function CheckoutContent() {
           </div>
         </div>
         <div className="py-20 text-center">
-          <Package className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-          <h2 className="mb-2 text-xl font-semibold text-gray-700">
+          <Package className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+          <h2 className="mb-2 text-xl font-semibold text-foreground">
             Tu carrito esta vacio
           </h2>
-          <p className="mb-6 text-gray-500">
+          <p className="mb-6 text-muted-foreground">
             Agrega productos antes de proceder al pago.
           </p>
           <Button asChild className="bg-orange-500 hover:bg-orange-600">
@@ -274,9 +274,9 @@ function CheckoutContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -305,7 +305,7 @@ function CheckoutContent() {
                           ? isCurrent
                             ? "bg-orange-500 text-white"
                             : "bg-orange-100 text-orange-600"
-                          : "bg-gray-200 text-gray-500"
+                          : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {activeStep > step.step ? (
@@ -320,7 +320,7 @@ function CheckoutContent() {
                           ? isCurrent
                             ? "text-orange-700"
                             : "text-orange-500"
-                          : "text-gray-400"
+                          : "text-muted-foreground/50"
                       }`}
                     >
                       <Icon className="mr-1 inline h-4 w-4" />
@@ -332,7 +332,7 @@ function CheckoutContent() {
                       className={`mx-3 h-0.5 w-12 transition-colors ${
                         activeStep > step.step
                           ? "bg-orange-400"
-                          : "bg-gray-300"
+                          : "bg-muted"
                       }`}
                     />
                   )}
@@ -355,8 +355,8 @@ function CheckoutContent() {
               <div className="flex-1 lg:max-w-[66%]">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Shipping Address */}
-                  <div className="rounded-lg border bg-white p-6 shadow-sm">
-                    <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900">
+                  <div className="rounded-lg border bg-card p-6 shadow-sm">
+                    <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-foreground">
                       <MapPin className="h-5 w-5 text-orange-500" />
                       Direccion de envio
                     </h2>
@@ -502,8 +502,8 @@ function CheckoutContent() {
                   </div>
 
                   {/* Payment Method */}
-                  <div className="rounded-lg border bg-white p-6 shadow-sm">
-                    <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-gray-900">
+                  <div className="rounded-lg border bg-card p-6 shadow-sm">
+                    <h2 className="mb-4 flex items-center gap-2 text-lg font-bold text-foreground">
                       <CreditCard className="h-5 w-5 text-orange-500" />
                       Metodo de pago
                     </h2>
@@ -522,7 +522,7 @@ function CheckoutContent() {
                           className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors ${
                             paymentMethod === method.value
                               ? "border-orange-500 bg-orange-50"
-                              : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                              : "border-border hover:border-border hover:bg-muted/50"
                           }`}
                         >
                           <RadioGroupItem
@@ -530,10 +530,10 @@ function CheckoutContent() {
                             className="mt-0.5"
                           />
                           <div>
-                            <p className="font-medium text-gray-900">
+                            <p className="font-medium text-foreground">
                               {method.label}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-muted-foreground">
                               {method.desc}
                             </p>
                           </div>
@@ -585,8 +585,8 @@ function CheckoutContent() {
 
               {/* Right Column - Order Summary */}
               <div className="lg:w-[34%]">
-                <div className="sticky top-4 rounded-lg border bg-white p-6 shadow-sm">
-                  <h2 className="mb-4 text-lg font-bold text-gray-900">
+                <div className="sticky top-4 rounded-lg border bg-card p-6 shadow-sm">
+                  <h2 className="mb-4 text-lg font-bold text-foreground">
                     Resumen del pedido
                   </h2>
 
@@ -594,7 +594,7 @@ function CheckoutContent() {
                     {items.map((item) => (
                       <div key={`${item.productId}-${item.size}`} className="flex gap-3">
                         {item.image && (
-                          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-gray-100">
+                          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
                             <Image
                               src={item.image}
                               alt={item.name}
@@ -605,14 +605,14 @@ function CheckoutContent() {
                           </div>
                         )}
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-medium text-gray-900">
+                          <p className="truncate text-sm font-medium text-foreground">
                             {item.name}
                           </p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-muted-foreground">
                             Cantidad: {item.quantity}
                           </p>
                         </div>
-                        <p className="shrink-0 text-sm font-semibold text-gray-900">
+                        <p className="shrink-0 text-sm font-semibold text-foreground">
                           ${(item.price * item.quantity).toLocaleString("es-CO")}
                         </p>
                       </div>
@@ -623,13 +623,13 @@ function CheckoutContent() {
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Subtotal</span>
+                      <span className="text-muted-foreground">Subtotal</span>
                       <span className="font-medium">
                         ${cartTotal.toLocaleString("es-CO")}
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Envio</span>
+                      <span className="text-muted-foreground">Envio</span>
                       <span className="font-medium text-green-600">GRATIS</span>
                     </div>
                     <Separator />
@@ -649,7 +649,7 @@ function CheckoutContent() {
               key="success"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="mx-auto max-w-md rounded-lg border bg-white p-10 text-center shadow-lg"
+              className="mx-auto max-w-md rounded-lg border bg-card p-10 text-center shadow-lg"
             >
               <motion.div
                 initial={{ scale: 0 }}
@@ -658,10 +658,10 @@ function CheckoutContent() {
               >
                 <CircleCheck className="mx-auto mb-4 h-20 w-20 text-green-500" />
               </motion.div>
-              <h2 className="mb-2 text-2xl font-bold text-gray-900">
+              <h2 className="mb-2 text-2xl font-bold text-foreground">
                 Pedido realizado con exito!
               </h2>
-              <p className="mb-1 text-gray-600">
+              <p className="mb-1 text-muted-foreground">
                 Tu orden ha sido registrada correctamente.
               </p>
               {orderId && (
@@ -669,7 +669,7 @@ function CheckoutContent() {
                   Order ID: {orderId}
                 </p>
               )}
-              <p className="mb-6 text-sm text-gray-500">
+              <p className="mb-6 text-sm text-muted-foreground">
                 Te contactaremos por WhatsApp para confirmar los detalles del
                 envio y pago.
               </p>
@@ -696,7 +696,7 @@ export default function CheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+        <div className="flex min-h-screen items-center justify-center bg-background">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
         </div>
       }

@@ -52,3 +52,179 @@ Stage Summary:
 - Account and orders pages with mock data
 - PM2 managed, all routes compile clean
 - Total: ~3500+ lines of new production code
+
+---
+Task ID: 2d
+Agent: Dark Mode Fix Agent
+Task: Fix dark mode colors on pago/[slug], mayorista, ayuda, nosotros pages
+
+Work Log:
+- Read all 4 target files and identified all hardcoded Tailwind gray color classes
+- Replaced `bg-gray-50` → `bg-background` for page backgrounds in all 4 files
+- Replaced `bg-white` → `bg-card` for breadcrumb bars, section backgrounds, and contact cards
+- Replaced `text-gray-900/800/700` → `text-foreground` for headings and primary text
+- Replaced `text-gray-600/500` → `text-muted-foreground` for secondary text
+- Replaced `text-gray-400` → `text-muted-foreground` for search icon
+- Replaced `text-gray-300` → `text-muted-foreground/50` for empty state icon
+- Kept all accent colors AS-IS (orange, green, pink, blue, purple, gradient sections)
+- Kept hero buttons with `bg-white text-green-600 hover:bg-white/90` AS-IS (they need white on dark gradient)
+- Verified zero remaining gray classes with grep across all 4 files
+- ESLint passes clean with 0 errors
+
+Stage Summary:
+- 4 files updated: pago/[slug]/page.tsx, mayorista/page.tsx, ayuda/page.tsx, nosotros/page.tsx
+- All pages now use theme-aware shadcn/ui CSS variables for proper dark mode support
+- No functionality changes, only color class replacements
+- Clean lint (0 errors, 0 warnings)
+
+---
+Task ID: 2c
+Agent: Main Developer
+Task: Fix dark mode colors on ofertas and buscar pages
+
+Work Log:
+- Replaced all hardcoded Tailwind gray color classes with theme-aware shadcn/ui equivalents in ofertas/page.tsx (7 replacements)
+- Replaced all hardcoded Tailwind gray color classes with theme-aware shadcn/ui equivalents in buscar/page.tsx (24 replacements)
+- Preserved intentional accent colors (orange-50, red-*, orange-600) as-is
+- Verified zero remaining gray classes via grep search
+- Lint passes clean with 0 errors
+
+Replacements applied (ofertas/page.tsx):
+- bg-gray-50 → bg-background (page wrapper)
+- bg-white → bg-card (breadcrumb bar, filters row)
+- text-gray-600 → text-muted-foreground (sort/discount labels ×2)
+- bg-gray-300 → bg-border (divider)
+- text-gray-900 → text-foreground (section heading)
+
+Replacements applied (buscar/page.tsx):
+- bg-gray-50 → bg-background (page wrapper)
+- bg-white → bg-card (breadcrumb bar, sidebar filters)
+- text-gray-900 → text-foreground (headings ×3)
+- text-gray-700 → text-foreground (subheadings ×2)
+- text-gray-600 → text-muted-foreground (filter labels ×4)
+- text-gray-500 → text-muted-foreground (helper text ×4)
+- text-gray-400 → text-muted-foreground (search icons ×2)
+- text-gray-300 → text-muted-foreground/50 (empty state icons ×2)
+- hover:bg-gray-50 → hover:bg-muted/50 (filter buttons ×3)
+- hover:text-gray-600 → hover:text-foreground (clear button)
+
+Stage Summary:
+- Both ofertas and buscar pages fully dark-mode compatible
+- All 31 hardcoded gray classes replaced with theme-aware equivalents
+- Intentional accent colors (red/orange for deal timers, filter highlights) preserved
+- Zero lint errors
+
+---
+Task ID: 2a
+Agent: Dark Mode Fix Agent
+Task: Fix dark mode colors on 4 account-related pages (pagos, seguridad, direcciones, deseos)
+
+Work Log:
+- Read all 4 target files and identified all hardcoded Tailwind gray color classes
+- Replaced `bg-gray-50` → `bg-background` for page backgrounds in all 4 files (4 instances)
+- Replaced `bg-white` → `bg-card` for breadcrumb bars in all 4 files (4 instances)
+- Replaced `bg-gray-100` → `bg-muted` for image placeholder and default type color (pagos, deseos)
+- Replaced `text-gray-900` → `text-foreground` for headings and primary text (all 4 files)
+- Replaced `text-gray-700` → `text-foreground` for secondary text (pagos, seguridad, direcciones, deseos)
+- Replaced `text-gray-600` → `text-muted-foreground` for labels and descriptions
+- Replaced `text-gray-500` → `text-muted-foreground` for helper text
+- Replaced `text-gray-400` → `text-muted-foreground` for icons and metadata
+- Replaced `text-gray-300` → `text-muted-foreground/50` for empty state icons
+- Replaced `hover:bg-red-50` → `hover:bg-red-500/10` for delete buttons (pagos, direcciones, deseos)
+- Replaced `text-gray-400 hover:text-gray-600` → `text-muted-foreground hover:text-foreground` for password toggle buttons (seguridad ×3)
+- Removed all `dark:` prefix variants in seguridad/page.tsx:
+  - `dark:border-red-900`, `dark:text-gray-100`, `dark:text-gray-400`, `dark:text-gray-500`, `dark:border-red-800`, `dark:hover:bg-red-950`, `dark:border-gray-700`, `dark:text-red-400`
+- Replaced `border-gray-200 dark:border-gray-700` → `border-border` (seguridad delete account card)
+- Kept all accent/icon colors AS-IS (green-*, purple-*, red-*, blue-*, orange-*, pink-*)
+- Kept all button colors AS-IS (`bg-orange-500 hover:bg-orange-600`, etc.)
+- Verified zero remaining hardcoded gray classes with grep across all 4 files
+- Verified zero remaining `dark:` variants in seguridad/page.tsx
+- ESLint passes clean with 0 errors
+
+Replacements applied (pagos/page.tsx): ~18 replacements
+Replacements applied (seguridad/page.tsx): ~16 replacements + 8 dark: variant removals
+Replacements applied (direcciones/page.tsx): ~15 replacements
+Replacements applied (deseos/page.tsx): ~10 replacements
+
+Stage Summary:
+- 4 files updated: cuenta/pagos, cuenta/seguridad, cuenta/direcciones, cuenta/deseos
+- All pages now use theme-aware shadcn/ui CSS variables for proper dark mode support
+- All manual dark: prefix variants removed from seguridad (now handled by theme variables)
+- No functionality changes, only color class replacements
+- Clean lint (0 errors, 0 warnings)
+
+---
+Task ID: 2b
+Agent: Dark Mode Fix Agent
+Task: Fix dark mode colors on checkout and pedidos pages
+
+Work Log:
+- Read both target files and identified all hardcoded Tailwind gray color classes
+- Replaced `bg-gray-50` → `bg-background` for page backgrounds and fallback loader (checkout ×3, pedidos ×1)
+- Replaced `bg-white` → `bg-card` for breadcrumb bars, form cards, order summary, success card (checkout ×5, pedidos ×2)
+- Replaced `bg-gray-200` → `bg-muted` for step indicator inactive circle (checkout ×1)
+- Replaced `bg-gray-100` → `bg-muted` for image placeholders (checkout ×1, pedidos ×1)
+- Replaced `bg-gray-300` → `bg-muted` for step connector line (checkout ×1)
+- Replaced `text-gray-900` → `text-foreground` for headings and primary text (checkout ×7, pedidos ×6)
+- Replaced `text-gray-700` → `text-foreground` for secondary text (checkout ×2, pedidos ×2)
+- Replaced `text-gray-600` → `text-muted-foreground` for labels (checkout ×3, pedidos ×2)
+- Replaced `text-gray-500` → `text-muted-foreground` for helper/description text (checkout ×5, pedidos ×5)
+- Replaced `text-gray-400` → `text-muted-foreground/50` for inactive step labels and empty state icons (checkout ×1, pedidos ×2)
+- Replaced `text-gray-300` → `text-muted-foreground/50` for empty state icons (checkout ×2, pedidos ×1)
+- Replaced `border-gray-200` → `border-border` for payment method cards (checkout ×1)
+- Replaced `border-gray-300` → `border-muted-foreground/30` for tracking timeline circles and lines (pedidos ×2)
+- Replaced `hover:border-gray-300 hover:bg-gray-50` → `hover:border-border hover:bg-muted/50` (checkout ×1)
+- Replaced `bg-white` → `bg-card` for tracking timeline inactive circles (pedidos ×1)
+- Replaced `bg-gray-300` → `bg-muted-foreground/30` for tracking timeline connector lines (pedidos ×1)
+- Replaced `bg-gray-50` → `bg-muted` for order header background (pedidos ×1)
+- Kept all accent colors AS-IS (orange-*, green-*, amber-*, blue-*, red-*, text-green-600 dark:text-green-400)
+- Kept all semantic badge backgrounds AS-IS (bg-green-100, bg-amber-100, bg-blue-100, bg-indigo-100, bg-red-50, bg-blue-50)
+- Verified zero remaining gray classes with grep across both files
+- ESLint passes clean with 0 errors
+
+Replacements applied (checkout/page.tsx): ~35 replacements
+Replacements applied (pedidos/page.tsx): ~25 replacements
+
+Stage Summary:
+- 2 files updated: checkout/page.tsx, pedidos/page.tsx
+- All pages now use theme-aware shadcn/ui CSS variables for proper dark mode support
+- Tracking timeline uses subtle muted-foreground/30 for inactive states
+- No functionality changes, only color class replacements
+- Clean lint (0 errors, 0 warnings)
+
+---
+Task ID: 2e
+Agent: Dark Mode Fix Agent
+Task: Fix dark mode colors on 7 remaining static pages (devoluciones, garantia, empleo, prensa, blog, vender, afiliados)
+
+Work Log:
+- Read all 7 target files and identified all hardcoded Tailwind gray color classes
+- Replaced `bg-gray-50` → `bg-background` for page backgrounds in all 7 files
+- Replaced `bg-white` → `bg-card` for breadcrumb bars in all 7 files
+- Replaced `text-gray-900` → `text-foreground` for headings and primary text (all 7 files)
+- Replaced `text-gray-700` → `text-foreground` for secondary text in note sections (inside bg-orange-50)
+- Replaced `text-gray-600` → `text-muted-foreground` for body/description text
+- Replaced `text-gray-500` → `text-muted-foreground` for helper text and labels
+- Replaced `text-gray-400` → `text-muted-foreground` for date metadata (blog)
+- Replaced `text-gray-300` → `text-muted-foreground/50` for placeholder icons (blog)
+- Replaced `font-medium text-gray-900` → `font-medium text-foreground` for card headings (prensa, vender, afiliados)
+- Replaced `from-gray-100 to-gray-200` → `from-muted to-border` for image placeholder gradient (blog)
+- Kept all accent colors AS-IS (orange-500, orange-100, orange-600, orange-50, green-500, green-600, green-800, green-100, green-50, red-400, pink-100, pink-600, purple-100, purple-600, blue-500, bg-green-100, bg-pink-100)
+- Kept all button colors AS-IS (bg-green-500 hover:bg-green-600)
+- Verified zero remaining gray classes with grep across all 7 files
+- ESLint passes clean with 0 errors
+
+Replacements applied (devoluciones/page.tsx): 8 replacements
+Replacements applied (garantia/page.tsx): 9 replacements
+Replacements applied (empleo/page.tsx): 9 replacements
+Replacements applied (prensa/page.tsx): 10 replacements
+Replacements applied (blog/page.tsx): 8 replacements
+Replacements applied (vender/page.tsx): 13 replacements
+Replacements applied (afiliados/page.tsx): 11 replacements
+
+Stage Summary:
+- 7 files updated: devoluciones, garantia, empleo, prensa, blog, vender, afiliados
+- All pages now use theme-aware shadcn/ui CSS variables for proper dark mode support
+- No functionality changes, only color class replacements
+- Total: ~68 replacements across 7 files
+- Clean lint (0 errors, 0 warnings)

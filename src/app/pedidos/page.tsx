@@ -166,9 +166,9 @@ export default function PedidosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -187,7 +187,7 @@ export default function PedidosPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6"
         >
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Tus Pedidos
           </h1>
         </motion.div>
@@ -225,26 +225,26 @@ export default function PedidosPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.15 + index * 0.1 }}
-                className="rounded-lg border bg-white shadow-sm"
+                className="rounded-lg border bg-card shadow-sm"
               >
                 {/* Order Header */}
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b bg-gray-50 px-5 py-3">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b bg-muted px-5 py-3">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
                     <div>
-                      <span className="text-xs text-gray-500">Pedido</span>
-                      <p className="text-sm font-bold text-gray-900">
+                      <span className="text-xs text-muted-foreground">Pedido</span>
+                      <p className="text-sm font-bold text-foreground">
                         #{order.id}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-gray-500">Fecha</span>
-                      <p className="text-sm text-gray-700">
+                      <span className="text-xs text-muted-foreground">Fecha</span>
+                      <p className="text-sm text-foreground">
                         {formatDate(order.date)}
                       </p>
                     </div>
                     <div>
-                      <span className="text-xs text-gray-500">Envio</span>
-                      <p className="text-sm text-gray-700">
+                      <span className="text-xs text-muted-foreground">Envio</span>
+                      <p className="text-sm text-foreground">
                         {order.shippingAddress}
                       </p>
                     </div>
@@ -260,7 +260,7 @@ export default function PedidosPage() {
                         {item.image && (
                           <Link
                             href={`/producto/${item.productId}`}
-                            className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-gray-100"
+                            className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted"
                           >
                             <Image
                               src={item.image}
@@ -274,15 +274,15 @@ export default function PedidosPage() {
                         <div className="min-w-0 flex-1">
                           <Link
                             href={`/producto/${item.productId}`}
-                            className="truncate text-sm font-medium text-gray-900 hover:text-orange-600 hover:underline"
+                            className="truncate text-sm font-medium text-foreground hover:text-orange-600 hover:underline"
                           >
                             {item.name}
                           </Link>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-muted-foreground">
                             Talla: {item.size} &middot; Cantidad: {item.quantity}
                           </p>
                         </div>
-                        <p className="shrink-0 text-sm font-semibold text-gray-900">
+                        <p className="shrink-0 text-sm font-semibold text-foreground">
                           ${(item.price * item.quantity).toLocaleString("es-CO")}
                         </p>
                       </div>
@@ -294,8 +294,8 @@ export default function PedidosPage() {
                   {/* Order Footer */}
                   <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
-                      <span className="text-sm text-gray-500">Total:</span>
-                      <span className="ml-1 text-lg font-bold text-gray-900">
+                      <span className="text-sm text-muted-foreground">Total:</span>
+                      <span className="ml-1 text-lg font-bold text-foreground">
                         ${order.total.toLocaleString("es-CO")}
                       </span>
                     </div>
@@ -330,11 +330,11 @@ export default function PedidosPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="py-16 text-center"
           >
-            <Package className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-            <h2 className="mb-2 text-xl font-semibold text-gray-700">
+            <Package className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+            <h2 className="mb-2 text-xl font-semibold text-foreground">
               No tienes pedidos
             </h2>
-            <p className="mb-6 text-gray-500">
+            <p className="mb-6 text-muted-foreground">
               {orders.length === 0
                 ? "Explora nuestros productos y realiza tu primera compra."
                 : "No hay pedidos en el periodo seleccionado."}
@@ -375,14 +375,14 @@ export default function PedidosPage() {
               {/* Order Info */}
               <div className="flex flex-wrap items-center gap-4 rounded-lg bg-muted/30 p-4">
                 <div className="flex items-center gap-2 text-sm">
-                  <Clock className="h-4 w-4 text-gray-500" />
-                  <span className="text-gray-600">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">
                     Fecha: {formatDate(trackingOrder.date)}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <MapPin className="h-4 w-4 text-gray-500" />
-                  <span className="text-gray-600">
+                  <MapPin className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">
                     {trackingOrder.shippingAddress}
                   </span>
                 </div>
@@ -402,7 +402,7 @@ export default function PedidosPage() {
               {/* Tracking Timeline */}
               {trackingOrder.status !== "Cancelada" ? (
                 <div className="space-y-4">
-                  <h4 className="text-sm font-semibold text-gray-900">
+                  <h4 className="text-sm font-semibold text-foreground">
                     Estado del envio
                   </h4>
                   <div className="relative space-y-0">
@@ -424,7 +424,7 @@ export default function PedidosPage() {
                                   ? isCurrent
                                     ? "border-orange-500 bg-orange-500 text-white"
                                     : "border-green-500 bg-green-500 text-white"
-                                  : "border-gray-300 bg-white text-gray-400"
+                                  : "border-muted-foreground/30 bg-card text-muted-foreground/50"
                               }`}
                             >
                               <StepIcon className="h-4 w-4" />
@@ -434,7 +434,7 @@ export default function PedidosPage() {
                                 className={`h-10 w-0.5 ${
                                   i < currentStep
                                     ? "bg-green-500"
-                                    : "bg-gray-300"
+                                    : "bg-muted-foreground/30"
                                 }`}
                               />
                             )}
@@ -448,7 +448,7 @@ export default function PedidosPage() {
                                   ? isCurrent
                                     ? "text-orange-700"
                                     : "text-green-700"
-                                  : "text-gray-400"
+                                  : "text-muted-foreground/50"
                               }`}
                             >
                               {step.label}

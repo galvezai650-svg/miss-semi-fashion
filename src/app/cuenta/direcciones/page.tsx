@@ -103,8 +103,8 @@ export default function DireccionesPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white">
+      <div className="min-h-screen bg-background">
+        <div className="border-b bg-card">
           <div className="mx-auto max-w-7xl px-4 py-3">
             <Breadcrumbs
               items={[
@@ -116,11 +116,11 @@ export default function DireccionesPage() {
           </div>
         </div>
         <div className="mx-auto max-w-4xl px-4 py-16 text-center">
-          <LogIn className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-          <h2 className="mb-2 text-xl font-semibold text-gray-700">
+          <LogIn className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+          <h2 className="mb-2 text-xl font-semibold text-foreground">
             Inicia sesion para ver tus direcciones
           </h2>
-          <p className="mb-6 text-gray-500">
+          <p className="mb-6 text-muted-foreground">
             Necesitas iniciar sesion para gestionar tus direcciones de envio.
           </p>
           <Link href="/cuenta">
@@ -134,9 +134,9 @@ export default function DireccionesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -156,7 +156,7 @@ export default function DireccionesPage() {
           className="mb-8 flex items-center gap-3"
         >
           <MapPin className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Tus Direcciones
           </h1>
         </motion.div>
@@ -259,7 +259,7 @@ export default function DireccionesPage() {
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0 flex-1">
                             <div className="mb-1 flex items-center gap-2">
-                              <p className="font-semibold text-gray-900">
+                              <p className="font-semibold text-foreground">
                                 {addr.name}
                               </p>
                               {addr.isDefault && (
@@ -269,14 +269,14 @@ export default function DireccionesPage() {
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-sm text-gray-700">{addr.address}</p>
-                            <p className="text-sm text-gray-700">
+                            <p className="text-sm text-foreground">{addr.address}</p>
+                            <p className="text-sm text-foreground">
                               {addr.city}
                               {addr.neighborhood
                                 ? `, ${addr.neighborhood}`
                                 : ""}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-muted-foreground">
                               Tel: {addr.phone}
                             </p>
                           </div>
@@ -296,7 +296,7 @@ export default function DireccionesPage() {
                               variant="ghost"
                               size="sm"
                               onClick={() => handleRemoveAddress(addr.id)}
-                              className="text-xs text-red-600 hover:bg-red-50 hover:text-red-700"
+                              className="text-xs text-red-600 hover:bg-red-500/10 hover:text-red-700"
                             >
                               <Trash2 className="mr-1 h-3 w-3" />
                               Eliminar
@@ -311,11 +311,11 @@ export default function DireccionesPage() {
             ) : (
               <Card className="border-dashed">
                 <CardContent className="flex flex-col items-center justify-center p-8 text-center">
-                  <MapPin className="mb-3 h-12 w-12 text-gray-300" />
-                  <p className="mb-1 font-medium text-gray-600">
+                  <MapPin className="mb-3 h-12 w-12 text-muted-foreground/50" />
+                  <p className="mb-1 font-medium text-muted-foreground">
                     No tienes direcciones guardadas
                   </p>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-sm text-muted-foreground">
                     Agrega tu primera direccion usando el formulario
                   </p>
                 </CardContent>

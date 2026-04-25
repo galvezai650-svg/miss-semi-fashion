@@ -9,9 +9,9 @@ import { Separator } from "@/components/ui/separator";
 
 export default function DevolucionesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Devoluciones" }]}
@@ -27,7 +27,7 @@ export default function DevolucionesPage() {
           className="mb-8 flex items-center gap-3"
         >
           <RotateCcw className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Politica de Devoluciones
           </h1>
         </motion.div>
@@ -40,10 +40,10 @@ export default function DevolucionesPage() {
           <Card>
             <CardContent className="space-y-6 p-6 md:p-8">
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Plazo para devoluciones
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   Tienes un plazo de <strong>7 dias calendario</strong> contados
                   a partir de la fecha de entrega para solicitar una devolucion o
                   cambio de tu pedido.
@@ -53,10 +53,10 @@ export default function DevolucionesPage() {
               <Separator />
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Condiciones para devolucion
                 </h2>
-                <ul className="space-y-2 text-gray-600">
+                <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-orange-500" />
                     La prenda debe estar sin uso, sin lavar y sin alteraciones.
@@ -85,10 +85,10 @@ export default function DevolucionesPage() {
               <Separator />
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Como solicitar una devolucion
                 </h2>
-                <ol className="space-y-2 text-gray-600">
+                <ol className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-600">
                       1
@@ -121,10 +121,10 @@ export default function DevolucionesPage() {
               <Separator />
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Reembolso
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   El reembolso se realizara por el mismo medio de pago utilizado
                   en la compra. El tiempo de procesamiento puede ser de 3 a 5
                   dias habiles.
@@ -134,7 +134,7 @@ export default function DevolucionesPage() {
               <Separator />
 
               <div className="rounded-lg bg-orange-50 p-4">
-                <p className="mb-4 text-sm text-gray-700">
+                <p className="mb-4 text-sm text-foreground">
                   <strong>Nota:</strong> Para cualquier consulta sobre
                   devoluciones, no dudes en contactarnos. Estamos para
                   ayudarte.

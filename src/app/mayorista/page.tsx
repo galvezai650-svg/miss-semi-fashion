@@ -97,9 +97,9 @@ const faqItems = [
 
 export default function MayoristaPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -167,10 +167,10 @@ export default function MayoristaPage() {
           viewport={{ once: true }}
           className="mb-10 text-center"
         >
-          <h2 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
+          <h2 className="mb-2 text-2xl font-bold text-foreground md:text-3xl">
             Beneficios de comprar al por mayor
           </h2>
-          <p className="text-gray-500">
+          <p className="text-muted-foreground">
             Todo lo que necesitas para hacer crecer tu negocio
           </p>
         </motion.div>
@@ -192,10 +192,10 @@ export default function MayoristaPage() {
                     >
                       <Icon className="h-7 w-7" />
                     </div>
-                    <h3 className="mb-2 font-semibold text-gray-900">
+                    <h3 className="mb-2 font-semibold text-foreground">
                       {benefit.title}
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       {benefit.description}
                     </p>
                   </CardContent>
@@ -207,7 +207,7 @@ export default function MayoristaPage() {
       </section>
 
       {/* How it Works */}
-      <section className="bg-white py-16">
+      <section className="bg-card py-16">
         <div className="mx-auto max-w-4xl px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -215,10 +215,10 @@ export default function MayoristaPage() {
             viewport={{ once: true }}
             className="mb-10 text-center"
           >
-            <h2 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
+            <h2 className="mb-2 text-2xl font-bold text-foreground md:text-3xl">
               Como funciona
             </h2>
-            <p className="text-gray-500">
+            <p className="text-muted-foreground">
               Compra al por mayor en 5 simples pasos
             </p>
           </motion.div>
@@ -236,8 +236,8 @@ export default function MayoristaPage() {
                   {step.number}
                 </div>
                 <div className="pt-1">
-                  <h3 className="font-semibold text-gray-900">{step.title}</h3>
-                  <p className="text-sm text-gray-500">{step.description}</p>
+                  <h3 className="font-semibold text-foreground">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground">{step.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -255,10 +255,10 @@ export default function MayoristaPage() {
           <Card className="overflow-hidden border-orange-200 bg-gradient-to-r from-orange-50 to-pink-50">
             <CardContent className="p-8 text-center md:p-12">
               <MessageCircle className="mx-auto mb-4 h-12 w-12 text-orange-500" />
-              <h2 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
+              <h2 className="mb-2 text-2xl font-bold text-foreground md:text-3xl">
                 Contactanos hoy
               </h2>
-              <p className="mx-auto mb-8 max-w-lg text-gray-500">
+              <p className="mx-auto mb-8 max-w-lg text-muted-foreground">
                 Estamos listos para ayudarte a hacer crecer tu negocio. Escribenos
                 y recibe una cotizacion personalizada.
               </p>
@@ -296,7 +296,7 @@ export default function MayoristaPage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-white py-16">
+      <section className="bg-card py-16">
         <div className="mx-auto max-w-3xl px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -304,7 +304,7 @@ export default function MayoristaPage() {
             viewport={{ once: true }}
             className="mb-10 text-center"
           >
-            <h2 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
+            <h2 className="mb-2 text-2xl font-bold text-foreground md:text-3xl">
               Preguntas frecuentes
             </h2>
           </motion.div>
@@ -314,7 +314,7 @@ export default function MayoristaPage() {
                 <AccordionTrigger className="text-left">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-500">
+                <AccordionContent className="text-muted-foreground">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>

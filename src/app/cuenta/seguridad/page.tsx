@@ -84,8 +84,8 @@ export default function SeguridadPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="border-b bg-white">
+      <div className="min-h-screen bg-background">
+        <div className="border-b bg-card">
           <div className="mx-auto max-w-7xl px-4 py-3">
             <Breadcrumbs
               items={[
@@ -97,11 +97,11 @@ export default function SeguridadPage() {
           </div>
         </div>
         <div className="mx-auto max-w-4xl px-4 py-16 text-center">
-          <LogIn className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-          <h2 className="mb-2 text-xl font-semibold text-gray-700">
+          <LogIn className="mx-auto mb-4 h-16 w-16 text-muted-foreground/50" />
+          <h2 className="mb-2 text-xl font-semibold text-foreground">
             Inicia sesion para gestionar tu cuenta
           </h2>
-          <p className="mb-6 text-gray-500">
+          <p className="mb-6 text-muted-foreground">
             Necesitas iniciar sesion para acceder a la configuracion de seguridad.
           </p>
           <Link href="/cuenta">
@@ -115,9 +115,9 @@ export default function SeguridadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -137,7 +137,7 @@ export default function SeguridadPage() {
           className="mb-8 flex items-center gap-3"
         >
           <Shield className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Seguridad de tu Cuenta
           </h1>
         </motion.div>
@@ -156,7 +156,7 @@ export default function SeguridadPage() {
               <form onSubmit={handleSaveChanges} className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="profile-name" className="flex items-center gap-2">
-                    <User className="h-4 w-4 text-gray-400" />
+                    <User className="h-4 w-4 text-muted-foreground" />
                     Nombre completo
                   </Label>
                   <Input
@@ -169,7 +169,7 @@ export default function SeguridadPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="profile-email" className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-gray-400" />
+                    <Mail className="h-4 w-4 text-muted-foreground" />
                     Correo electronico
                   </Label>
                   <Input
@@ -183,7 +183,7 @@ export default function SeguridadPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="profile-phone" className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-gray-400" />
+                    <Phone className="h-4 w-4 text-muted-foreground" />
                     Telefono
                   </Label>
                   <Input
@@ -197,7 +197,7 @@ export default function SeguridadPage() {
                 <Separator />
 
                 <div>
-                  <p className="mb-4 font-medium text-gray-900">
+                  <p className="mb-4 font-medium text-foreground">
                     Cambiar contrasena
                   </p>
                   <div className="space-y-4">
@@ -214,7 +214,7 @@ export default function SeguridadPage() {
                         <button
                           type="button"
                           onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                           tabIndex={-1}
                         >
                           {showCurrentPassword ? (
@@ -238,7 +238,7 @@ export default function SeguridadPage() {
                         <button
                           type="button"
                           onClick={() => setShowNewPassword(!showNewPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                           tabIndex={-1}
                         >
                           {showNewPassword ? (
@@ -266,7 +266,7 @@ export default function SeguridadPage() {
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                           }
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                           tabIndex={-1}
                         >
                           {showConfirmPassword ? (
@@ -299,18 +299,18 @@ export default function SeguridadPage() {
           transition={{ delay: 0.2 }}
           className="mt-6"
         >
-          <Card className="border-red-100 dark:border-red-900">
+          <Card className="border-red-100">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-gray-900 dark:text-gray-100">Cerrar sesion</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="font-medium text-foreground">Cerrar sesion</p>
+                  <p className="text-sm text-muted-foreground">
                     Salir de tu cuenta en este dispositivo
                   </p>
                 </div>
                 <Button
                   variant="outline"
-                  className="border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:hover:bg-red-950"
+                  className="border-red-300 text-red-600 hover:bg-red-500/10 hover:text-red-700"
                   onClick={handleLogout}
                 >
                   <LogOut className="mr-2 h-4 w-4" />
@@ -328,18 +328,18 @@ export default function SeguridadPage() {
           transition={{ delay: 0.3 }}
           className="mt-4"
         >
-          <Card className="border-gray-200 dark:border-gray-700">
+          <Card className="border-border">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-red-600 dark:text-red-400">Eliminar mi cuenta</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="font-medium text-red-600">Eliminar mi cuenta</p>
+                  <p className="text-sm text-muted-foreground">
                     Se eliminara permanentemente tu cuenta y todos tus datos
                   </p>
                 </div>
                 <Button
                   variant="outline"
-                  className="border-red-300 text-red-600 hover:bg-red-600 hover:text-white dark:border-red-800"
+                  className="border-red-300 text-red-600 hover:bg-red-600 hover:text-white"
                   onClick={handleDeleteAccount}
                 >
                   Eliminar cuenta

@@ -40,7 +40,7 @@ export default function StarRating({
       // Half star — overlay technique
       stars.push(
         <span key={i} className="relative inline-block">
-          <Star className={cn(sizeMap[size], "text-gray-300")} />
+          <Star className={cn(sizeMap[size], "text-muted-foreground/30")} />
           <span className="absolute inset-0 overflow-hidden" style={{ width: "50%" }}>
             <Star
               className={cn(sizeMap[size], "text-yellow-400 fill-yellow-400")}
@@ -51,7 +51,7 @@ export default function StarRating({
     } else {
       // Empty star
       stars.push(
-        <Star key={i} className={cn(sizeMap[size], "text-gray-300")} />
+        <Star key={i} className={cn(sizeMap[size], "text-muted-foreground/30")} />
       );
     }
   }

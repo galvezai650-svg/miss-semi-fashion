@@ -78,7 +78,7 @@ function PasswordStrength({ password }: { password: string }) {
           <div
             key={i}
             className={`h-1.5 flex-1 rounded-full transition-colors ${
-              i <= strength ? colors[strength - 1] : "bg-gray-200 dark:bg-gray-700"
+              i <= strength ? colors[strength - 1] : "bg-muted"
             }`}
           />
         ))}
@@ -124,7 +124,6 @@ export default function CuentaPage() {
     setLoginError("");
     setIsLoading(true);
 
-    // Small delay for UX feel
     setTimeout(() => {
       const result = login(loginEmail, loginPassword);
       setIsLoading(false);
@@ -147,7 +146,6 @@ export default function CuentaPage() {
     setRegError("");
     setIsLoading(true);
 
-    // Client-side validation
     if (!regName.trim() || regName.trim().length < 2) {
       setRegError("El nombre debe tener al menos 2 caracteres");
       setIsLoading(false);
@@ -181,7 +179,6 @@ export default function CuentaPage() {
       if (result.success) {
         setRegSuccess(true);
         toast.success(`Cuenta creada exitosamente! Bienvenido/a, ${regName}`);
-        // Reset form
         setRegName("");
         setRegEmail("");
         setRegPhone("");
@@ -203,9 +200,9 @@ export default function CuentaPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white dark:bg-gray-900">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Tu Cuenta" }]}
@@ -220,13 +217,13 @@ export default function CuentaPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             {isLoggedIn && user
               ? `Hola, ${user.name}`
               : "Identificate"}
           </h1>
           {isLoggedIn && user && (
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-muted-foreground">
               Miembro desde {new Date(user.createdAt).toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric" })}
             </p>
           )}
@@ -241,7 +238,7 @@ export default function CuentaPage() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-10 rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900 md:p-8"
+              className="mb-10 rounded-xl border border-border bg-card p-6 shadow-sm md:p-8"
             >
               <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4">
@@ -249,12 +246,12 @@ export default function CuentaPage() {
                     {user.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-xl font-bold text-foreground">
                       {user.name}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{user.email}</p>
+                    <p className="text-sm text-muted-foreground">{user.email}</p>
                     {user.phone && (
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-muted-foreground">
                         <Phone className="mr-1 inline h-3 w-3" />
                         {user.phone}
                       </p>
@@ -271,7 +268,7 @@ export default function CuentaPage() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-1.5 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:hover:bg-red-950"
+                    className="gap-1.5 border-red-200 text-red-600 hover:bg-red-500/10 hover:text-red-700"
                     onClick={handleLogout}
                   >
                     <LogOut className="h-4 w-4" />
@@ -286,19 +283,19 @@ export default function CuentaPage() {
               {accountCards.map((card, index) => {
                 const Icon = card.icon;
                 const cardContent = (
-                  <div className="group flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:border-primary/30 hover:shadow-md dark:border-gray-700 dark:bg-gray-900">
+                  <div className="group flex items-start gap-4 rounded-xl border border-border bg-card p-5 shadow-sm transition-all hover:border-primary/30 hover:shadow-md">
                     <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${card.accent}`}>
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-gray-900 group-hover:text-primary dark:text-gray-100">
+                      <h3 className="font-semibold text-foreground group-hover:text-primary">
                         {card.title}
                       </h3>
-                      <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+                      <p className="mt-0.5 text-sm text-muted-foreground">
                         {card.description}
                       </p>
                     </div>
-                    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-gray-300 transition-transform group-hover:translate-x-0.5 group-hover:text-primary dark:text-gray-600" />
+                    <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground/50 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
                   </div>
                 );
 
@@ -332,16 +329,16 @@ export default function CuentaPage() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="mb-10 rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900"
+              className="mb-10 rounded-xl border border-border bg-card shadow-sm"
             >
               {/* Tab Switcher */}
-              <div className="flex border-b border-gray-200 dark:border-gray-700">
+              <div className="flex border-b border-border">
                 <button
                   onClick={() => { setActiveTab("login"); setRegError(""); setLoginError(""); setRegSuccess(false); }}
                   className={`flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold transition-colors ${
                     activeTab === "login"
                       ? "border-b-2 border-primary text-primary"
-                      : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <LogIn className="h-4 w-4" />
@@ -352,7 +349,7 @@ export default function CuentaPage() {
                   className={`flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold transition-colors ${
                     activeTab === "register"
                       ? "border-b-2 border-primary text-primary"
-                      : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   <UserPlus className="h-4 w-4" />
@@ -372,10 +369,10 @@ export default function CuentaPage() {
                       transition={{ duration: 0.2 }}
                     >
                       <div className="mb-6">
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                        <h2 className="text-xl font-bold text-foreground">
                           Inicia sesion
                         </h2>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-muted-foreground">
                           Ingresa tus credenciales para acceder a tu cuenta
                         </p>
                       </div>
@@ -384,7 +381,7 @@ export default function CuentaPage() {
                         {/* Email */}
                         <div className="space-y-1.5">
                           <Label htmlFor="login-email" className="flex items-center gap-1.5 text-sm font-medium">
-                            <Mail className="h-3.5 w-3.5 text-gray-400" />
+                            <Mail className="h-3.5 w-3.5 text-muted-foreground" />
                             Correo electronico
                           </Label>
                           <Input
@@ -401,7 +398,7 @@ export default function CuentaPage() {
                         {/* Password */}
                         <div className="space-y-1.5">
                           <Label htmlFor="login-password" className="flex items-center gap-1.5 text-sm font-medium">
-                            <Lock className="h-3.5 w-3.5 text-gray-400" />
+                            <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                             Contrasena
                           </Label>
                           <div className="relative">
@@ -417,7 +414,7 @@ export default function CuentaPage() {
                             <button
                               type="button"
                               onClick={() => setShowLoginPassword(!showLoginPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                               tabIndex={-1}
                             >
                               {showLoginPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -430,7 +427,7 @@ export default function CuentaPage() {
                           <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950 dark:text-red-400"
+                            className="flex items-center gap-2 rounded-lg bg-red-500/10 p-3 text-sm text-red-600"
                           >
                             <X className="h-4 w-4 shrink-0" />
                             {loginError}
@@ -458,8 +455,8 @@ export default function CuentaPage() {
                       </form>
 
                       {/* Switch to register */}
-                      <div className="mt-6 border-t border-gray-100 pt-5 text-center dark:border-gray-800">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="mt-6 border-t border-border pt-5 text-center">
+                        <p className="text-sm text-muted-foreground">
                           No tienes cuenta?{" "}
                           <button
                             onClick={() => { setActiveTab("register"); setLoginError(""); }}
@@ -488,13 +485,13 @@ export default function CuentaPage() {
                           animate={{ opacity: 1, scale: 1 }}
                           className="py-6 text-center"
                         >
-                          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
-                            <CheckCircle2 className="h-8 w-8 text-green-600 dark:text-green-400" />
+                          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10">
+                            <CheckCircle2 className="h-8 w-8 text-green-600" />
                           </div>
-                          <h3 className="mb-1 text-xl font-bold text-gray-900 dark:text-gray-100">
+                          <h3 className="mb-1 text-xl font-bold text-foreground">
                             Cuenta creada exitosamente!
                           </h3>
-                          <p className="mb-6 text-gray-500 dark:text-gray-400">
+                          <p className="mb-6 text-muted-foreground">
                             Tu cuenta ha sido creada y has iniciado sesion automaticamente.
                           </p>
                           <div className="flex flex-col items-center gap-3">
@@ -508,10 +505,10 @@ export default function CuentaPage() {
                       ) : (
                         <>
                           <div className="mb-6">
-                            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                            <h2 className="text-xl font-bold text-foreground">
                               Crear cuenta nueva
                             </h2>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <p className="text-sm text-muted-foreground">
                               Completa tus datos para registrarte en Miss Semi Fashion
                             </p>
                           </div>
@@ -520,7 +517,7 @@ export default function CuentaPage() {
                             {/* Name */}
                             <div className="space-y-1.5">
                               <Label htmlFor="reg-name" className="flex items-center gap-1.5 text-sm font-medium">
-                                <User className="h-3.5 w-3.5 text-gray-400" />
+                                <User className="h-3.5 w-3.5 text-muted-foreground" />
                                 Nombre completo <span className="text-red-500">*</span>
                               </Label>
                               <Input
@@ -536,7 +533,7 @@ export default function CuentaPage() {
                             {/* Email */}
                             <div className="space-y-1.5">
                               <Label htmlFor="reg-email" className="flex items-center gap-1.5 text-sm font-medium">
-                                <Mail className="h-3.5 w-3.5 text-gray-400" />
+                                <Mail className="h-3.5 w-3.5 text-muted-foreground" />
                                 Correo electronico <span className="text-red-500">*</span>
                               </Label>
                               <Input
@@ -553,7 +550,7 @@ export default function CuentaPage() {
                             {/* Phone */}
                             <div className="space-y-1.5">
                               <Label htmlFor="reg-phone" className="flex items-center gap-1.5 text-sm font-medium">
-                                <Phone className="h-3.5 w-3.5 text-gray-400" />
+                                <Phone className="h-3.5 w-3.5 text-muted-foreground" />
                                 Telefono (WhatsApp) <span className="text-red-500">*</span>
                               </Label>
                               <Input
@@ -570,7 +567,7 @@ export default function CuentaPage() {
                             {/* Document */}
                             <div className="space-y-1.5">
                               <Label htmlFor="reg-document" className="flex items-center gap-1.5 text-sm font-medium">
-                                <FileText className="h-3.5 w-3.5 text-gray-400" />
+                                <FileText className="h-3.5 w-3.5 text-muted-foreground" />
                                 Numero de documento
                               </Label>
                               <Input
@@ -585,7 +582,7 @@ export default function CuentaPage() {
                             {/* Password */}
                             <div className="space-y-1.5">
                               <Label htmlFor="reg-password" className="flex items-center gap-1.5 text-sm font-medium">
-                                <Lock className="h-3.5 w-3.5 text-gray-400" />
+                                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                                 Contrasena <span className="text-red-500">*</span>
                               </Label>
                               <div className="relative">
@@ -601,7 +598,7 @@ export default function CuentaPage() {
                                 <button
                                   type="button"
                                   onClick={() => setShowRegPassword(!showRegPassword)}
-                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                                   tabIndex={-1}
                                 >
                                   {showRegPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -613,7 +610,7 @@ export default function CuentaPage() {
                             {/* Confirm Password */}
                             <div className="space-y-1.5">
                               <Label htmlFor="reg-confirm" className="flex items-center gap-1.5 text-sm font-medium">
-                                <Lock className="h-3.5 w-3.5 text-gray-400" />
+                                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                                 Confirmar contrasena <span className="text-red-500">*</span>
                               </Label>
                               <div className="relative">
@@ -629,7 +626,7 @@ export default function CuentaPage() {
                                 <button
                                   type="button"
                                   onClick={() => setShowRegConfirmPassword(!showRegConfirmPassword)}
-                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                                   tabIndex={-1}
                                 >
                                   {showRegConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -645,7 +642,7 @@ export default function CuentaPage() {
                               <motion.div
                                 initial={{ opacity: 0, y: -5 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950 dark:text-red-400"
+                                className="flex items-center gap-2 rounded-lg bg-red-500/10 p-3 text-sm text-red-600"
                               >
                                 <X className="h-4 w-4 shrink-0" />
                                 {regError}
@@ -653,7 +650,7 @@ export default function CuentaPage() {
                             )}
 
                             {/* Terms */}
-                            <p className="text-xs text-gray-400 dark:text-gray-500">
+                            <p className="text-xs text-muted-foreground">
                               Al crear una cuenta, aceptas nuestros{" "}
                               <Link href="/ayuda" className="text-primary hover:underline">
                                 Terminos y Condiciones
@@ -686,8 +683,8 @@ export default function CuentaPage() {
                           </form>
 
                           {/* Switch to login */}
-                          <div className="mt-6 border-t border-gray-100 pt-5 text-center dark:border-gray-800">
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                          <div className="mt-6 border-t border-border pt-5 text-center">
+                            <p className="text-sm text-muted-foreground">
                               Ya tienes cuenta?{" "}
                               <button
                                 onClick={() => { setActiveTab("login"); setRegError(""); }}

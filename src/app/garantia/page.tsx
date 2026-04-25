@@ -9,9 +9,9 @@ import { Separator } from "@/components/ui/separator";
 
 export default function GarantiaPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[{ label: "Inicio", href: "/" }, { label: "Garantia" }]}
@@ -27,7 +27,7 @@ export default function GarantiaPage() {
           className="mb-8 flex items-center gap-3"
         >
           <ShieldCheck className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             Garantia de Calidad
           </h1>
         </motion.div>
@@ -48,10 +48,10 @@ export default function GarantiaPage() {
               </div>
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Que cubre nuestra garantia
                 </h2>
-                <ul className="space-y-2 text-gray-600">
+                <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
                     Defectos de fabrica en costuras, tejidos o acabados.
@@ -75,10 +75,10 @@ export default function GarantiaPage() {
               <Separator />
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Que NO cubre nuestra garantia
                 </h2>
-                <ul className="space-y-2 text-gray-600">
+                <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-red-400" />
                     Danos causados por uso indebido, lavado inadecuado o maltrato.
@@ -97,10 +97,10 @@ export default function GarantiaPage() {
               <Separator />
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Plazo de garantia
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   La garantia aplica durante los primeros <strong>15 dias
                   calendario</strong> despues de la entrega del producto. Durante
                   este periodo, reporta cualquier inconveniente y lo resolveremos
@@ -111,10 +111,10 @@ export default function GarantiaPage() {
               <Separator />
 
               <div>
-                <h2 className="mb-3 text-xl font-semibold text-gray-900">
+                <h2 className="mb-3 text-xl font-semibold text-foreground">
                   Como hacer valer la garantia
                 </h2>
-                <ol className="space-y-2 text-gray-600">
+                <ol className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-100 text-xs font-bold text-orange-600">
                       1
@@ -140,7 +140,7 @@ export default function GarantiaPage() {
               </div>
 
               <div className="rounded-lg bg-orange-50 p-4">
-                <p className="mb-4 text-sm text-gray-700">
+                <p className="mb-4 text-sm text-foreground">
                   <strong>Tu satisfaccion es nuestra prioridad.</strong> Si tienes
                   algun problema con tu pedido, comunicate con nosotros de
                   inmediato.

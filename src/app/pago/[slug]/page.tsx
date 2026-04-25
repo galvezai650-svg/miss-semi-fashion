@@ -90,9 +90,9 @@ export default function PagoSlugPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
-      <div className="border-b bg-white">
+      <div className="border-b bg-card">
         <div className="mx-auto max-w-7xl px-4 py-3">
           <Breadcrumbs
             items={[
@@ -111,7 +111,7 @@ export default function PagoSlugPage() {
           className="mb-8 flex items-center gap-3"
         >
           <CreditCard className="h-7 w-7 text-orange-500" />
-          <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+          <h1 className="text-2xl font-bold text-foreground md:text-3xl">
             {pageData.title}
           </h1>
         </motion.div>
@@ -124,16 +124,16 @@ export default function PagoSlugPage() {
           <Card>
             <CardContent className="space-y-6 p-6 md:p-8">
               <div>
-                <p className="text-lg text-gray-600">{pageData.description}</p>
+                <p className="text-lg text-muted-foreground">{pageData.description}</p>
               </div>
 
               <Separator />
 
               <div>
-                <h3 className="mb-3 text-lg font-semibold text-gray-900">
+                <h3 className="mb-3 text-lg font-semibold text-foreground">
                   Caracteristicas
                 </h3>
-                <ul className="space-y-2 text-gray-600">
+                <ul className="space-y-2 text-muted-foreground">
                   {pageData.details.map((detail, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-orange-500" />
@@ -146,7 +146,7 @@ export default function PagoSlugPage() {
               <Separator />
 
               <div className="rounded-lg bg-orange-50 p-4">
-                <p className="mb-4 text-sm text-gray-700">
+                <p className="mb-4 text-sm text-foreground">
                   <strong>¿Tienes preguntas sobre este metodo de pago?</strong>{" "}
                   Escribenos por WhatsApp y con gusto te ayudaremos.
                 </p>
