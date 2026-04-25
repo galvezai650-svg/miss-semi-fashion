@@ -63,8 +63,10 @@ function PasswordStrength({ password }: { password: string }) {
     return score;
   };
 
-  const strength = getStrength(password);
   if (!password) return null;
+
+  const strength = getStrength(password);
+  if (strength === 0) return null;
 
   const labels = ["Muy debil", "Debil", "Regular", "Fuerte", "Muy fuerte"];
   const colors = ["bg-red-500", "bg-orange-500", "bg-yellow-500", "bg-green-400", "bg-green-600"];
