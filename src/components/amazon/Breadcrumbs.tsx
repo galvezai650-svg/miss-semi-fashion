@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface BreadcrumbItem {
   label: string;
   href?: string;
@@ -12,12 +14,12 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
     <nav aria-label="Breadcrumb" className="py-2">
       <ol className="flex flex-wrap items-center gap-1 text-sm text-muted-foreground">
         <li>
-          <a
+          <Link
             href="/"
             className="transition-colors hover:text-foreground hover:underline"
           >
             Inicio
-          </a>
+          </Link>
         </li>
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -27,12 +29,12 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
               {isLast || !item.href ? (
                 <span className="font-medium text-foreground">{item.label}</span>
               ) : (
-                <a
+                <Link
                   href={item.href}
                   className="transition-colors hover:text-foreground hover:underline"
                 >
                   {item.label}
-                </a>
+                </Link>
               )}
             </li>
           );

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   ShoppingCart,
   Heart,
@@ -14,8 +15,6 @@ import {
   Star,
   Home,
   Store,
-  ChevronLeft,
-  ChevronRight,
   Package,
   ShieldCheck,
   RotateCcw,
@@ -30,6 +29,7 @@ import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import StarRating from "@/components/amazon/StarRating";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import { useCartStore } from "@/stores/cart-store";
+import { useWishlistStore } from "@/stores/wishlist-store";
 import {
   getProductById,
   getRelatedProducts,
@@ -67,6 +67,7 @@ const MOCK_REVIEWS = [
 
 export default function ProductDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
 
   const product = getProductById(id);
@@ -76,10 +77,14 @@ export default function ProductDetailPage() {
 
   const addItem = useCartStore((s) => s.addItem);
   const items = useCartStore((s) => s.items);
+  const wishlistAddItem = useWishlistStore((s) => s.addItem);
+  const wishlistRemoveItem = useWishlistStore((s) => s.removeItem);
+  const isInWishlist = useWishlistStore((s) => s.isInWishlist(product?.id || ""));
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
+  const [activeTab, setActiveTab] = useState("descripcion");
 
   // Product not found
   if (!product) {
@@ -105,7 +110,7 @@ export default function ProductDetailPage() {
   }
 
   const images = product.images.length > 0 ? product.images : [product.image];
-  const isInCart = items.some(
+  const inCart = items.some(
     (i) => i.productId === product.id && i.size === selectedSize
   );
 
@@ -116,7 +121,10 @@ export default function ProductDetailPage() {
     : product.dealDiscount || 0;
 
   function handleAddToCart() {
-    if (!selectedSize) return;
+    if (!selectedSize) {
+      toast.error("Por favor selecciona una talla");
+      return;
+    }
     for (let i = 0; i < quantity; i++) {
       addItem({
         productId: product.id,
@@ -126,6 +134,45 @@ export default function ProductDetailPage() {
         size: selectedSize,
       });
     }
+    toast.success("Producto agregado al carrito");
+  }
+
+  function handleBuyNow() {
+    if (!selectedSize) {
+      toast.error("Por favor selecciona una talla");
+      return;
+    }
+    addItem({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      size: selectedSize,
+    });
+    router.push("/checkout?buyNow=true");
+  }
+
+  function handleToggleWishlist() {
+    if (isInWishlist) {
+      wishlistRemoveItem(product.id);
+      toast.success("Eliminado de tu lista de deseos");
+    } else {
+      wishlistAddItem({
+        productId: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        addedAt: new Date().toISOString(),
+      });
+      toast.success("Agregado a tu lista de deseos");
+    }
+  }
+
+  function handleCalificaciones() {
+    setActiveTab("opiniones");
+    setTimeout(() => {
+      document.getElementById("product-tabs")?.scrollIntoView({ behavior: "smooth" });
+    }, 0);
   }
 
   return (
@@ -208,7 +255,10 @@ export default function ProductDetailPage() {
                   {product.reviewCount.toLocaleString("es-CO")} calificaciones
                 </span>
                 <Separator orientation="vertical" className="h-4" />
-                <button className="text-sm text-primary hover:underline">
+                <button
+                  onClick={handleCalificaciones}
+                  className="text-sm text-primary hover:underline"
+                >
                   Calificaciones
                 </button>
               </div>
@@ -346,13 +396,13 @@ export default function ProductDetailPage() {
                 onClick={handleAddToCart}
                 disabled={!selectedSize}
                 className={`w-full gap-2 py-6 text-base font-bold ${
-                  isInCart
+                  inCart
                     ? "bg-green-500 hover:bg-green-600"
                     : "bg-rose-500 hover:bg-rose-600"
                 }`}
               >
                 <ShoppingCart className="h-5 w-5" />
-                {isInCart ? "Actualizar carrito" : "Agregar al carrito"}
+                {inCart ? "Actualizar carrito" : "Agregar al carrito"}
               </Button>
               {!selectedSize && (
                 <p className="text-center text-xs text-rose-500">
@@ -362,14 +412,12 @@ export default function ProductDetailPage() {
 
               {/* Buy Now */}
               <Button
-                asChild
                 variant="outline"
                 className="w-full gap-2 border-orange-400 bg-orange-50 py-6 text-base font-bold text-orange-600 hover:bg-orange-100 hover:text-orange-700 dark:border-orange-500/50 dark:bg-orange-950 dark:text-orange-400 dark:hover:bg-orange-900"
                 disabled={!selectedSize}
+                onClick={handleBuyNow}
               >
-                <Link href="/checkout?buyNow=true">
-                  Comprar ahora
-                </Link>
+                Comprar ahora
               </Button>
 
               <Separator />
@@ -377,15 +425,24 @@ export default function ProductDetailPage() {
               {/* Extra links */}
               <div className="space-y-2">
                 <Link
-                  href="/mayorista"
+                  href="/vender"
                   className="flex items-center gap-2 text-sm text-primary hover:underline"
                 >
                   <Store className="h-4 w-4" />
                   Vender en Miss Semi Fashion
                 </Link>
-                <button className="flex items-center gap-2 text-sm text-primary hover:underline">
-                  <Heart className="h-4 w-4" />
-                  Agregar a Lista de Deseos
+                <button
+                  onClick={handleToggleWishlist}
+                  className="flex items-center gap-2 text-sm text-primary hover:underline"
+                >
+                  <Heart
+                    className={`h-4 w-4 ${
+                      isInWishlist ? "fill-red-500 text-red-500" : ""
+                    }`}
+                  />
+                  {isInWishlist
+                    ? "En tu Lista de Deseos"
+                    : "Agregar a Lista de Deseos"}
                 </button>
               </div>
             </div>
@@ -393,8 +450,8 @@ export default function ProductDetailPage() {
         </div>
 
         {/* ── Tabs Section ── */}
-        <div className="mt-10">
-          <Tabs defaultValue="descripcion" className="w-full">
+        <div className="mt-10" id="product-tabs">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="w-full justify-start">
               <TabsTrigger value="descripcion">Descripción</TabsTrigger>
               <TabsTrigger value="opiniones">

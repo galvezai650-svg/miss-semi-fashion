@@ -11,6 +11,7 @@ import {
   ShoppingCart,
 } from "lucide-react";
 import { searchProducts, type Product } from "@/data/products";
+import { categories } from "@/data/categories";
 import ProductCard from "@/components/amazon/ProductCard";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -67,10 +68,15 @@ function SearchContent() {
     return sortProducts(filtered, sortBy);
   }, [results, priceRange, sortBy]);
 
-  // Extract unique categories from results for filter
-  const uniqueCategories = useMemo(() => {
+  // Extract unique categories from results and map to their real slugs
+  const categoryLinks = useMemo(() => {
     const cats = new Set(results.map((p) => p.category).filter(Boolean));
-    return Array.from(cats);
+    return Array.from(cats)
+      .map((catName) => {
+        const cat = categories.find((c) => c.name === catName);
+        return cat ? { name: cat.name, slug: cat.slug } : null;
+      })
+      .filter(Boolean) as { name: string; slug: string }[];
   }, [results]);
 
   useEffect(() => {
@@ -177,7 +183,10 @@ function SearchContent() {
               <ul className="space-y-1">
                 <li>Revisa que las palabras esten escritas correctamente</li>
                 <li>Usa palabras mas generales</li>
-                <li>Intenta buscar por categoria: &quot;vestidos&quot;, &quot;pijamas&quot;, &quot;blusas&quot;</li>
+                <li>
+                  Intenta buscar por categoria: &quot;vestidos&quot;,
+                  &quot;pijamas&quot;, &quot;blusas&quot;
+                </li>
               </ul>
             </div>
           </motion.div>
@@ -243,24 +252,22 @@ function SearchContent() {
                   </div>
                 </div>
 
-                {/* Categories */}
-                {uniqueCategories.length > 0 && (
+                {/* Categories - using real slugs */}
+                {categoryLinks.length > 0 && (
                   <div>
                     <h4 className="mb-2 text-sm font-medium text-gray-600">
                       Categorias
                     </h4>
                     <div className="space-y-1">
-                      {uniqueCategories.map((cat) => (
+                      {categoryLinks.map((cat) => (
                         <button
-                          key={cat}
+                          key={cat.slug}
                           onClick={() =>
-                            router.push(
-                              `/categoria/${cat?.toLowerCase().replace(/\s+/g, "-")}`
-                            )
+                            router.push(`/categoria/${cat.slug}`)
                           }
                           className="block w-full rounded px-2 py-1.5 text-left text-sm text-gray-600 transition-colors hover:bg-gray-50"
                         >
-                          {cat}
+                          {cat.name}
                         </button>
                       ))}
                     </div>
@@ -274,7 +281,9 @@ function SearchContent() {
               {/* Sort indicator on mobile */}
               <div className="mb-3 flex items-center gap-2 text-sm text-gray-500 lg:hidden">
                 <ArrowUpDown className="h-3.5 w-3.5" />
-                <span>{sortOptions.find((o) => o.value === sortBy)?.label}</span>
+                <span>
+                  {sortOptions.find((o) => o.value === sortBy)?.label}
+                </span>
               </div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">

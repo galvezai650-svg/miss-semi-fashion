@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
   Package,
   Shield,
@@ -13,12 +14,14 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
+  LogOut,
 } from "lucide-react";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { useAuthStore } from "@/stores/auth-store";
 
 interface AccountCard {
   icon: React.ElementType;
@@ -41,24 +44,28 @@ const accountCards: AccountCard[] = [
     icon: Shield,
     title: "Seguridad de tu cuenta",
     description: "Editar nombre, email y contrasena",
+    href: "/cuenta/seguridad",
     accent: "bg-green-100 text-green-600",
   },
   {
     icon: MapPin,
     title: "Direcciones",
     description: "Edita direcciones de envio y facturacion",
+    href: "/cuenta/direcciones",
     accent: "bg-purple-100 text-purple-600",
   },
   {
     icon: CreditCard,
     title: "Metodos de pago",
     description: "Administra tus formas de pago",
+    href: "/cuenta/pagos",
     accent: "bg-orange-100 text-orange-600",
   },
   {
     icon: Heart,
     title: "Lista de Deseos",
     description: "Crea y administra tu lista de deseos",
+    href: "/cuenta/deseos",
     accent: "bg-pink-100 text-pink-600",
   },
   {
@@ -75,9 +82,30 @@ export default function CuentaPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const user = useAuthStore((s) => s.user);
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
+  const login = useAuthStore((s) => s.login);
+  const logout = useAuthStore((s) => s.logout);
+
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    // No real auth - just a demo
+    if (!email.trim() || password.length < 4) {
+      toast.error("Credenciales invalidas");
+      return;
+    }
+    const success = login(email, password);
+    if (success) {
+      toast.success("Bienvenido! Has iniciado sesion");
+      setEmail("");
+      setPassword("");
+    } else {
+      toast.error("Credenciales invalidas");
+    }
+  }
+
+  function handleLogout() {
+    logout();
+    toast.success("Has cerrado sesion");
   }
 
   return (
@@ -99,86 +127,119 @@ export default function CuentaPage() {
           className="mb-8"
         >
           <h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
-            Hola, Identificate
+            {isLoggedIn && user
+              ? `Hola, ${user.name}`
+              : "Hola, Identificate"}
           </h1>
         </motion.div>
 
-        {/* Login Section */}
+        {/* Login Section or Logged-in state */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="mb-10 rounded-lg border bg-white p-6 shadow-sm md:p-8"
         >
-          <div className="flex items-center gap-2 mb-6">
-            <LogIn className="h-5 w-5 text-orange-500" />
-            <h2 className="text-lg font-bold text-gray-900">Iniciar sesion</h2>
-          </div>
-
-          <form onSubmit={handleLogin} className="max-w-sm space-y-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="login-email">Email</Label>
-              <Input
-                id="login-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@email.com"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="login-password">Contrasena</Label>
-              <div className="relative">
-                <Input
-                  id="login-password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Tu contrasena"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  tabIndex={-1}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </button>
+          {isLoggedIn && user ? (
+            /* ── Logged-in State ── */
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-lg font-bold text-orange-600">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-gray-900">
+                    {user.name}
+                  </p>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                </div>
               </div>
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full bg-orange-500 hover:bg-orange-600"
-            >
-              Iniciar sesion
-            </Button>
-
-            <div className="text-center text-sm">
-              <span className="text-gray-500">No tienes cuenta? </span>
-              <a
-                href="https://wa.me/573108416620"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium text-orange-600 hover:text-orange-700 hover:underline"
+              <Button
+                variant="outline"
+                className="gap-2"
+                onClick={handleLogout}
               >
-                Crear cuenta nueva
-              </a>
+                <LogOut className="h-4 w-4" />
+                Cerrar sesion
+              </Button>
             </div>
-          </form>
+          ) : (
+            /* ── Login Form ── */
+            <>
+              <div className="flex items-center gap-2 mb-6">
+                <LogIn className="h-5 w-5 text-orange-500" />
+                <h2 className="text-lg font-bold text-gray-900">
+                  Iniciar sesion
+                </h2>
+              </div>
 
-          {/* Demo Disclaimer */}
-          <div className="mt-6 rounded-lg bg-amber-50 border border-amber-200 p-3">
-            <p className="text-sm text-amber-800">
-              <strong>Nota:</strong> Esta es una demo. Contacta por WhatsApp
-              para pedidos reales.
-            </p>
-          </div>
+              <form onSubmit={handleLogin} className="max-w-sm space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="login-email">Email</Label>
+                  <Input
+                    id="login-email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="tu@email.com"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="login-password">Contrasena</Label>
+                  <div className="relative">
+                    <Input
+                      id="login-password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Tu contrasena"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      tabIndex={-1}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="w-full bg-orange-500 hover:bg-orange-600"
+                >
+                  Iniciar sesion
+                </Button>
+
+                <div className="text-center text-sm">
+                  <span className="text-gray-500">No tienes cuenta? </span>
+                  <a
+                    href="https://wa.me/573108416620"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-orange-600 hover:text-orange-700 hover:underline"
+                  >
+                    Crear cuenta nueva
+                  </a>
+                </div>
+              </form>
+
+              {/* Demo Disclaimer */}
+              <div className="mt-6 rounded-lg bg-amber-50 border border-amber-200 p-3">
+                <p className="text-sm text-amber-800">
+                  <strong>Nota:</strong> Esta es una demo. Ingresa cualquier
+                  email y una contrasena de al menos 4 caracteres para iniciar
+                  sesion.
+                </p>
+              </div>
+            </>
+          )}
         </motion.div>
 
         {/* Account Grid */}

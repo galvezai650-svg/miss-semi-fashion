@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Check } from "lucide-react";
+import { ShoppingCart, Check, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/stores/cart-store";
+import { useWishlistStore } from "@/stores/wishlist-store";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import StarRating from "./StarRating";
 
@@ -23,6 +25,7 @@ interface ProductCardProps {
     isDeal?: boolean;
     dealDiscount?: number;
     isPrime?: boolean;
+    sizes?: string[];
   };
 }
 
@@ -33,17 +36,37 @@ function formatPrice(price: number): string {
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
   const items = useCartStore((state) => state.items);
+  const { toggleItem, items: wishlistItems } = useWishlistStore();
 
   // Check if product is already in cart
   const isInCart = items.some((item) => item.productId === product.id);
 
+  // Check if product is in wishlist
+  const isInWishlist = wishlistItems.some(
+    (item) => item.productId === product.id
+  );
+
   function handleAddToCart() {
+    const size =
+      product.sizes && product.sizes.length > 0 ? product.sizes[0] : "U";
     addItem({
       productId: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
-      size: "U", // Default unique size — can be customized on product page
+      size,
+    });
+    toast.success(`${product.name} agregado al carrito`);
+  }
+
+  function handleToggleWishlist(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleItem({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
     });
   }
 
@@ -64,6 +87,26 @@ export default function ProductCard({ product }: ProductCardProps) {
             Mas vendido
           </Badge>
         )}
+
+        {/* ── Wishlist Heart Button ── */}
+        <button
+          onClick={handleToggleWishlist}
+          className="absolute right-2 top-2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm transition-colors hover:bg-white"
+          aria-label={
+            isInWishlist
+              ? "Quitar de lista de deseos"
+              : "Agregar a lista de deseos"
+          }
+        >
+          <Heart
+            className={cn(
+              "h-4 w-4 transition-colors",
+              isInWishlist
+                ? "fill-red-500 text-red-500"
+                : "text-muted-foreground hover:text-primary"
+            )}
+          />
+        </button>
 
         {/* ── Image ── */}
         <Link

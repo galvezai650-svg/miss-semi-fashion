@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import {
   CheckCircle2,
   Package,
@@ -17,8 +18,10 @@ import {
   MessageSquare,
   CircleCheck,
   Loader2,
+  ShoppingCart,
 } from "lucide-react";
 import { useCartStore } from "@/stores/cart-store";
+import { useOrdersStore, type Order } from "@/stores/orders-store";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,6 +37,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
+import Link from "next/link";
 
 const CITIES = [
   "Chinchina",
@@ -80,11 +84,18 @@ interface ShippingForm {
   specialInstructions: string;
 }
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const buyNow = searchParams.get("buyNow") === "true";
+
   const { items, totalPrice, clearCart } = useCartStore();
+  const addOrder = useOrdersStore((s) => s.addOrder);
+
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [orderId, setOrderId] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("contra-entrega");
   const [form, setForm] = useState<ShippingForm>({
     fullName: "",
@@ -98,17 +109,96 @@ export default function CheckoutPage() {
     specialInstructions: "",
   });
 
+  // Track which fields have been touched for step calculation
+  const hasFormStarted =
+    form.fullName ||
+    form.documentId ||
+    form.phone ||
+    form.email ||
+    form.address ||
+    form.city;
+
+  // Dynamic step calculation
+  const computedStep = useMemo(() => {
+    if (showSuccess) return 3;
+    if (paymentMethod) return 2;
+    return 1;
+  }, [showSuccess, paymentMethod, hasFormStarted]);
+
+  const activeStep = computedStep;
+
   function updateForm(field: keyof ShippingForm, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
+    if (!showSuccess && paymentMethod) {
+      setCurrentStep(2);
+    }
+  }
+
+  function validateForm(): boolean {
+    if (!form.fullName.trim()) {
+      toast.error("Por favor ingresa tu nombre completo");
+      return false;
+    }
+    if (!form.documentId.trim()) {
+      toast.error("Por favor ingresa tu documento de identidad");
+      return false;
+    }
+    if (!form.phone.trim() || form.phone.replace(/\D/g, "").length < 7) {
+      toast.error("Por favor ingresa un telefono valido (al menos 7 digitos)");
+      return false;
+    }
+    if (!form.email.trim() || !form.email.includes("@")) {
+      toast.error("Por favor ingresa un email valido");
+      return false;
+    }
+    if (!form.address.trim()) {
+      toast.error("Por favor ingresa tu direccion");
+      return false;
+    }
+    if (!form.city) {
+      toast.error("Por favor selecciona tu ciudad");
+      return false;
+    }
+    return true;
   }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     setIsSubmitting(true);
-    // Simulate submission
+
+    // Simulate network delay
     setTimeout(() => {
+      const newOrderId = `MSF-${Date.now().toString(36).toUpperCase()}`;
+      const cartTotal = totalPrice();
+
+      const order: Order = {
+        id: newOrderId,
+        date: new Date().toISOString(),
+        status: "Confirmada",
+        total: cartTotal,
+        items: items.map((item) => ({
+          productId: item.productId,
+          name: item.name,
+          image: item.image,
+          price: item.price,
+          size: item.size,
+          quantity: item.quantity,
+        })),
+        shippingAddress: `${form.address}, ${form.neighborhood ? form.neighborhood + ", " : ""}${form.city}`,
+        paymentMethod,
+        email: form.email,
+        phone: form.phone,
+      };
+
+      addOrder(order);
+      clearCart();
+      setOrderId(newOrderId);
       setIsSubmitting(false);
       setShowSuccess(true);
+      setCurrentStep(3);
     }, 1500);
   }
 
@@ -116,7 +206,37 @@ export default function CheckoutPage() {
   const shipping = 0;
   const total = cartTotal + shipping;
 
-  // Empty cart state
+  // buyNow=true with empty cart
+  if (buyNow && items.length === 0 && !showSuccess) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="border-b bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-3">
+            <Breadcrumbs
+              items={[
+                { label: "Inicio", href: "/" },
+                { label: "Proceder al pago" },
+              ]}
+            />
+          </div>
+        </div>
+        <div className="py-20 text-center">
+          <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-gray-300" />
+          <h2 className="mb-2 text-xl font-semibold text-gray-700">
+            Agrega productos al carrito antes de pagar
+          </h2>
+          <p className="mb-6 text-gray-500">
+            Tu carrito esta vacio. Explora nuestros productos.
+          </p>
+          <Button asChild className="bg-orange-500 hover:bg-orange-600">
+            <Link href="/">Ver productos</Link>
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty cart state (not buyNow)
   if (items.length === 0 && !showSuccess) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -139,16 +259,18 @@ export default function CheckoutPage() {
           <p className="mb-6 text-gray-500">
             Agrega productos antes de proceder al pago.
           </p>
-          <Button onClick={() => router.push("/")}>Ver productos</Button>
+          <Button asChild className="bg-orange-500 hover:bg-orange-600">
+            <Link href="/">Ver productos</Link>
+          </Button>
         </div>
       </div>
     );
   }
 
   const steps = [
-    { icon: Truck, label: "Envio", active: true },
-    { icon: CreditCard, label: "Pago", active: false },
-    { icon: ClipboardCheck, label: "Confirmacion", active: false },
+    { icon: Truck, label: "Envio", step: 1 },
+    { icon: CreditCard, label: "Pago", step: 2 },
+    { icon: ClipboardCheck, label: "Confirmacion", step: 3 },
   ];
 
   return (
@@ -172,22 +294,32 @@ export default function CheckoutPage() {
           <div className="flex items-center justify-center gap-0">
             {steps.map((step, i) => {
               const Icon = step.icon;
+              const isActive = activeStep >= step.step;
+              const isCurrent = activeStep === step.step;
               return (
                 <div key={step.label} className="flex items-center">
                   <div className="flex items-center gap-2">
                     <div
-                      className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold ${
-                        step.active
-                          ? "bg-orange-500 text-white"
+                      className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                        isActive
+                          ? isCurrent
+                            ? "bg-orange-500 text-white"
+                            : "bg-orange-100 text-orange-600"
                           : "bg-gray-200 text-gray-500"
                       }`}
                     >
-                      {i + 1}
+                      {activeStep > step.step ? (
+                        <CheckCircle2 className="h-4 w-4" />
+                      ) : (
+                        i + 1
+                      )}
                     </div>
                     <span
-                      className={`text-sm font-medium ${
-                        step.active
-                          ? "text-orange-700"
+                      className={`text-sm font-medium transition-colors ${
+                        isActive
+                          ? isCurrent
+                            ? "text-orange-700"
+                            : "text-orange-500"
                           : "text-gray-400"
                       }`}
                     >
@@ -196,7 +328,13 @@ export default function CheckoutPage() {
                     </span>
                   </div>
                   {i < steps.length - 1 && (
-                    <div className="mx-3 h-0.5 w-12 bg-gray-300" />
+                    <div
+                      className={`mx-3 h-0.5 w-12 transition-colors ${
+                        activeStep > step.step
+                          ? "bg-orange-400"
+                          : "bg-gray-300"
+                      }`}
+                    />
                   )}
                 </div>
               );
@@ -291,7 +429,9 @@ export default function CheckoutPage() {
                         <Input
                           id="address"
                           value={form.address}
-                          onChange={(e) => updateForm("address", e.target.value)}
+                          onChange={(e) =>
+                            updateForm("address", e.target.value)
+                          }
                           placeholder="Calle 5 #12-34, Apto 301"
                           required
                         />
@@ -370,7 +510,10 @@ export default function CheckoutPage() {
 
                     <RadioGroup
                       value={paymentMethod}
-                      onValueChange={setPaymentMethod}
+                      onValueChange={(v) => {
+                        setPaymentMethod(v);
+                        setCurrentStep(2);
+                      }}
                       className="space-y-3"
                     >
                       {PAYMENT_METHODS.map((method) => (
@@ -434,7 +577,7 @@ export default function CheckoutPage() {
                         Procesando...
                       </>
                     ) : (
-                      "Continuar"
+                      "Confirmar pedido"
                     )}
                   </Button>
                 </form>
@@ -518,33 +661,27 @@ export default function CheckoutPage() {
               <h2 className="mb-2 text-2xl font-bold text-gray-900">
                 Pedido realizado con exito!
               </h2>
-              <p className="mb-2 text-gray-600">
+              <p className="mb-1 text-gray-600">
                 Tu orden ha sido registrada correctamente.
               </p>
+              {orderId && (
+                <p className="mb-2 font-mono text-sm font-bold text-orange-600">
+                  Order ID: {orderId}
+                </p>
+              )}
               <p className="mb-6 text-sm text-gray-500">
                 Te contactaremos por WhatsApp para confirmar los detalles del
                 envio y pago.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    clearCart();
-                    setShowSuccess(false);
-                    router.push("/pedidos");
-                  }}
-                >
-                  Ver mis pedidos
+                <Button asChild variant="outline">
+                  <Link href="/pedidos">Ver mis pedidos</Link>
                 </Button>
                 <Button
-                  onClick={() => {
-                    clearCart();
-                    setShowSuccess(false);
-                    router.push("/");
-                  }}
+                  asChild
                   className="bg-orange-500 hover:bg-orange-600"
                 >
-                  Seguir comprando
+                  <Link href="/">Seguir comprando</Link>
                 </Button>
               </div>
             </motion.div>
@@ -552,5 +689,19 @@ export default function CheckoutPage() {
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gray-50">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+        </div>
+      }
+    >
+      <CheckoutContent />
+    </Suspense>
   );
 }

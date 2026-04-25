@@ -43,8 +43,8 @@ const navLinks = [
   { label: "Blusas", href: "/categoria/blusas" },
   { label: "Deportivo", href: "/categoria/deportivo" },
   { label: "Pantalones", href: "/categoria/pantalones" },
-  { label: "Atencion al Cliente", href: "#contacto" },
-  { label: "Lista de Deseos", href: "#" },
+  { label: "Atencion al Cliente", href: "/ayuda" },
+  { label: "Lista de Deseos", href: "/cuenta/deseos" },
 ];
 
 const searchCategories = [
@@ -72,7 +72,13 @@ export default function AmazonNavbar() {
   function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/buscar?q=${encodeURIComponent(searchQuery.trim())}`);
+      const catParam =
+        searchCategory && searchCategory !== "all"
+          ? `&cat=${encodeURIComponent(searchCategory)}`
+          : "";
+      router.push(
+        `/buscar?q=${encodeURIComponent(searchQuery.trim())}${catParam}`
+      );
     }
   }
 
@@ -108,7 +114,7 @@ export default function AmazonNavbar() {
 
           {/* Location */}
           <Link
-            href="#"
+            href="/cuenta/direcciones"
             className="hidden items-center gap-1 text-xs hover:underline lg:flex"
           >
             <MapPin className="h-4 w-4 shrink-0" />
@@ -193,7 +199,7 @@ export default function AmazonNavbar() {
 
             {/* Wishlist (mobile) */}
             <Link
-              href="#"
+              href="/cuenta/deseos"
               className="text-background hover:text-background/80 sm:hidden"
               aria-label="Lista de deseos"
             >
@@ -279,7 +285,7 @@ export default function AmazonNavbar() {
 
                 {/* Mobile: Wishlist */}
                 <Link
-                  href="#"
+                  href="/cuenta/deseos"
                   className="mb-4 flex items-center gap-2 border-b pb-3 text-sm hover:underline"
                   onClick={() => setMobileMenuOpen(false)}
                 >

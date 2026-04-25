@@ -1,96 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+import Link from "next/link";
+import Image from "next/image";
 import {
   Package,
   Truck,
   CheckCircle2,
   ShoppingBag,
-  ArrowRight,
   RotateCcw,
+  X,
+  MapPin,
+  Clock,
 } from "lucide-react";
-import { products } from "@/data/products";
+import { useOrdersStore, type Order, type OrderStatus } from "@/stores/orders-store";
+import { useCartStore } from "@/stores/cart-store";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-
-type OrderStatus = "Entregado" | "En camino" | "Procesando" | "Cancelado";
-
-interface OrderItem {
-  name: string;
-  quantity: number;
-  price: number;
-  image?: string;
-}
-
-interface MockOrder {
-  id: string;
-  date: string;
-  status: OrderStatus;
-  total: number;
-  items: OrderItem[];
-  shipping: string;
-}
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const timeFilters = [
   { label: "Ultimos 3 meses", value: "3m" },
   { label: "Ultimos 6 meses", value: "6m" },
-  { label: "2025", value: "2025" },
+  { label: "2026", value: "2026" },
   { label: "2024", value: "2024" },
 ] as const;
 
-// Look up real product data for images
-function getProductImage(name: string): string | undefined {
-  const found = products.find(
-    (p) => p.name.toLowerCase().includes(name.toLowerCase().split(" ")[0])
-  );
-  return found?.image;
-}
-
-const mockOrders: MockOrder[] = [
-  {
-    id: "MSF-2026-001",
-    date: "15 de abril de 2026",
-    status: "Entregado",
-    total: 157000,
-    items: [
-      {
-        name: "Pijama Trio Dama",
-        quantity: 1,
-        price: 89000,
-        image: getProductImage("Pijama Trio Dama"),
-      },
-      {
-        name: "Blusa Perlitas",
-        quantity: 1,
-        price: 68000,
-        image: getProductImage("Blusa Perlitas"),
-      },
-    ],
-    shipping: "Chinchina, Caldas",
-  },
-  {
-    id: "MSF-2026-002",
-    date: "20 de abril de 2026",
-    status: "En camino",
-    total: 80000,
-    items: [
-      {
-        name: "Vestido Deportivo Licra",
-        quantity: 1,
-        price: 80000,
-        image: getProductImage("Vestido Deportivo Licra"),
-      },
-    ],
-    shipping: "Bogota, Colombia",
-  },
+const TRACKING_STEPS: { label: string; icon: React.ElementType }[] = [
+  { label: "Orden confirmada", icon: CheckCircle2 },
+  { label: "Preparando envio", icon: Package },
+  { label: "En camino", icon: Truck },
+  { label: "Entregado", icon: CheckCircle2 },
 ];
 
 function getStatusBadge(status: OrderStatus) {
   switch (status) {
-    case "Entregado":
+    case "Entregada":
       return (
         <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
           <CheckCircle2 className="mr-1 h-3 w-3" />
@@ -104,23 +59,111 @@ function getStatusBadge(status: OrderStatus) {
           {status}
         </Badge>
       );
-    case "Procesando":
+    case "Confirmada":
       return (
         <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">
           {status}
         </Badge>
       );
-    case "Cancelado":
+    case "Preparando":
+      return (
+        <Badge className="bg-indigo-100 text-indigo-700 hover:bg-indigo-100">
+          {status}
+        </Badge>
+      );
+    case "Cancelada":
       return (
         <Badge variant="destructive" className="hover:bg-red-100">
           {status}
         </Badge>
       );
+    default:
+      return <Badge variant="outline">{status}</Badge>;
+  }
+}
+
+function getStatusStepIndex(status: OrderStatus): number {
+  switch (status) {
+    case "Confirmada":
+      return 0;
+    case "Preparando":
+      return 1;
+    case "En camino":
+      return 2;
+    case "Entregada":
+      return 3;
+    case "Cancelada":
+      return -1;
+    default:
+      return 0;
+  }
+}
+
+function formatDate(isoDate: string): string {
+  const d = new Date(isoDate);
+  return d.toLocaleDateString("es-CO", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function getEstimatedDelivery(isoDate: string): string {
+  const d = new Date(isoDate);
+  d.setDate(d.getDate() + 5);
+  return d.toLocaleDateString("es-CO", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+function filterOrdersByDate(orders: Order[], filterValue: string): Order[] {
+  const now = new Date();
+  switch (filterValue) {
+    case "3m": {
+      const threeMonthsAgo = new Date(now);
+      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+      return orders.filter((o) => new Date(o.date) >= threeMonthsAgo);
+    }
+    case "6m": {
+      const sixMonthsAgo = new Date(now);
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+      return orders.filter((o) => new Date(o.date) >= sixMonthsAgo);
+    }
+    case "2026":
+      return orders.filter((o) => new Date(o.date).getFullYear() === 2026);
+    case "2024":
+      return orders.filter((o) => new Date(o.date).getFullYear() === 2024);
+    default:
+      return orders;
   }
 }
 
 export default function PedidosPage() {
+  const orders = useOrdersStore((s) => s.orders);
+  const addItem = useCartStore((s) => s.addItem);
+
   const [activeFilter, setActiveFilter] = useState("3m");
+  const [trackingOrder, setTrackingOrder] = useState<Order | null>(null);
+
+  const filteredOrders = useMemo(
+    () => filterOrdersByDate(orders, activeFilter),
+    [orders, activeFilter]
+  );
+
+  function handleBuyAgain(order: Order) {
+    order.items.forEach((item) => {
+      addItem({
+        productId: item.productId,
+        name: item.name,
+        image: item.image,
+        price: item.price,
+        size: item.size,
+      });
+    });
+    toast.success("Productos agregados al carrito");
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -174,9 +217,9 @@ export default function PedidosPage() {
         </motion.div>
 
         {/* Orders List */}
-        {mockOrders.length > 0 ? (
+        {filteredOrders.length > 0 ? (
           <div className="space-y-5">
-            {mockOrders.map((order, index) => (
+            {filteredOrders.map((order, index) => (
               <motion.div
                 key={order.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -195,11 +238,15 @@ export default function PedidosPage() {
                     </div>
                     <div>
                       <span className="text-xs text-gray-500">Fecha</span>
-                      <p className="text-sm text-gray-700">{order.date}</p>
+                      <p className="text-sm text-gray-700">
+                        {formatDate(order.date)}
+                      </p>
                     </div>
                     <div>
                       <span className="text-xs text-gray-500">Envio</span>
-                      <p className="text-sm text-gray-700">{order.shipping}</p>
+                      <p className="text-sm text-gray-700">
+                        {order.shippingAddress}
+                      </p>
                     </div>
                   </div>
                   {getStatusBadge(order.status)}
@@ -211,24 +258,32 @@ export default function PedidosPage() {
                     {order.items.map((item, itemIdx) => (
                       <div key={itemIdx} className="flex items-center gap-3">
                         {item.image && (
-                          <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md bg-gray-100">
-                            <img
+                          <Link
+                            href={`/producto/${item.productId}`}
+                            className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md bg-gray-100"
+                          >
+                            <Image
                               src={item.image}
                               alt={item.name}
-                              className="h-full w-full object-cover"
+                              fill
+                              className="object-cover"
+                              sizes="64px"
                             />
-                          </div>
+                          </Link>
                         )}
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-sm font-medium text-gray-900">
+                          <Link
+                            href={`/producto/${item.productId}`}
+                            className="truncate text-sm font-medium text-gray-900 hover:text-orange-600 hover:underline"
+                          >
                             {item.name}
-                          </p>
+                          </Link>
                           <p className="text-xs text-gray-500">
-                            Cantidad: {item.quantity}
+                            Talla: {item.size} &middot; Cantidad: {item.quantity}
                           </p>
                         </div>
                         <p className="shrink-0 text-sm font-semibold text-gray-900">
-                          ${item.price.toLocaleString("es-CO")}
+                          ${(item.price * item.quantity).toLocaleString("es-CO")}
                         </p>
                       </div>
                     ))}
@@ -245,13 +300,19 @@ export default function PedidosPage() {
                       </span>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="outline" size="sm" className="gap-1.5">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-1.5"
+                        onClick={() => setTrackingOrder(order)}
+                      >
                         <Truck className="h-3.5 w-3.5" />
                         Rastrear pedido
                       </Button>
                       <Button
                         size="sm"
                         className="gap-1.5 bg-orange-500 hover:bg-orange-600"
+                        onClick={() => handleBuyAgain(order)}
                       >
                         <RotateCcw className="h-3.5 w-3.5" />
                         Comprar de nuevo
@@ -274,18 +335,170 @@ export default function PedidosPage() {
               No tienes pedidos
             </h2>
             <p className="mb-6 text-gray-500">
-              Explora nuestros productos y realiza tu primera compra.
+              {orders.length === 0
+                ? "Explora nuestros productos y realiza tu primera compra."
+                : "No hay pedidos en el periodo seleccionado."}
             </p>
             <Button
+              asChild
               className="bg-orange-500 hover:bg-orange-600"
-              onClick={() => (window.location.href = "/")}
             >
-              <ShoppingBag className="mr-2 h-4 w-4" />
-              Empezar a comprar
+              <Link href="/">
+                <ShoppingBag className="mr-2 h-4 w-4" />
+                Empezar a comprar
+              </Link>
             </Button>
           </motion.div>
         )}
       </div>
+
+      {/* ── Tracking Dialog ── */}
+      <Dialog
+        open={!!trackingOrder}
+        onOpenChange={(open) => {
+          if (!open) setTrackingOrder(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Truck className="h-5 w-5 text-orange-500" />
+              Rastrear pedido #{trackingOrder?.id}
+            </DialogTitle>
+            <DialogDescription>
+              Seguimiento en tiempo real de tu pedido
+            </DialogDescription>
+          </DialogHeader>
+
+          {trackingOrder && (
+            <div className="space-y-6">
+              {/* Order Info */}
+              <div className="flex flex-wrap items-center gap-4 rounded-lg bg-muted/30 p-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="h-4 w-4 text-gray-500" />
+                  <span className="text-gray-600">
+                    Fecha: {formatDate(trackingOrder.date)}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <MapPin className="h-4 w-4 text-gray-500" />
+                  <span className="text-gray-600">
+                    {trackingOrder.shippingAddress}
+                  </span>
+                </div>
+                {getStatusBadge(trackingOrder.status)}
+              </div>
+
+              {/* Estimated Delivery */}
+              {trackingOrder.status !== "Cancelada" && (
+                <div className="rounded-lg border border-blue-200 bg-blue-50 p-3">
+                  <p className="text-sm text-blue-800">
+                    <strong>Entrega estimada:</strong>{" "}
+                    {getEstimatedDelivery(trackingOrder.date)}
+                  </p>
+                </div>
+              )}
+
+              {/* Tracking Timeline */}
+              {trackingOrder.status !== "Cancelada" ? (
+                <div className="space-y-4">
+                  <h4 className="text-sm font-semibold text-gray-900">
+                    Estado del envio
+                  </h4>
+                  <div className="relative space-y-0">
+                    {TRACKING_STEPS.map((step, i) => {
+                      const currentStep = getStatusStepIndex(
+                        trackingOrder.status
+                      );
+                      const isCompleted = i <= currentStep;
+                      const isCurrent = i === currentStep;
+                      const StepIcon = step.icon;
+
+                      return (
+                        <div key={step.label} className="flex items-start gap-4">
+                          {/* Timeline line and circle */}
+                          <div className="flex flex-col items-center">
+                            <div
+                              className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${
+                                isCompleted
+                                  ? isCurrent
+                                    ? "border-orange-500 bg-orange-500 text-white"
+                                    : "border-green-500 bg-green-500 text-white"
+                                  : "border-gray-300 bg-white text-gray-400"
+                              }`}
+                            >
+                              <StepIcon className="h-4 w-4" />
+                            </div>
+                            {i < TRACKING_STEPS.length - 1 && (
+                              <div
+                                className={`h-10 w-0.5 ${
+                                  i < currentStep
+                                    ? "bg-green-500"
+                                    : "bg-gray-300"
+                                }`}
+                              />
+                            )}
+                          </div>
+
+                          {/* Label */}
+                          <div className="pt-1">
+                            <p
+                              className={`text-sm font-medium ${
+                                isCompleted
+                                  ? isCurrent
+                                    ? "text-orange-700"
+                                    : "text-green-700"
+                                  : "text-gray-400"
+                              }`}
+                            >
+                              {step.label}
+                            </p>
+                            {isCurrent && (
+                              <p className="text-xs text-orange-600">
+                                Estado actual
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-center">
+                  <p className="text-sm font-medium text-red-700">
+                    Este pedido fue cancelado
+                  </p>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5"
+                  onClick={() => {
+                    handleBuyAgain(trackingOrder);
+                    setTrackingOrder(null);
+                  }}
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Comprar de nuevo
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-1.5"
+                  onClick={() => setTrackingOrder(null)}
+                >
+                  Cerrar
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

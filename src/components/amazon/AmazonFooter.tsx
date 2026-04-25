@@ -36,7 +36,7 @@ const footerSections = [
     links: [
       { label: "Centro de ayuda", href: "/ayuda" },
       { label: "Devoluciones", href: "/devoluciones" },
-      { label: "Contacto WhatsApp", href: "#contacto" },
+      { label: "Contacto WhatsApp", href: "/ayuda" },
       { label: "Garantia", href: "/garantia" },
     ],
   },
