@@ -31,32 +31,55 @@ import { useRouter } from "next/navigation";
 
 export default function SeguridadPage() {
   const router = useRouter();
-  const { isLoggedIn, user, updateProfile, logout } = useAuthStore();
+  const { isLoggedIn, user, updateProfile, changePassword, logout, deleteAccount } = useAuthStore();
 
   const [name, setName] = useState(user?.name ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
   const [phone, setPhone] = useState(user?.phone ?? "");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   function handleSaveChanges(e: React.FormEvent) {
     e.preventDefault();
-    if (newPassword && newPassword !== confirmPassword) {
-      toast.error("Las contrasenas no coinciden");
-      return;
+    if (newPassword) {
+      if (!currentPassword) {
+        toast.error("Ingresa tu contrasena actual para cambiarla");
+        return;
+      }
+      if (newPassword !== confirmPassword) {
+        toast.error("Las contrasenas no coinciden");
+        return;
+      }
+      const result = changePassword(currentPassword, newPassword);
+      if (!result.success) {
+        toast.error(result.error || "No se pudo cambiar la contrasena");
+        return;
+      }
+      toast.success("Contrasena actualizada");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
     }
     updateProfile({ name, email, phone });
     toast.success("Perfil actualizado exitosamente");
-    setNewPassword("");
-    setConfirmPassword("");
   }
 
   function handleLogout() {
     logout();
     router.push("/");
     toast.success("Sesion cerrada");
+  }
+
+  function handleDeleteAccount() {
+    if (window.confirm("Estas seguro? Se eliminara tu cuenta y toda tu informacion. Esta accion no se puede deshacer.")) {
+      deleteAccount();
+      router.push("/");
+      toast.success("Tu cuenta ha sido eliminada");
+    }
   }
 
   if (!isLoggedIn) {
@@ -179,6 +202,30 @@ export default function SeguridadPage() {
                   </p>
                   <div className="space-y-4">
                     <div className="space-y-2">
+                      <Label htmlFor="current-password">Contrasena actual</Label>
+                      <div className="relative">
+                        <Input
+                          id="current-password"
+                          type={showCurrentPassword ? "text" : "password"}
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                          placeholder="Tu contrasena actual"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                          tabIndex={-1}
+                        >
+                          {showCurrentPassword ? (
+                            <EyeOff className="h-4 w-4" />
+                          ) : (
+                            <Eye className="h-4 w-4" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
                       <Label htmlFor="new-password">Nueva contrasena</Label>
                       <div className="relative">
                         <Input
@@ -186,7 +233,7 @@ export default function SeguridadPage() {
                           type={showNewPassword ? "text" : "password"}
                           value={newPassword}
                           onChange={(e) => setNewPassword(e.target.value)}
-                          placeholder="Nueva contrasena"
+                          placeholder="Minimo 6 caracteres"
                         />
                         <button
                           type="button"
@@ -252,22 +299,50 @@ export default function SeguridadPage() {
           transition={{ delay: 0.2 }}
           className="mt-6"
         >
-          <Card className="border-red-100">
+          <Card className="border-red-100 dark:border-red-900">
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-gray-900">Cerrar sesion</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="font-medium text-gray-900 dark:text-gray-100">Cerrar sesion</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
                     Salir de tu cuenta en este dispositivo
                   </p>
                 </div>
                 <Button
                   variant="outline"
-                  className="border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700"
+                  className="border-red-300 text-red-600 hover:bg-red-50 hover:text-red-700 dark:border-red-800 dark:hover:bg-red-950"
                   onClick={handleLogout}
                 >
                   <LogOut className="mr-2 h-4 w-4" />
                   Cerrar sesion
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Delete Account Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-4"
+        >
+          <Card className="border-gray-200 dark:border-gray-700">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-red-600 dark:text-red-400">Eliminar mi cuenta</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Se eliminara permanentemente tu cuenta y todos tus datos
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  className="border-red-300 text-red-600 hover:bg-red-600 hover:text-white dark:border-red-800"
+                  onClick={handleDeleteAccount}
+                >
+                  Eliminar cuenta
                 </Button>
               </div>
             </CardContent>
