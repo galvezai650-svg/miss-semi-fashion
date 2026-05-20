@@ -173,6 +173,7 @@ export default function OfertasPage() {
               : "No hay ofertas con ese descuento"
           }
           viewAllHref="/"
+          variant="grid"
         />
 
         {/* Featured Bestsellers */}
@@ -191,6 +192,7 @@ export default function OfertasPage() {
             products={sortedBestSellers}
             title=""
             viewAllHref="/"
+            variant="grid"
           />
         </motion.div>
       </div>

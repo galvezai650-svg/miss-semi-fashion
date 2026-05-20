@@ -301,7 +301,7 @@ export default function ProductDetailPage() {
               {product.isPrime && (
                 <Badge
                   variant="outline"
-                  className="border-pink-400 bg-pink-50 font-semibold text-pink-600 dark:border-pink-500/50 dark:bg-pink-950 dark:text-pink-400"
+                  className="border-pink-500/50 bg-pink-950 font-semibold text-pink-400"
                 >
                   <span className="mr-1 inline-block h-2 w-2 rounded-full bg-pink-500" />
                   Prime
@@ -312,7 +312,7 @@ export default function ProductDetailPage() {
 
               {/* Shipping */}
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
+                <div className="flex items-center gap-2 text-green-400">
                   <Truck className="h-4 w-4" />
                   <span className="text-sm font-semibold">
                     Envío GRATIS a Chinchiná
@@ -413,7 +413,7 @@ export default function ProductDetailPage() {
               {/* Buy Now */}
               <Button
                 variant="outline"
-                className="w-full gap-2 border-orange-400 bg-orange-50 py-6 text-base font-bold text-orange-600 hover:bg-orange-100 hover:text-orange-700 dark:border-orange-500/50 dark:bg-orange-950 dark:text-orange-400 dark:hover:bg-orange-900"
+                className="w-full gap-2 border-orange-500/50 bg-orange-950 py-6 text-base font-bold text-orange-400 hover:bg-orange-900 hover:text-orange-300"
                 disabled={!selectedSize}
                 onClick={handleBuyNow}
               >
@@ -639,6 +639,7 @@ export default function ProductDetailPage() {
             <ProductGrid
               products={relatedProducts}
               title="Productos relacionados"
+              variant="grid"
             />
           </div>
         )}

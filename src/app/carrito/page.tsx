@@ -199,7 +199,7 @@ export default function CartPage() {
                             Talla: {item.size}
                           </Badge>
                           {item.price > 0 && (
-                            <span className="text-xs text-green-600 dark:text-green-400">
+                            <span className="text-xs text-green-400">
                               <Truck className="mr-1 inline h-3 w-3" />
                               Envio GRATIS
                             </span>
@@ -400,7 +400,7 @@ export default function CartPage() {
                 {/* Shipping */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Envio</span>
-                  <span className="text-sm font-semibold text-green-600 dark:text-green-400">
+                  <span className="text-sm font-semibold text-green-400">
                     GRATIS
                   </span>
                 </div>
@@ -408,10 +408,10 @@ export default function CartPage() {
                 {/* Discount */}
                 {promoApplied && (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-green-600 dark:text-green-400">
+                    <span className="text-sm text-green-400">
                       Descuento (MISSSEMI10)
                     </span>
-                    <span className="text-sm font-semibold text-green-600 dark:text-green-400">
+                    <span className="text-sm font-semibold text-green-400">
                       -{formatPrice(discount)}
                     </span>
                   </div>
@@ -461,7 +461,7 @@ export default function CartPage() {
                     )}
                   </div>
                   {promoApplied && (
-                    <p className="text-xs text-green-600 dark:text-green-400">
+                    <p className="text-xs text-green-400">
                       &#10003; Codigo MISSSEMI10 aplicado - 10% de descuento
                     </p>
                   )}
@@ -483,7 +483,7 @@ export default function CartPage() {
                 </div>
 
                 {promoApplied && items.length > 0 && (
-                  <p className="text-xs text-green-600 dark:text-green-400">
+                  <p className="text-xs text-green-400">
                     Estás ahorrando {formatPrice(discount)} con tu codigo
                     promocional
                   </p>

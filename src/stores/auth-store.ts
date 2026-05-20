@@ -16,6 +16,8 @@ interface Address {
   id: string;
   name: string;
   address: string;
+  department: string;
+  municipality: string;
   city: string;
   neighborhood: string;
   phone: string;

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import AmazonNavbar from "@/components/amazon/AmazonNavbar";
@@ -21,15 +20,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es">
       <body className={`${geistSans.variable} font-sans antialiased bg-background text-foreground`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange={false}>
-          <AmazonNavbar />
-          <main className="min-h-screen">{children}</main>
-          <AmazonFooter />
-          <WhatsAppFloat />
-          <Toaster />
-        </ThemeProvider>
+        <AmazonNavbar />
+        <main className="min-h-screen">{children}</main>
+        <AmazonFooter />
+        <WhatsAppFloat />
+        <Toaster />
       </body>
     </html>
   );

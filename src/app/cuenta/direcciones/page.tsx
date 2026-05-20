@@ -21,43 +21,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { useAuthStore } from "@/stores/auth-store";
+import { COLOMBIA_LOCATIONS } from "@/data/colombia-locations";
 import Link from "next/link";
 import { toast } from "sonner";
-
-const colombianCities = [
-  "Bogota",
-  "Medellin",
-  "Cali",
-  "Barranquilla",
-  "Cartagena",
-  "Bucaramanga",
-  "Pereira",
-  "Santa Marta",
-  "Manizales",
-  "Ibague",
-  "Cucuta",
-  "Villavicencio",
-  "Pasto",
-  "Armenia",
-  "Neiva",
-  "Monteria",
-  "Popayan",
-  "Sincelejo",
-  "Valledupar",
-  "Tunja",
-  "Florencia",
-  "Riohacha",
-  "Quibdo",
-  "Mocoa",
-  "Chinchina",
-  "Envigado",
-  "Bello",
-  "Itagui",
-  "Soledad",
-  "Palmira",
-];
 
 export default function DireccionesPage() {
   const { isLoggedIn, addresses, addAddress, removeAddress, setDefaultAddress } =
@@ -65,20 +32,26 @@ export default function DireccionesPage() {
 
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
+  const [department, setDepartment] = useState("");
+  const [municipality, setMunicipality] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
   const [phone, setPhone] = useState("");
 
+  const selectedDept = COLOMBIA_LOCATIONS.find((d) => d.code === department);
+  const municipalities = selectedDept?.municipalities || [];
+
   function handleAddAddress(e: React.FormEvent) {
     e.preventDefault();
-    if (!name || !address || !city || !phone) {
+    if (!name || !address || !department || !municipality || !phone) {
       toast.error("Por favor completa todos los campos obligatorios");
       return;
     }
     addAddress({
       name,
       address,
-      city,
+      department: selectedDept?.name || department,
+      municipality,
+      city: municipality,
       neighborhood,
       phone,
       isDefault: addresses.length === 0,
@@ -86,7 +59,8 @@ export default function DireccionesPage() {
     toast.success("Direccion guardada exitosamente");
     setName("");
     setAddress("");
-    setCity("");
+    setDepartment("");
+    setMunicipality("");
     setNeighborhood("");
     setPhone("");
   }
@@ -195,21 +169,59 @@ export default function DireccionesPage() {
                       placeholder="Calle, carrera, numero, apto"
                     />
                   </div>
+
+                  {/* Department */}
                   <div className="space-y-2">
-                    <Label htmlFor="address-city">Ciudad *</Label>
-                    <Select value={city} onValueChange={setCity}>
-                      <SelectTrigger id="address-city">
-                        <SelectValue placeholder="Selecciona tu ciudad" />
+                    <Label htmlFor="address-department">Departamento *</Label>
+                    <Select
+                      value={department}
+                      onValueChange={(v) => {
+                        setDepartment(v);
+                        setMunicipality("");
+                      }}
+                    >
+                      <SelectTrigger id="address-department">
+                        <SelectValue placeholder="Selecciona tu departamento" />
                       </SelectTrigger>
-                      <SelectContent>
-                        {colombianCities.map((c) => (
-                          <SelectItem key={c} value={c}>
-                            {c}
+                      <SelectContent className="max-h-60">
+                        {COLOMBIA_LOCATIONS.map((dept) => (
+                          <SelectItem key={dept.code} value={dept.code}>
+                            {dept.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
+
+                  {/* Municipality */}
+                  <div className="space-y-2">
+                    <Label htmlFor="address-municipality">Municipio / Ciudad *</Label>
+                    <Select
+                      value={municipality}
+                      onValueChange={setMunicipality}
+                      disabled={!department}
+                    >
+                      <SelectTrigger id="address-municipality">
+                        <SelectValue
+                          placeholder={
+                            department
+                              ? municipalities.length > 0
+                                ? "Selecciona tu municipio"
+                                : "No hay municipios disponibles"
+                              : "Primero selecciona un departamento"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent className="max-h-60">
+                        {municipalities.map((muni) => (
+                          <SelectItem key={muni} value={muni}>
+                            {muni}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
                   <div className="space-y-2">
                     <Label htmlFor="address-neighborhood">Barrio</Label>
                     <Input
@@ -271,7 +283,8 @@ export default function DireccionesPage() {
                             </div>
                             <p className="text-sm text-foreground">{addr.address}</p>
                             <p className="text-sm text-foreground">
-                              {addr.city}
+                              {addr.municipality || addr.city}
+                              {addr.department ? `, ${addr.department}` : ""}
                               {addr.neighborhood
                                 ? `, ${addr.neighborhood}`
                                 : ""}
