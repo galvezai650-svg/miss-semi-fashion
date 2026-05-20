@@ -73,11 +73,11 @@ export default function AmazonNavbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#E8E5DE] bg-white/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-[#2A2A2A] bg-[#0A0A0A]/95 backdrop-blur-md">
       {/* ── Top Bar ── */}
-      <div className="hidden border-b border-[#F0EDE8] bg-[#FAFAF8] lg:block">
+      <div className="hidden border-b border-[#1A1A1A] bg-[#111111] lg:block">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-6">
-          <p className="text-[11px] tracking-[0.15em] text-[#999] uppercase">
+          <p className="text-[11px] tracking-[0.15em] text-[#888] uppercase">
             Envío gratis en compras superiores a $50.000 COP
           </p>
           <div className="flex items-center gap-6">
@@ -113,7 +113,7 @@ export default function AmazonNavbar() {
               alt="Miss Semi Fashion"
               width={160}
               height={48}
-              className="h-9 w-auto lg:h-11"
+              className="h-9 w-auto lg:h-11 brightness-0 invert"
               priority
             />
           </Link>
@@ -127,8 +127,8 @@ export default function AmazonNavbar() {
                 className={cn(
                   "relative px-4 py-2 text-[13px] font-medium tracking-[0.08em] uppercase transition-colors",
                   isActive(link.href)
-                    ? "text-[#1A1A1A]"
-                    : "text-[#666] hover:text-[#1A1A1A]"
+                    ? "text-[#C6A962]"
+                    : "text-[#888] hover:text-[#E5E5E5]"
                 )}
               >
                 {link.label}
@@ -152,19 +152,19 @@ export default function AmazonNavbar() {
             {/* Search (desktop - icon toggle) */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="hidden h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#F5F3EF] lg:flex"
+              className="hidden h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#1A1A1A] lg:flex"
               aria-label="Buscar"
             >
-              <Search className="h-[18px] w-[18px] text-[#4A4A4A]" />
+              <Search className="h-[18px] w-[18px] text-[#999]" />
             </button>
 
             {/* Account */}
             <Link
               href="/cuenta"
-              className="hidden h-10 items-center gap-2 rounded-full px-3 transition-colors hover:bg-[#F5F3EF] lg:flex"
+              className="hidden h-10 items-center gap-2 rounded-full px-3 transition-colors hover:bg-[#1A1A1A] lg:flex"
             >
-              <User className="h-[18px] w-[18px] text-[#4A4A4A]" />
-              <span className="text-[13px] font-medium text-[#4A4A4A]">
+              <User className="h-[18px] w-[18px] text-[#999]" />
+              <span className="text-[13px] font-medium text-[#999]">
                 {user?.name ? user.name.split(" ")[0] : "Cuenta"}
               </span>
             </Link>
@@ -172,21 +172,21 @@ export default function AmazonNavbar() {
             {/* Wishlist */}
             <Link
               href="/cuenta/deseos"
-              className="hidden h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#F5F3EF] lg:flex"
+              className="hidden h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#1A1A1A] lg:flex"
               aria-label="Lista de deseos"
             >
-              <Heart className="h-[18px] w-[18px] text-[#4A4A4A]" />
+              <Heart className="h-[18px] w-[18px] text-[#999]" />
             </Link>
 
             {/* Cart */}
             <Link
               href="/carrito"
-              className="relative flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#F5F3EF]"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#1A1A1A]"
               aria-label={`Carrito con ${cartCount} artículos`}
             >
-              <ShoppingCart className="h-[18px] w-[18px] text-[#4A4A4A]" />
+              <ShoppingCart className="h-[18px] w-[18px] text-[#999]" />
               {cartCount > 0 && (
-                <Badge className="absolute -right-0.5 -top-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-[#C6A962] p-0 text-[10px] font-bold text-white shadow-sm">
+                <Badge className="absolute -right-0.5 -top-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-[#C6A962] p-0 text-[10px] font-bold text-[#0A0A0A] shadow-sm">
                   {cartCount > 99 ? "99+" : cartCount}
                 </Badge>
               )}
@@ -198,20 +198,20 @@ export default function AmazonNavbar() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-10 w-10 rounded-full text-[#4A4A4A] hover:bg-[#F5F3EF] lg:hidden"
+                  className="h-10 w-10 rounded-full text-[#999] hover:bg-[#1A1A1A] lg:hidden"
                   aria-label="Abrir menú"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 overflow-y-auto p-0 bg-white">
+              <SheetContent side="left" className="w-80 overflow-y-auto p-0 bg-[#111111] border-[#2A2A2A]">
                 <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
 
                 {/* Mobile Header */}
-                <div className="flex items-center justify-between border-b border-[#E8E5DE] px-6 py-5">
+                <div className="flex items-center justify-between border-b border-[#2A2A2A] px-6 py-5">
                   <div className="flex items-center gap-3">
                     <User className="h-5 w-5 text-[#C6A962]" />
-                    <span className="text-sm font-medium text-[#1A1A1A]">
+                    <span className="text-sm font-medium text-[#E5E5E5]">
                       {user?.name
                         ? user.name.split(" ")[0]
                         : "Iniciar Sesión"}
@@ -219,7 +219,7 @@ export default function AmazonNavbar() {
                   </div>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-[#999] hover:text-[#1A1A1A] transition-colors"
+                    className="text-[#666] hover:text-[#E5E5E5] transition-colors"
                   >
                     <X className="h-5 w-5" />
                   </button>
@@ -228,21 +228,21 @@ export default function AmazonNavbar() {
                 {/* Mobile Search */}
                 <form
                   onSubmit={handleMobileSearch}
-                  className="flex gap-2 border-b border-[#E8E5DE] px-6 py-4"
+                  className="flex gap-2 border-b border-[#2A2A2A] px-6 py-4"
                 >
                   <Input
                     type="search"
                     value={mobileSearchQuery}
                     onChange={(e) => setMobileSearchQuery(e.target.value)}
                     placeholder="Buscar productos..."
-                    className="flex-1 border-[#E8E5DE] bg-[#FAFAF8] text-sm"
+                    className="flex-1 border-[#2A2A2A] bg-[#1A1A1A] text-sm text-[#E5E5E5] placeholder:text-[#666]"
                   />
                   <Button
                     type="submit"
                     size="icon"
-                    className="h-10 w-10 shrink-0 rounded-full bg-[#1A1A1A] hover:bg-[#333]"
+                    className="h-10 w-10 shrink-0 rounded-full bg-[#C6A962] hover:bg-[#D4AF37]"
                   >
-                    <Search className="h-4 w-4 text-white" />
+                    <Search className="h-4 w-4 text-[#0A0A0A]" />
                   </Button>
                 </form>
 
@@ -256,8 +256,8 @@ export default function AmazonNavbar() {
                       className={cn(
                         "flex items-center justify-between px-6 py-3.5 text-sm transition-colors",
                         isActive(link.href)
-                          ? "bg-[#F5F3EF] font-semibold text-[#1A1A1A]"
-                          : "text-[#4A4A4A] hover:bg-[#FAFAF8]"
+                          ? "bg-[#1A1A1A] font-semibold text-[#C6A962]"
+                          : "text-[#999] hover:bg-[#151515]"
                       )}
                     >
                       <span className="tracking-wide uppercase text-[13px]">
@@ -269,10 +269,10 @@ export default function AmazonNavbar() {
                 </nav>
 
                 {/* Mobile bottom links */}
-                <div className="border-t border-[#E8E5DE] py-2">
+                <div className="border-t border-[#2A2A2A] py-2">
                   <Link
                     href="/pedidos"
-                    className="flex items-center gap-3 px-6 py-3.5 text-[13px] text-[#666] transition-colors hover:bg-[#FAFAF8]"
+                    className="flex items-center gap-3 px-6 py-3.5 text-[13px] text-[#888] transition-colors hover:bg-[#151515]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <Package className="h-4 w-4 text-[#C6A962]" />
@@ -280,7 +280,7 @@ export default function AmazonNavbar() {
                   </Link>
                   <Link
                     href="/cuenta/deseos"
-                    className="flex items-center gap-3 px-6 py-3.5 text-[13px] text-[#666] transition-colors hover:bg-[#FAFAF8]"
+                    className="flex items-center gap-3 px-6 py-3.5 text-[13px] text-[#888] transition-colors hover:bg-[#151515]"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <Heart className="h-4 w-4 text-[#C6A962]" />
@@ -301,26 +301,26 @@ export default function AmazonNavbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden border-t border-[#E8E5DE] bg-white"
+            className="overflow-hidden border-t border-[#2A2A2A] bg-[#0A0A0A]"
           >
             <form
               onSubmit={handleSearch}
               className="mx-auto flex max-w-2xl items-center gap-3 px-6 py-4"
             >
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#999]" />
+                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#666]" />
                 <Input
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Buscar en Miss Semi Fashion..."
-                  className="h-11 border-[#E8E5DE] bg-[#FAFAF8] pl-11 text-sm placeholder:text-[#AAA]"
+                  className="h-11 border-[#2A2A2A] bg-[#1A1A1A] pl-11 text-sm text-[#E5E5E5] placeholder:text-[#555]"
                   autoFocus
                 />
               </div>
               <Button
                 type="submit"
-                className="h-11 rounded-full bg-[#1A1A1A] px-6 font-medium text-white hover:bg-[#333]"
+                className="h-11 rounded-full bg-[#C6A962] px-6 font-medium text-[#0A0A0A] hover:bg-[#D4AF37]"
               >
                 Buscar
               </Button>

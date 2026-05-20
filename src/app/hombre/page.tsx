@@ -65,7 +65,7 @@ const heroStats = [
 
 export default function HombrePage() {
   return (
-    <main className="min-h-screen" style={{ background: "#FAFAF8" }}>
+    <main className="min-h-screen" style={{ background: "#0A0A0A" }}>
       {/* ════════════════════════════════════════════════════════════
           HERO SECTION
           ════════════════════════════════════════════════════════════ */}
@@ -219,21 +219,21 @@ export default function HombrePage() {
               key={feat.title}
               variants={fadeUp}
               custom={i}
-              className="group relative flex items-center gap-4 bg-white px-6 py-5 transition-all duration-500"
-              style={{ border: "1px solid #E8E5DE" }}
+              className="group relative flex items-center gap-4 bg-[#111111] px-6 py-5 transition-all duration-500"
+              style={{ border: "1px solid #2A2A2A" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderTopColor = "#C6A962";
-                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.06)";
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderTopColor = "#E8E5DE";
+                e.currentTarget.style.borderTopColor = "#2A2A2A";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
               <div
                 className="flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-300"
                 style={{
-                  background: "rgba(198,169,98,0.08)",
+                  background: "rgba(198,169,98,0.15)",
                   color: "#C6A962",
                 }}
               >
@@ -242,11 +242,11 @@ export default function HombrePage() {
               <div>
                 <p
                   className="text-[13px] font-semibold uppercase tracking-wider"
-                  style={{ color: "#1A1A1A" }}
+                  style={{ color: "#E5E5E5" }}
                 >
                   {feat.title}
                 </p>
-                <p className="mt-0.5 text-[13px]" style={{ color: "#999" }}>
+                <p className="mt-0.5 text-[13px]" style={{ color: "#B3B3B3" }}>
                   {feat.desc}
                 </p>
               </div>
@@ -270,7 +270,7 @@ export default function HombrePage() {
             <div className="h-6 w-1" style={{ background: "#C6A962" }} />
             <h2
               className="font-serif text-xl sm:text-2xl font-normal tracking-wide"
-              style={{ color: "#1A1A1A" }}
+              style={{ color: "#E5E5E5" }}
             >
               Categorías
             </h2>
@@ -336,7 +336,7 @@ export default function HombrePage() {
       <section
         id="productos"
         className="py-14"
-        style={{ background: "#F5F3EF" }}
+        style={{ background: "#111111" }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Section Header with Gold Left Bar */}
@@ -351,12 +351,12 @@ export default function HombrePage() {
               <div className="h-6 w-1" style={{ background: "#C6A962" }} />
               <h2
                 className="font-serif text-xl sm:text-2xl font-normal tracking-wide"
-                style={{ color: "#1A1A1A" }}
+                style={{ color: "#E5E5E5" }}
               >
                 Nuestra Colección
               </h2>
             </div>
-            <p className="ml-7 text-sm" style={{ color: "#999" }}>
+            <p className="ml-7 text-sm" style={{ color: "#B3B3B3" }}>
               {hombreProducts.length} producto
               {hombreProducts.length !== 1 ? "s" : ""} disponible
               {hombreProducts.length !== 1 ? "s" : ""} para hombre

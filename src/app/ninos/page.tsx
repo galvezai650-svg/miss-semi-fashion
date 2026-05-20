@@ -38,7 +38,7 @@ function GoldDivider() {
   return (
     <div className="mx-auto flex items-center gap-3">
       <div className="h-px w-12 bg-[#C6A962]/30 sm:w-20" />
-      <div className="h-1.5 w-1.5 rotate-45 border border-[#C6A962]/50 bg-[#FAFAF8]" />
+      <div className="h-1.5 w-1.5 rotate-45 border border-[#C6A962]/50 bg-[#0A0A0A]" />
       <div className="h-px w-12 bg-[#C6A962]/30 sm:w-20" />
     </div>
   );
@@ -63,19 +63,19 @@ function FeatureCard({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-40px" }}
-      className="group relative bg-white p-6 text-center transition-shadow duration-300 hover:shadow-lg sm:p-8"
-      style={{ border: "1px solid #E8E5DE" }}
+      className="group relative bg-[#111111] p-6 text-center transition-shadow duration-300 hover:shadow-lg sm:p-8"
+      style={{ border: "1px solid #2A2A2A" }}
     >
       {/* Gold top accent line */}
       <div className="absolute left-1/2 top-0 h-px w-10 -translate-x-1/2 bg-[#C6A962] opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-16" />
 
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14" style={{ backgroundColor: "#F5F3EF" }}>
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14" style={{ backgroundColor: "#151515" }}>
         <Icon className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: "#C6A962" }} />
       </div>
-      <h3 className="font-serif text-base font-medium tracking-wide" style={{ color: "#1A1A1A" }}>
+      <h3 className="font-serif text-base font-medium tracking-wide" style={{ color: "#E5E5E5" }}>
         {title}
       </h3>
-      <p className="mx-auto mt-2 max-w-[220px] text-sm leading-relaxed" style={{ color: "#999" }}>
+      <p className="mx-auto mt-2 max-w-[220px] text-sm leading-relaxed" style={{ color: "#888888" }}>
         {description}
       </p>
     </motion.div>
@@ -89,7 +89,7 @@ export default function NinosPage() {
   const products = useMemo(() => getProductsByCategory("ninos"), []);
 
   return (
-    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#FAFAF8" }}>
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#0A0A0A" }}>
       {/* ── Breadcrumbs ── */}
       <div className="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Niños" }]} />
@@ -107,7 +107,7 @@ export default function NinosPage() {
           />
 
           {/* Warm cream overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#F5F3EF]/85 via-[#FAFAF8]/75 to-[#F5F3EF]/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A]/85 via-[#111111]/75 to-[#0A0A0A]/90" />
 
           {/* Subtle warm vignette */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(198,169,98,0.05)_100%)]" />
@@ -135,7 +135,7 @@ export default function NinosPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35 }}
               className="font-serif text-5xl font-medium tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
-              style={{ color: "#1A1A1A" }}
+              style={{ color: "#E5E5E5" }}
             >
               NIÑOS
             </motion.h1>
@@ -158,7 +158,7 @@ export default function NinosPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="max-w-md text-sm leading-relaxed sm:text-base md:max-w-lg"
-              style={{ color: "#666" }}
+              style={{ color: "#B3B3B3" }}
             >
               Diseños exclusivos elaborados con telas premium para los más
               pequeños. Comodidad y elegancia en cada detalle.
@@ -195,14 +195,14 @@ export default function NinosPage() {
         >
           <h2
             className="font-serif text-2xl font-medium tracking-wide sm:text-3xl"
-            style={{ color: "#1A1A1A" }}
+            style={{ color: "#E5E5E5" }}
           >
             Calidad que se siente
           </h2>
           <div className="mx-auto mt-3 w-16 sm:w-20">
             <GoldDivider />
           </div>
-          <p className="mx-auto mt-3 max-w-sm text-sm" style={{ color: "#999" }}>
+          <p className="mx-auto mt-3 max-w-sm text-sm" style={{ color: "#888888" }}>
             Cada prenda está pensada para el confort y la elegancia de los más pequeños
           </p>
         </motion.div>
@@ -233,7 +233,7 @@ export default function NinosPage() {
       <section
         id="productos"
         className="w-full py-12 sm:py-16"
-        style={{ backgroundColor: "#F5F3EF" }}
+        style={{ backgroundColor: "#111111" }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -245,14 +245,14 @@ export default function NinosPage() {
           >
             <h2
               className="font-serif text-2xl font-medium tracking-wide sm:text-3xl"
-              style={{ color: "#1A1A1A" }}
+              style={{ color: "#E5E5E5" }}
             >
               Colección Infantil
             </h2>
             <div className="mx-auto mt-3 w-16 sm:w-20">
               <GoldDivider />
             </div>
-            <p className="mx-auto mt-3 max-w-md text-sm" style={{ color: "#999" }}>
+            <p className="mx-auto mt-3 max-w-md text-sm" style={{ color: "#888888" }}>
               Descubre nuestras prendas seleccionadas para los más pequeños de la familia
             </p>
           </motion.div>
@@ -276,7 +276,7 @@ export default function NinosPage() {
           viewport={{ once: true, margin: "-40px" }}
           variants={scaleIn}
           className="relative overflow-hidden px-8 py-12 text-center sm:px-12 sm:py-14"
-          style={{ backgroundColor: "#F5F3EF", border: "1px solid #E8E5DE" }}
+          style={{ backgroundColor: "#111111", border: "1px solid #2A2A2A" }}
         >
           {/* Corner gold accents */}
           <div className="pointer-events-none absolute left-4 top-4 h-8 w-8 border-l border-t border-[#C6A962]/30 sm:left-6 sm:top-6 sm:h-12 sm:w-12" />
@@ -286,13 +286,13 @@ export default function NinosPage() {
             <Sparkles className="mx-auto mb-4 h-5 w-5" style={{ color: "#C6A962" }} />
             <h3
               className="font-serif text-xl font-medium tracking-wide sm:text-2xl md:text-3xl"
-              style={{ color: "#1A1A1A" }}
+              style={{ color: "#E5E5E5" }}
             >
               Envío gratis en pedidos +$50.000
             </h3>
             <p
               className="mx-auto mt-3 max-w-md text-sm leading-relaxed"
-              style={{ color: "#999" }}
+              style={{ color: "#888888" }}
             >
               Recibe la colección infantil directamente en tu puerta, sin costos
               adicionales de envío.
@@ -334,10 +334,10 @@ export default function NinosPage() {
               </motion.div>
             ))}
           </div>
-          <p className="text-sm font-medium" style={{ color: "#666" }}>
+          <p className="text-sm font-medium" style={{ color: "#B3B3B3" }}>
             Miles de familias confían en Miss Semi Fashion
           </p>
-          <p className="text-xs" style={{ color: "#999" }}>
+          <p className="text-xs" style={{ color: "#888888" }}>
             4.8 ★ promedio en valoraciones
           </p>
         </motion.div>

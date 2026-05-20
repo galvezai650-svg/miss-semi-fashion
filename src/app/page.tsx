@@ -88,7 +88,7 @@ const stagger = {
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col bg-[#FAFAF8]">
+    <div className="flex flex-col bg-[#0A0A0A]">
       {/* ══════════════════════════════════════════
           1. HERO SECTION
           ══════════════════════════════════════════ */}
@@ -107,7 +107,7 @@ export default function HomePage() {
           </video>
 
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-[#1A1A1A]/60" />
+          <div className="absolute inset-0 bg-[#0A0A0A]/70" />
 
           {/* Content */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -147,7 +147,7 @@ export default function HomePage() {
                 <motion.p
                   variants={fadeUp}
                   custom={3}
-                  className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg"
+                  className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg"
                 >
                   Descubre nuestra colección exclusiva de prendas
                   confeccionadas en Colombia con las mejores telas y diseño.
@@ -162,7 +162,7 @@ export default function HomePage() {
                   <Button
                     asChild
                     size="lg"
-                    className="h-12 w-full rounded-none bg-[#C6A962] px-10 text-sm font-semibold tracking-wider text-[#1A1A1A] uppercase transition-all duration-300 hover:bg-[#B8963F] sm:w-auto"
+                    className="h-12 w-full rounded-none bg-[#C6A962] px-10 text-sm font-semibold tracking-wider text-[#0A0A0A] uppercase transition-all duration-300 hover:bg-[#D4AF37] sm:w-auto"
                   >
                     <Link href="/ofertas">
                       Comprar Ahora
@@ -172,7 +172,7 @@ export default function HomePage() {
                   <Button
                     asChild
                     size="lg"
-                    className="h-12 w-full rounded-none border border-white/40 bg-transparent px-10 text-sm font-semibold tracking-wider text-white uppercase transition-all duration-300 hover:border-white/70 hover:bg-white/10 sm:w-auto"
+                    className="h-12 w-full rounded-none border border-white/30 bg-transparent px-10 text-sm font-semibold tracking-wider text-white uppercase transition-all duration-300 hover:border-[#C6A962] hover:bg-white/5 sm:w-auto"
                   >
                     <Link href="/ofertas">
                       Ver Colecciones
@@ -194,7 +194,7 @@ export default function HomePage() {
               animate={{ y: [0, 8, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             >
-              <ChevronRight className="h-6 w-6 rotate-90 text-white/60" />
+              <ChevronRight className="h-6 w-6 rotate-90 text-[#C6A962]/60" />
             </motion.div>
           </motion.div>
         </div>
@@ -212,7 +212,7 @@ export default function HomePage() {
         >
           {/* Section heading */}
           <motion.div variants={fadeUp} custom={0} className="mb-10 text-center">
-            <h2 className="font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl">
+            <h2 className="font-serif text-2xl font-normal tracking-wide text-[#E5E5E5] sm:text-3xl">
               Explora Categorías
             </h2>
             <div className="mx-auto mt-4 h-[1px] w-10 bg-[#C6A962]" />
@@ -223,7 +223,7 @@ export default function HomePage() {
             {categoryLinks.map((cat, i) => (
               <motion.div key={cat.name} variants={fadeUp} custom={i + 1}>
                 <Link href={cat.href} className="group block">
-                  <div className="relative aspect-[3/4] overflow-hidden">
+                  <div className="relative aspect-[3/4] overflow-hidden border border-[#2A2A2A]">
                     <Image
                       src={cat.image}
                       alt={cat.name}
@@ -232,7 +232,7 @@ export default function HomePage() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     {/* Dark overlay */}
-                    <div className="absolute inset-0 bg-[#1A1A1A]/50 transition-all duration-500 group-hover:bg-[#1A1A1A]/40" />
+                    <div className="absolute inset-0 bg-[#0A0A0A]/50 transition-all duration-500 group-hover:bg-[#0A0A0A]/30" />
 
                     {/* Centered text */}
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -256,9 +256,9 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           3. TRUST BAR
           ══════════════════════════════════════════ */}
-      <section className="border-y border-[#E8E5DE] bg-[#FAFAF8]">
+      <section className="border-y border-[#2A2A2A] bg-[#111111]">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-[#E8E5DE]">
+          <div className="grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-[#2A2A2A]">
             {trustItems.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -270,10 +270,10 @@ export default function HomePage() {
               >
                 <item.icon className="h-5 w-5 shrink-0 text-[#C6A962]" strokeWidth={1.5} />
                 <div>
-                  <p className="text-sm font-medium tracking-wide text-[#1A1A1A]">
+                  <p className="text-sm font-medium tracking-wide text-[#E5E5E5]">
                     {item.title}
                   </p>
-                  <p className="text-xs text-[#999]">
+                  <p className="text-xs text-[#666]">
                     {item.desc}
                   </p>
                 </div>
@@ -307,7 +307,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           5. ELEGANT BANNER
           ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-[#1A1A1A]">
+      <section className="relative overflow-hidden bg-[#111111]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -329,7 +329,7 @@ export default function HomePage() {
                 Colección 2024
               </h2>
 
-              <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-white/70 sm:text-base md:mx-0">
+              <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-[#888] sm:text-base md:mx-0">
                 Prendas diseñadas con pasión y confeccionadas con las mejores
                 telas colombianas. Descubre la nueva temporada con estilo y
                 sofisticación.
@@ -337,7 +337,7 @@ export default function HomePage() {
 
               <Button
                 asChild
-                className="h-11 rounded-none bg-[#C6A962] px-8 text-sm font-semibold tracking-wider text-[#1A1A1A] uppercase transition-all duration-300 hover:bg-[#B8963F]"
+                className="h-11 rounded-none bg-[#C6A962] px-8 text-sm font-semibold tracking-wider text-[#0A0A0A] uppercase transition-all duration-300 hover:bg-[#D4AF37]"
               >
                 <Link href="/ofertas">
                   Descubrir
@@ -348,15 +348,14 @@ export default function HomePage() {
 
             {/* Right image */}
             <div className="relative w-full max-w-sm shrink-0 md:max-w-md">
-              <div className="relative aspect-[3/4] overflow-hidden">
+              <div className="relative aspect-[3/4] overflow-hidden border border-[#2A2A2A]">
                 <Image
                   src="/images/hero.png"
                   alt="Colección 2024"
                   fill
                   className="object-cover"
                 />
-                {/* Subtle overlay for blending */}
-                <div className="absolute inset-0 bg-[#1A1A1A]/10" />
+                <div className="absolute inset-0 bg-[#0A0A0A]/10" />
               </div>
               {/* Gold accent line at bottom */}
               <div className="absolute -bottom-0 left-1/2 h-[2px] w-16 -translate-x-1/2 bg-[#C6A962] md:left-0 md:translate-x-0" />
@@ -389,7 +388,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           7. TESTIMONIALS
           ══════════════════════════════════════════ */}
-      <section className="bg-[#F5F3EF] py-16 sm:py-20">
+      <section className="bg-[#111111] py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -399,7 +398,7 @@ export default function HomePage() {
           >
             {/* Section heading */}
             <motion.div variants={fadeUp} custom={0} className="mb-12 text-center">
-              <h2 className="font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl">
+              <h2 className="font-serif text-2xl font-normal tracking-wide text-[#E5E5E5] sm:text-3xl">
                 Lo que dicen nuestras clientas
               </h2>
               <div className="mx-auto mt-4 h-[1px] w-10 bg-[#C6A962]" />
@@ -412,8 +411,7 @@ export default function HomePage() {
                   key={testimonial.name}
                   variants={fadeUp}
                   custom={i + 1}
-                  className="relative bg-white p-8 transition-shadow duration-500"
-                  style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
+                  className="relative border border-[#2A2A2A] bg-[#0A0A0A] p-8 transition-all duration-500 hover:border-[#C6A962]/20"
                 >
                   {/* Gold quote mark */}
                   <span className="mb-5 block font-serif text-4xl leading-none text-[#C6A962]">
@@ -421,12 +419,12 @@ export default function HomePage() {
                   </span>
 
                   {/* Text */}
-                  <p className="mb-6 text-sm leading-relaxed text-[#666]">
+                  <p className="mb-6 text-sm leading-relaxed text-[#999]">
                     {testimonial.text}
                   </p>
 
                   {/* Divider */}
-                  <div className="mb-5 h-[1px] w-full bg-[#E8E5DE]" />
+                  <div className="mb-5 h-[1px] w-full bg-[#2A2A2A]" />
 
                   {/* Rating */}
                   <div className="mb-3 flex gap-0.5">
@@ -439,10 +437,10 @@ export default function HomePage() {
                   </div>
 
                   {/* Name & Location */}
-                  <p className="text-sm font-medium tracking-wide text-[#1A1A1A]">
+                  <p className="text-sm font-medium tracking-wide text-[#E5E5E5]">
                     {testimonial.name}
                   </p>
-                  <p className="text-xs text-[#999]">{testimonial.location}</p>
+                  <p className="text-xs text-[#666]">{testimonial.location}</p>
                 </motion.div>
               ))}
             </div>
@@ -464,11 +462,11 @@ export default function HomePage() {
           {/* Gold line */}
           <div className="mx-auto mb-6 h-[1px] w-10 bg-[#C6A962]" />
 
-          <h2 className="mb-3 font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl">
+          <h2 className="mb-3 font-serif text-2xl font-normal tracking-wide text-[#E5E5E5] sm:text-3xl">
             ¿Necesitas ayuda?
           </h2>
 
-          <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-[#999]">
+          <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-[#666]">
             Nuestro equipo está listo para asesorarte en la elección perfecta.
             Escríbenos y recibe atención personalizada.
           </p>

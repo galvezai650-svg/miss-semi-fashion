@@ -81,7 +81,7 @@ export default function HogarPage() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#fdf8f4" }}>
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#0A0A0A" }}>
       {/* ── Breadcrumbs ── */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Hogar" }]} />
@@ -203,7 +203,7 @@ export default function HogarPage() {
           >
             <path
               d="M0 60V30C240 0 480 0 720 30C960 60 1200 60 1440 30V60H0Z"
-              fill="#fdf8f4"
+              fill="#0A0A0A"
             />
           </svg>
         </div>
@@ -229,8 +229,8 @@ export default function HogarPage() {
                 transition={{ delay: index * 0.15 }}
                 className="group relative overflow-hidden rounded-2xl border-2 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:p-8"
                 style={{
-                  borderColor: `${feature.color}30`,
-                  backgroundColor: `${feature.color}08`,
+                  borderColor: "#2A2A2A",
+                  backgroundColor: "#111111",
                 }}
               >
                 {/* Warm glow on hover */}
@@ -264,7 +264,7 @@ export default function HogarPage() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm leading-relaxed text-gray-600">
+                  <p className="text-sm leading-relaxed text-[#B3B3B3]">
                     {feature.description}
                   </p>
                 </div>
@@ -285,10 +285,10 @@ export default function HogarPage() {
           variants={stagger}
         >
           <motion.div variants={fadeUp} custom={0} className="mb-6 text-center sm:mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+            <h2 className="text-2xl font-bold text-[#E5E5E5] sm:text-3xl">
               Explora por Categoría
             </h2>
-            <p className="mt-2 text-sm text-gray-500 sm:text-base">
+            <p className="mt-2 text-sm text-[#888888] sm:text-base">
               Encuentra lo que necesitas para cada rincón
             </p>
           </motion.div>
@@ -300,7 +300,7 @@ export default function HogarPage() {
                 <motion.div key={sub.name} variants={scaleIn} transition={{ delay: index * 0.1 }}>
                   <Link
                     href={sub.href}
-                    className="group flex flex-col items-center gap-3 rounded-xl border-2 border-transparent bg-white/70 p-4 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#d4a574]/40 hover:shadow-lg sm:p-6"
+                    className="group flex flex-col items-center gap-3 rounded-xl border-2 border-[#2A2A2A] bg-[#111111]/70 p-4 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#C6A962]/40 hover:shadow-lg sm:p-6"
                   >
                     <div
                       className="flex h-12 w-12 items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 sm:h-14 sm:w-14"
@@ -308,7 +308,7 @@ export default function HogarPage() {
                     >
                       <Icon className="h-6 w-6" style={{ color: "#c2703e" }} />
                     </div>
-                    <span className="text-sm font-semibold text-gray-700 sm:text-base">
+                    <span className="text-sm font-semibold text-[#E5E5E5] sm:text-base">
                       {sub.name}
                     </span>
                   </Link>
@@ -336,11 +336,11 @@ export default function HogarPage() {
           <motion.div variants={fadeUp} custom={0} className="mb-2">
             <div className="mb-6 flex items-center gap-4">
               <span className="h-[3px] w-10 rounded-full sm:w-14" style={{ backgroundColor: "#c2703e" }} />
-              <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+              <h2 className="text-2xl font-bold text-[#E5E5E5] sm:text-3xl">
                 Nuestra Colección Hogar
               </h2>
             </div>
-            <p className="mb-8 text-sm text-gray-500 sm:text-base">
+            <p className="mb-8 text-sm text-[#888888] sm:text-base">
               Piezas seleccionadas con cuidado para crear ambientes únicos y acogedores
             </p>
           </motion.div>
@@ -457,8 +457,8 @@ export default function HogarPage() {
                 >
                   <Icon className="h-6 w-6" style={{ color: "#c2703e" }} />
                 </div>
-                <span className="text-sm font-semibold text-gray-800">{item.label}</span>
-                <span className="text-xs text-gray-500">{item.sub}</span>
+                <span className="text-sm font-semibold text-[#E5E5E5]">{item.label}</span>
+                <span className="text-xs text-[#888888]">{item.sub}</span>
               </motion.div>
             );
           })}

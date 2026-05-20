@@ -352,3 +352,148 @@ Stage Summary:
 - Updated: /src/data/products.ts (15 new products)
 - Generated: 5 hero images
 - All 5 routes return 200, lint clean
+
+---
+Task ID: 7-b
+Agent: general-purpose
+Task: Convert lenceria page to dark luxury theme
+
+Work Log:
+- Read lenceria/page.tsx and identified all light theme colors
+- Replaced main page background: bg-[#FAFAF8] → bg-[#0A0A0A]
+- Updated hero section overlay: via-[#FAF0EB]/85 → via-[#151515]/80 for darker gradient
+- Updated hero bottom fade: from-[#FAFAF8]/80 → from-[#0A0A0A]/80
+- Updated hero text: text-[#1A1A1A] → text-white, decorative lines bg-[#1A1A1A]/25 → bg-white/25
+- Updated hero description: text-[#1A1A1A]/75 → text-white/85
+- Updated hero text shadow for dark theme readability
+- Updated SVG wave divider fill: #FAFAF8 → #0A0A0A
+- Updated feature badge cards: bg-[#F5F3EF] → bg-[#111111], border-[#E8E5DE] → border-[#2A2A2A]
+- Updated feature badge text: text-[#1A1A1A] → text-[#E5E5E5], text-[#666] → text-[#888888]
+- Updated section header dividers: bg-[#E8E5DE] → bg-[#2A2A2A]
+- Updated section header text: text-[#1A1A1A] → text-[#E5E5E5]
+- Updated subcategory section header: text-[#1A1A1A] → text-[#E5E5E5]
+- Updated subcategory card borders: border-[#E8E5DE] → border-[#2A2A2A]
+- Updated CTA banner button: bg-[#1A1A1A] → bg-white with text-[#0A0A0A] for contrast on gold
+- Kept all gold accents (#C6A962) and text-white as-is
+- Kept image overlays (from-[#1A1A1A]/60 etc.) as-is — already dark for text contrast
+- ESLint passes clean with 0 errors
+
+Stage Summary:
+- Lenceria page now uses dark luxury theme (#0A0A0A background, #111111 cards, #2A2A2A borders)
+- All text colors updated to light palette (#E5E5E5, #888888, white)
+- Gold accents preserved, CTA button inverted for contrast
+- Zero lint errors
+
+---
+Task ID: 7-d
+Agent: general-purpose
+Task: Convert adornos page to dark luxury theme
+
+Work Log:
+- Read adornos/page.tsx and identified all light theme color values
+- Replaced page background `#FAFAF8` → `#0A0A0A`
+- Replaced section backgrounds `#F5F3EF` → `#111111` (features section, trust section)
+- Replaced feature card backgrounds `bg-white/60` → `bg-[#151515]/60`
+- Replaced all borders `#E8E5DE` → `#2A2A2A` (breadcrumbs, feature cards, trust section)
+- Replaced all heading text `#1A1A1A` → `#E5E5E5` (feature titles, section header, empty state, trust labels)
+- Replaced secondary text `#666` → `#B3B3B3` (feature descriptions)
+- Replaced muted text `#999` → `#888888` (section description, empty state, trust descriptions)
+- Replaced empty state icon `#E8E5DE` → `#333333`
+- Kept all gold accent colors (`#C6A962`, `#A68B3C`, `#D4AF37`) as-is
+- Kept all `text-white` and white button text as-is
+- Kept CTA banner `#1A1A1A` background as-is (already dark)
+- Verified zero remaining light theme colors via grep
+- ESLint passes clean with 0 errors
+
+Stage Summary:
+- Adornos page now uses dark luxury theme (16 color replacements)
+- Background: #0A0A0A (main), #111111 (sections), #151515 (cards)
+- Text: #E5E5E5 (headings), #B3B3B3 (secondary), #888888 (muted)
+- Borders: #2A2A2A throughout
+- Gold accents preserved as-is
+- No functionality changes
+
+---
+Task ID: 7-a
+Agent: general-purpose
+Task: Convert hombre page to dark luxury theme
+
+Work Log:
+- Read hombre/page.tsx and identified all light theme colors
+- Replaced main background #FAFAF8 → #0A0A0A
+- Replaced section background #F5F3EF → #111111
+- Replaced feature badge cards bg-white → bg-[#111111]
+- Replaced borders #E8E5DE → #2A2A2A (both static and hover reset)
+- Replaced text color #1A1A1A → #E5E5E5 (section headers, feature badge titles)
+- Replaced secondary text #999 → #B3B3B3 (feature badge descriptions, product count)
+- Updated feature badge hover boxShadow from rgba(0,0,0,0.06) → rgba(0,0,0,0.3) for dark bg visibility
+- Updated feature badge icon background from rgba(198,169,98,0.08) → rgba(198,169,98,0.15) for contrast on dark
+- Kept gold accents (#C6A962), white text, hero overlay, and banner CTA section (#1A1A1A) as-is
+- Verified zero remaining light theme colors (#FAFAF8, #F5F3EF, #E8E5DE, bg-white) via grep
+- ESLint passes clean with 0 errors
+
+Stage Summary:
+- Hombre page now uses dark luxury theme (#0A0A0A bg, #E5E5E5 text, #2A2A2A borders)
+- Total: ~11 color replacements in /src/app/hombre/page.tsx
+- All gold accents and hero/banner dark overlays preserved
+
+---
+Task ID: 7-e
+Agent: general-purpose
+Task: Convert hogar page to dark luxury theme
+
+Work Log:
+- Read hogar/page.tsx and identified all light theme colors
+- Replaced main page background `#fdf8f4` → `#0A0A0A`
+- Replaced SVG wave fill `#fdf8f4` → `#0A0A0A` (hero bottom transition)
+- Replaced feature badge card backgrounds from translucent color → `#111111` with `#2A2A2A` borders
+- Replaced feature badge description text `text-gray-600` → `text-[#B3B3B3]`
+- Replaced subcategory section heading `text-gray-800` → `text-[#E5E5E5]`
+- Replaced subcategory section description `text-gray-500` → `text-[#888888]`
+- Replaced subcategory cards `bg-white/70 border-transparent` → `bg-[#111111]/70 border-[#2A2A2A]`
+- Replaced subcategory card hover border `hover:border-[#d4a574]/40` → `hover:border-[#C6A962]/40` (gold accent)
+- Replaced subcategory card text `text-gray-700` → `text-[#E5E5E5]`
+- Replaced products section heading `text-gray-800` → `text-[#E5E5E5]`
+- Replaced products section description `text-gray-500` → `text-[#888888]`
+- Replaced trust indicator labels `text-gray-800` → `text-[#E5E5E5]`
+- Replaced trust indicator subtitles `text-gray-500` → `text-[#888888]`
+- Kept all `text-white`, `bg-white` (on gradient overlays/buttons), hero overlay, banner CTA, and feature color accents as-is
+- Verified zero remaining light-theme text-gray-* or bg-white (outside intentional hero/banner) via grep
+- ESLint passes clean with 0 errors
+
+Stage Summary:
+- Hogar page now uses dark luxury theme (14 color replacements across 9 locations)
+- Background: #0A0A0A (main), #111111 (cards/badges)
+- Text: #E5E5E5 (headings), #B3B3B3 (secondary), #888888 (muted)
+- Borders: #2A2A2A throughout
+- Gold hover accents: #C6A962 on subcategory cards
+- All warm/earthy feature colors (#c2703e, #d4a574, #fb923c) preserved
+- No functionality changes
+
+---
+Task ID: 7-c
+Agent: general-purpose
+Task: Convert ninos page to dark luxury theme
+
+Work Log:
+- Read ninos/page.tsx and identified all light theme color values
+- Replaced page background `#FAFAF8` → `#0A0A0A` (main wrapper, GoldDivider diamond)
+- Replaced section/card backgrounds `#F5F3EF` → `#111111` (feature icon circles, products section, banner CTA)
+- Replaced feature card `bg-white` → `bg-[#111111]`
+- Replaced all borders `#E8E5DE` → `#2A2A2A` (feature cards, banner CTA)
+- Replaced all heading text `#1A1A1A` → `#E5E5E5` (hero title, features heading, products heading, banner CTA heading, feature card titles)
+- Replaced secondary text `#666` → `#B3B3B3` (hero description, trust rating text)
+- Replaced muted text `#999` → `#888888` (feature card descriptions, features subheading, products subheading, banner CTA description, trust rating subtext)
+- Replaced hero overlay gradient from `#F5F3EF`/`#FAFAF8` → `#0A0A0A`/`#111111` dark equivalents
+- Kept all gold accent colors (`#C6A962`, `#A68B3C`) as-is
+- Kept all `text-white` and gold decorative elements as-is
+- Verified zero remaining light theme colors via grep
+- ESLint passes clean with 0 errors
+
+Stage Summary:
+- Ninos page now uses dark luxury theme (~17 color replacements)
+- Background: #0A0A0A (main), #111111 (sections/cards), #151515 (icon circles)
+- Text: #E5E5E5 (headings), #B3B3B3 (secondary), #888888 (muted)
+- Borders: #2A2A2A throughout
+- Gold accents preserved as-is
+- No functionality changes

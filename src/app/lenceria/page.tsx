@@ -76,7 +76,7 @@ export default function LenceriaPage() {
   const products = useMemo(() => getProductsByCategory("lenceria"), []);
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8]">
+    <main className="min-h-screen bg-[#0A0A0A]">
       {/* ── Breadcrumbs ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Lencería" }]} />
@@ -96,9 +96,9 @@ export default function LenceriaPage() {
             priority
           />
           {/* Gold-toned overlay — warm & luxurious */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#C6A962]/70 via-[#FAF0EB]/85 to-[#C6A962]/50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#C6A962]/50 via-[#151515]/80 to-[#C6A962]/30" />
           {/* Bottom fade to page bg */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAF8]/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent" />
         </div>
 
         {/* Hero content */}
@@ -114,19 +114,19 @@ export default function LenceriaPage() {
           >
             {/* Brand line */}
             <motion.div variants={fadeIn} className="flex items-center gap-3">
-              <span className="h-px w-10 bg-[#1A1A1A]/25 sm:w-16" />
-              <span className="text-[11px] font-medium tracking-[0.3em] text-[#1A1A1A]/60 uppercase sm:text-xs">
+              <span className="h-px w-10 bg-white/25 sm:w-16" />
+              <span className="text-[11px] font-medium tracking-[0.3em] text-white/80 uppercase sm:text-xs">
                 Miss Semi Fashion
               </span>
-              <span className="h-px w-10 bg-[#1A1A1A]/25 sm:w-16" />
+              <span className="h-px w-10 bg-white/25 sm:w-16" />
             </motion.div>
 
             {/* Main serif title */}
             <motion.h1
               variants={fadeUp}
               custom={0}
-              className="font-serif text-5xl font-normal tracking-[0.12em] text-[#1A1A1A] sm:text-6xl md:text-7xl lg:text-8xl"
-              style={{ textShadow: "0 2px 20px rgba(198,169,98,0.35)" }}
+              className="font-serif text-5xl font-normal tracking-[0.12em] text-white sm:text-6xl md:text-7xl lg:text-8xl"
+              style={{ textShadow: "0 2px 30px rgba(0,0,0,0.8), 0 0 40px rgba(198,169,98,0.3)" }}
             >
               LENCIERÍA
             </motion.h1>
@@ -135,7 +135,7 @@ export default function LenceriaPage() {
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="max-w-xl text-base font-light leading-relaxed text-[#1A1A1A]/75 sm:text-lg md:text-xl"
+              className="max-w-xl text-base font-light leading-relaxed text-white/85 sm:text-lg md:text-xl"
             >
               Descubre nuestra colección de lencería diseñada para realzar tu
               sensualidad con elegancia y comodidad. Piezas que celebran la
@@ -166,7 +166,7 @@ export default function LenceriaPage() {
           >
             <path
               d="M0,30 C240,55 480,5 720,30 C960,55 1200,5 1440,30 L1440,60 L0,60 Z"
-              fill="#FAFAF8"
+              fill="#0A0A0A"
             />
           </svg>
         </div>
@@ -187,7 +187,7 @@ export default function LenceriaPage() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.4 }}
                 variants={scaleIn}
-                className="group relative overflow-hidden rounded-sm border border-[#E8E5DE] bg-[#F5F3EF] p-6 transition-all duration-300 hover:border-[#C6A962]/50 hover:shadow-md hover:shadow-[#C6A962]/8"
+                className="group relative overflow-hidden rounded-sm border border-[#2A2A2A] bg-[#111111] p-6 transition-all duration-300 hover:border-[#C6A962]/50 hover:shadow-md hover:shadow-[#C6A962]/8"
               >
                 <div className="flex flex-col items-center text-center">
                   {/* Gold circle icon */}
@@ -197,10 +197,10 @@ export default function LenceriaPage() {
                       strokeWidth={1.5}
                     />
                   </div>
-                  <h3 className="text-sm font-semibold tracking-wide text-[#1A1A1A] sm:text-base">
+                  <h3 className="text-sm font-semibold tracking-wide text-[#E5E5E5] sm:text-base">
                     {feature.title}
                   </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-[#666] sm:text-sm">
+                  <p className="mt-1.5 text-xs leading-relaxed text-[#888888] sm:text-sm">
                     {feature.description}
                   </p>
                 </div>
@@ -227,18 +227,18 @@ export default function LenceriaPage() {
         {/* Section header */}
         <motion.div variants={fadeUp} custom={0} className="mb-10 text-center">
           <div className="mx-auto mb-4 flex items-center justify-center gap-3">
-            <span className="h-px w-10 bg-[#E8E5DE] sm:w-16" />
+            <span className="h-px w-10 bg-[#2A2A2A] sm:w-16" />
             <Heart
               className="h-5 w-5 text-[#C6A962]"
               fill="currentColor"
               strokeWidth={0}
             />
-            <span className="h-px w-10 bg-[#E8E5DE] sm:w-16" />
+            <span className="h-px w-10 bg-[#2A2A2A] sm:w-16" />
           </div>
-          <h2 className="font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl md:text-4xl">
+          <h2 className="font-serif text-2xl font-normal tracking-wide text-[#E5E5E5] sm:text-3xl md:text-4xl">
             Nuestra Colección
           </h2>
-          <p className="mx-auto mt-3 max-w-lg text-sm text-[#999] sm:text-base">
+          <p className="mx-auto mt-3 max-w-lg text-sm text-[#888888] sm:text-base">
             Cada pieza ha sido cuidadosamente seleccionada para ofrecerte
             confort, estilo y esa confianza que mereces.
           </p>
@@ -323,7 +323,7 @@ export default function LenceriaPage() {
             <Button
               asChild
               size="lg"
-              className="mt-8 min-w-[200px] rounded-none bg-[#1A1A1A] px-10 text-[13px] font-medium tracking-[0.15em] text-white uppercase transition-all duration-300 hover:bg-[#333] hover:shadow-lg sm:min-w-[220px] sm:text-sm"
+              className="mt-8 min-w-[200px] rounded-none bg-white px-10 text-[13px] font-medium tracking-[0.15em] text-[#0A0A0A] uppercase transition-all duration-300 hover:bg-white/90 hover:shadow-lg sm:min-w-[220px] sm:text-sm"
             >
               <Link href="/">Explorar Todo</Link>
             </Button>
@@ -347,7 +347,7 @@ export default function LenceriaPage() {
           <motion.h2
             variants={fadeUp}
             custom={0}
-            className="font-serif mb-8 text-center text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl"
+            className="font-serif mb-8 text-center text-2xl font-normal tracking-wide text-[#E5E5E5] sm:text-3xl"
           >
             Explora por Categoría
           </motion.h2>
@@ -361,7 +361,7 @@ export default function LenceriaPage() {
               >
                 <Link
                   href={cat.href}
-                  className="group relative block overflow-hidden rounded-sm border border-[#E8E5DE] transition-all duration-500 hover:border-[#C6A962]/50 hover:shadow-lg hover:shadow-[#C6A962]/10"
+                  className="group relative block overflow-hidden rounded-sm border border-[#2A2A2A] transition-all duration-500 hover:border-[#C6A962]/50 hover:shadow-lg hover:shadow-[#C6A962]/10"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <Image

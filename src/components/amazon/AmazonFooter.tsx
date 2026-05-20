@@ -53,7 +53,7 @@ export default function AmazonFooter() {
   }
 
   return (
-    <footer className="w-full border-t border-[#E8E5DE] bg-[#1A1A1A] text-[#CCC]">
+    <footer className="w-full border-t border-[#2A2A2A] bg-[#0A0A0A] text-[#CCC]">
       {/* ── Newsletter Section ── */}
       <div className="border-b border-[#333]">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-14 text-center md:flex-row md:text-left">

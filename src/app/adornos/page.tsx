@@ -62,13 +62,13 @@ export default function AdornosPage() {
   const products = useMemo(() => getProductsByCategory("adornos"), []);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#FAFAF8" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#0A0A0A" }}>
       {/* ════════════════════════════════════════════════
           BREADCRUMBS
       ════════════════════════════════════════════════ */}
       <div
         className="border-b"
-        style={{ borderColor: "#E8E5DE" }}
+        style={{ borderColor: "#2A2A2A" }}
       >
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Adornos" }]} />
@@ -231,7 +231,7 @@ export default function AdornosPage() {
       {/* ════════════════════════════════════════════════
           FEATURES SECTION
       ════════════════════════════════════════════════ */}
-      <section style={{ backgroundColor: "#F5F3EF" }}>
+      <section style={{ backgroundColor: "#111111" }}>
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <motion.div
             initial="hidden"
@@ -245,9 +245,9 @@ export default function AdornosPage() {
                 key={feat.title}
                 custom={i}
                 variants={fadeUp}
-                className="group relative flex flex-col items-center rounded-lg border bg-white/60 p-6 text-center backdrop-blur-sm transition-all duration-300 sm:p-8"
+                className="group relative flex flex-col items-center rounded-lg border bg-[#151515]/60 p-6 text-center backdrop-blur-sm transition-all duration-300 sm:p-8"
                 style={{
-                  borderColor: "#E8E5DE",
+                  borderColor: "#2A2A2A",
                 }}
                 whileHover={{
                   borderColor: "rgba(198, 169, 98, 0.4)",
@@ -267,11 +267,11 @@ export default function AdornosPage() {
 
                 <h3
                   className="font-serif mb-2 text-base font-medium"
-                  style={{ color: "#1A1A1A" }}
+                  style={{ color: "#E5E5E5" }}
                 >
                   {feat.title}
                 </h3>
-                <p className="text-sm leading-relaxed" style={{ color: "#666" }}>
+                <p className="text-sm leading-relaxed" style={{ color: "#B3B3B3" }}>
                   {feat.description}
                 </p>
               </motion.div>
@@ -314,7 +314,7 @@ export default function AdornosPage() {
               />
             </div>
             <h2 className="font-serif text-2xl font-medium tracking-wide sm:text-3xl md:text-4xl">
-              <span style={{ color: "#1A1A1A" }}>
+              <span style={{ color: "#E5E5E5" }}>
                 Nuestra Colección de{" "}
               </span>
               <span
@@ -327,7 +327,7 @@ export default function AdornosPage() {
             </h2>
             <p
               className="mt-3 max-w-md text-sm leading-relaxed sm:text-base"
-              style={{ color: "#999" }}
+              style={{ color: "#888888" }}
             >
               Encuentra collares, aretes, bolsos y más. Cada pieza ha sido
               cuidadosamente seleccionada para ti.
@@ -355,11 +355,11 @@ export default function AdornosPage() {
               animate={{ opacity: 1 }}
               className="flex flex-col items-center py-20 text-center"
             >
-              <Gem className="mb-4 h-16 w-16" style={{ color: "#E8E5DE" }} />
-              <h3 className="font-serif mb-2 text-lg font-medium" style={{ color: "#1A1A1A" }}>
+              <Gem className="mb-4 h-16 w-16" style={{ color: "#333333" }} />
+              <h3 className="font-serif mb-2 text-lg font-medium" style={{ color: "#E5E5E5" }}>
                 Próximamente
               </h3>
-              <p className="text-sm" style={{ color: "#999" }}>
+              <p className="text-sm" style={{ color: "#888888" }}>
                 Estamos preparando una colección espectacular de adornos para ti.
               </p>
             </motion.div>
@@ -460,7 +460,7 @@ export default function AdornosPage() {
       ════════════════════════════════════════════════ */}
       <section
         className="border-t"
-        style={{ borderColor: "#E8E5DE", backgroundColor: "#F5F3EF" }}
+        style={{ borderColor: "#2A2A2A", backgroundColor: "#111111" }}
       >
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <motion.div
@@ -504,10 +504,10 @@ export default function AdornosPage() {
                 >
                   <item.icon className="h-5 w-5" style={{ color: "#C6A962" }} />
                 </div>
-                <p className="text-sm font-medium" style={{ color: "#1A1A1A" }}>
+                <p className="text-sm font-medium" style={{ color: "#E5E5E5" }}>
                   {item.label}
                 </p>
-                <p className="text-xs" style={{ color: "#999" }}>
+                <p className="text-xs" style={{ color: "#888888" }}>
                   {item.desc}
                 </p>
               </motion.div>

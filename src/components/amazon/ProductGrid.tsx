@@ -63,17 +63,17 @@ export default function ProductGrid({
         {title && (
           <div className="mb-6 flex items-end justify-between">
             <div>
-              <h2 className="font-serif text-xl font-medium text-[#1A1A1A] sm:text-2xl">
+              <h2 className="font-serif text-xl font-medium text-[#E5E5E5] sm:text-2xl">
                 {title}
               </h2>
               {subtitle && (
-                <p className="mt-1 text-sm text-[#999]">{subtitle}</p>
+                <p className="mt-1 text-sm text-[#666]">{subtitle}</p>
               )}
             </div>
             {viewAllHref && (
               <Link
                 href={viewAllHref}
-                className="hidden text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-colors hover:text-[#A68B3C] sm:block"
+                className="hidden text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-colors hover:text-[#D4AF37] sm:block"
               >
                 Ver todo
               </Link>
@@ -95,17 +95,17 @@ export default function ProductGrid({
       {title && (
         <div className="mb-5 flex items-end justify-between">
           <div>
-            <h2 className="font-serif text-xl font-medium text-[#1A1A1A] sm:text-2xl">
+            <h2 className="font-serif text-xl font-medium text-[#E5E5E5] sm:text-2xl">
               {title}
             </h2>
             {subtitle && (
-              <p className="mt-1 text-sm text-[#999]">{subtitle}</p>
+              <p className="mt-1 text-sm text-[#666]">{subtitle}</p>
             )}
           </div>
           {viewAllHref && (
             <Link
               href={viewAllHref}
-              className="group/link flex items-center gap-1.5 text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-all hover:text-[#A68B3C]"
+              className="group/link flex items-center gap-1.5 text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-all hover:text-[#D4AF37]"
             >
               Ver todo
               <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
@@ -118,10 +118,10 @@ export default function ProductGrid({
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#E8E5DE] bg-white p-2 shadow-sm transition-all hover:shadow-md md:flex"
+            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2A2A] bg-[#111111] p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
             aria-label="Anterior"
           >
-            <ChevronLeft className="h-4 w-4 text-[#4A4A4A]" />
+            <ChevronLeft className="h-4 w-4 text-[#999]" />
           </button>
         )}
 
@@ -143,16 +143,16 @@ export default function ProductGrid({
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#E8E5DE] bg-white p-2 shadow-sm transition-all hover:shadow-md md:flex"
+            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2A2A] bg-[#111111] p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
             aria-label="Siguiente"
           >
-            <ChevronRight className="h-4 w-4 text-[#4A4A4A]" />
+            <ChevronRight className="h-4 w-4 text-[#999]" />
           </button>
         )}
 
         {/* Edge fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[#FAFAF8] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#FAFAF8] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[#0A0A0A] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#0A0A0A] to-transparent" />
       </div>
     </section>
   );
