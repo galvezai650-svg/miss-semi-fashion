@@ -759,7 +759,8 @@ export default function AdminPage() {
               </div>
 
               <div className="space-y-3">
-                {promotions.map((promo) => (
+                {promotions.map(function (promo) {
+                  return (
                   <div
                     key={promo.id}
                     className="flex items-center justify-between rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl px-5 py-4"
@@ -776,7 +777,7 @@ export default function AdminPage() {
                       <div className="text-right">
                         <p className="text-lg font-medium text-[#C6A962]">
                           {promo.type === "percentage"
-                            ? promo.discount + "%"
+                            ? `${promo.discount}%`
                             : fmt(promo.discount)}
                         </p>
                         <p className="text-xs text-[#666]">
@@ -798,7 +799,9 @@ export default function AdminPage() {
                         </button>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                  );
+                })}
                 {promotions.length === 0 && (
                   <div className="rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl px-5 py-12 text-center text-sm text-[#666]">
                     No hay promociones activas.
