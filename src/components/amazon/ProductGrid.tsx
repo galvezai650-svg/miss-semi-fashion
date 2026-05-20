@@ -56,24 +56,24 @@ export default function ProductGrid({
     });
   }
 
-  // Grid variant for category/search pages
+  // Grid variant
   if (variant === "grid") {
     return (
       <section className="w-full">
         {title && (
-          <div className="mb-5 flex items-end justify-between">
+          <div className="mb-6 flex items-end justify-between">
             <div>
-              <h2 className="text-xl font-bold text-foreground sm:text-2xl">
+              <h2 className="font-serif text-xl font-medium text-[#1A1A1A] sm:text-2xl">
                 {title}
               </h2>
               {subtitle && (
-                <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+                <p className="mt-1 text-sm text-[#999]">{subtitle}</p>
               )}
             </div>
             {viewAllHref && (
               <Link
                 href={viewAllHref}
-                className="hidden text-sm font-medium text-primary transition-colors hover:underline sm:block"
+                className="hidden text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-colors hover:text-[#A68B3C] sm:block"
               >
                 Ver todo
               </Link>
@@ -89,46 +89,42 @@ export default function ProductGrid({
     );
   }
 
-  // Scroll variant for homepage
+  // Scroll variant
   return (
     <section className="w-full">
-      {/* ── Section Header ── */}
       {title && (
-        <div className="mb-4 flex items-end justify-between">
+        <div className="mb-5 flex items-end justify-between">
           <div>
-            <h2 className="text-xl font-bold text-foreground sm:text-2xl">
+            <h2 className="font-serif text-xl font-medium text-[#1A1A1A] sm:text-2xl">
               {title}
             </h2>
             {subtitle && (
-              <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>
+              <p className="mt-1 text-sm text-[#999]">{subtitle}</p>
             )}
           </div>
           {viewAllHref && (
             <Link
               href={viewAllHref}
-              className="group/link flex items-center gap-1 text-sm font-medium text-primary transition-all hover:gap-2"
+              className="group/link flex items-center gap-1.5 text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-all hover:text-[#A68B3C]"
             >
               Ver todo
-              <ChevronRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5" />
+              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
             </Link>
           )}
         </div>
       )}
 
-      {/* ── Scrollable Container ── */}
       <div className="relative group/scroll">
-        {/* Left scroll button */}
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute -left-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-card shadow-xl border border-border/50 p-1.5 transition-all hover:scale-110 hover:shadow-2xl md:flex"
+            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#E8E5DE] bg-white p-2 shadow-sm transition-all hover:shadow-md md:flex"
             aria-label="Anterior"
           >
-            <ChevronLeft className="h-5 w-5 text-foreground" />
+            <ChevronLeft className="h-4 w-4 text-[#4A4A4A]" />
           </button>
         )}
 
-        {/* Scroll content */}
         <div
           ref={scrollRef}
           onScroll={checkScroll}
@@ -144,20 +140,19 @@ export default function ProductGrid({
           ))}
         </div>
 
-        {/* Right scroll button */}
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute -right-3 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full bg-card shadow-xl border border-border/50 p-1.5 transition-all hover:scale-110 hover:shadow-2xl md:flex"
+            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#E8E5DE] bg-white p-2 shadow-sm transition-all hover:shadow-md md:flex"
             aria-label="Siguiente"
           >
-            <ChevronRight className="h-5 w-5 text-foreground" />
+            <ChevronRight className="h-4 w-4 text-[#4A4A4A]" />
           </button>
         )}
 
-        {/* Edge fade gradients */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent" />
+        {/* Edge fade */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[#FAFAF8] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#FAFAF8] to-transparent" />
       </div>
     </section>
   );

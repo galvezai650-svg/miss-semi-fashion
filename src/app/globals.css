@@ -6,6 +6,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -40,57 +41,57 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Custom fashion brand colors */
-  --color-rose-brand: var(--rose-brand);
-  --color-rose-light: var(--rose-light);
-  --color-rose-dark: var(--rose-dark);
-  --color-sky-brand: var(--sky-brand);
+  /* Luxury brand colors */
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
   --color-cream: var(--cream);
-  --color-lavender: var(--lavender);
+  --color-charcoal: var(--charcoal);
+  --color-silver: var(--silver);
 }
 
 :root {
-  --radius: 0.75rem;
-  /* Dark Theme Only — Amazon Style */
-  --background: oklch(0.14 0.012 340);
-  --foreground: oklch(0.94 0.008 340);
-  --card: oklch(0.19 0.015 340);
-  --card-foreground: oklch(0.94 0.008 340);
-  --popover: oklch(0.19 0.015 340);
-  --popover-foreground: oklch(0.94 0.008 340);
-  --primary: oklch(0.68 0.18 350);
-  --primary-foreground: oklch(0.12 0.02 340);
-  --secondary: oklch(0.25 0.025 340);
-  --secondary-foreground: oklch(0.9 0.02 340);
-  --muted: oklch(0.24 0.015 340);
-  --muted-foreground: oklch(0.62 0.015 340);
-  --accent: oklch(0.3 0.03 80);
-  --accent-foreground: oklch(0.9 0.02 340);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.28 0.015 340);
-  --input: oklch(0.28 0.015 340);
-  --ring: oklch(0.68 0.18 350);
-  --chart-1: oklch(0.68 0.18 350);
-  --chart-2: oklch(0.55 0.1 240);
-  --chart-3: oklch(0.65 0.08 300);
-  --chart-4: oklch(0.7 0.06 90);
-  --chart-5: oklch(0.6 0.1 20);
-  --sidebar: oklch(0.17 0.012 340);
-  --sidebar-foreground: oklch(0.94 0.008 340);
-  --sidebar-primary: oklch(0.68 0.18 350);
-  --sidebar-primary-foreground: oklch(0.12 0.02 340);
-  --sidebar-accent: oklch(0.25 0.025 340);
-  --sidebar-accent-foreground: oklch(0.9 0.02 340);
-  --sidebar-border: oklch(0.28 0.015 340);
-  --sidebar-ring: oklch(0.68 0.18 350);
+  --radius: 0.5rem;
+  /* ── Luxury White/Gold/Grey Theme ── */
+  --background: #FAFAF8;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #C6A962;
+  --primary-foreground: #1A1A1A;
+  --secondary: #F5F3EF;
+  --secondary-foreground: #4A4A4A;
+  --muted: #F0EDE8;
+  --muted-foreground: #7A7A7A;
+  --accent: #D4AF37;
+  --accent-foreground: #1A1A1A;
+  --destructive: #DC2626;
+  --border: #E8E5DE;
+  --input: #E8E5DE;
+  --ring: #C6A962;
+  --chart-1: #C6A962;
+  --chart-2: #4A4A4A;
+  --chart-3: #8B7D6B;
+  --chart-4: #D4AF37;
+  --chart-5: #E8E5DE;
+  --sidebar: #F5F3EF;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #C6A962;
+  --sidebar-primary-foreground: #1A1A1A;
+  --sidebar-accent: #F0EDE8;
+  --sidebar-accent-foreground: #4A4A4A;
+  --sidebar-border: #E8E5DE;
+  --sidebar-ring: #C6A962;
 
-  /* Brand colors */
-  --rose-brand: oklch(0.68 0.18 350);
-  --rose-light: oklch(0.3 0.03 350);
-  --rose-dark: oklch(0.8 0.14 350);
-  --sky-brand: oklch(0.5 0.08 240);
-  --cream: oklch(0.18 0.012 340);
-  --lavender: oklch(0.26 0.025 340);
+  /* Brand specific colors */
+  --gold: #C6A962;
+  --gold-light: #E2D4A8;
+  --gold-dark: #A68B3C;
+  --cream: #F5F3EF;
+  --charcoal: #2C2C2C;
+  --silver: #C0C0C0;
 }
 
 @layer base {
@@ -102,7 +103,7 @@
   }
 }
 
-/* Custom scrollbar */
+/* ── Elegant Scrollbar ── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -111,11 +112,11 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.75 0.1 350);
+  background: #D4D0C8;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.6 0.15 350);
+  background: #C6A962;
 }
 
 /* Smooth scroll */
@@ -123,11 +124,20 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ── Animations ── */
+/* ── Selection ── */
+::selection {
+  background: #C6A962;
+  color: #FFFFFF;
+}
+
+/* ══════════════════════════════════════════
+   LUXURY ANIMATIONS
+   ══════════════════════════════════════════ */
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -140,36 +150,26 @@ html {
   to { opacity: 1; }
 }
 
-@keyframes slideInLeft {
+@keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateX(-30px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
-@keyframes slideInRight {
+@keyframes scaleIn {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: scale(1);
   }
-}
-
-@keyframes pulse-soft {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
 }
 
 @keyframes shimmer {
@@ -177,49 +177,107 @@ html {
   100% { background-position: 200% 0; }
 }
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+@keyframes goldGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(198, 169, 98, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(198, 169, 98, 0.6); }
+}
+
+@keyframes elegantLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes borderDraw {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+  animation: fadeInUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
-.animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out forwards;
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out forwards;
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
 }
 
-.animate-pulse-soft {
-  animation: pulse-soft 3s ease-in-out infinite;
+.animate-text-reveal {
+  animation: textReveal 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animate-gold-glow {
+  animation: goldGlow 3s ease-in-out infinite;
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }
 
-/* ── Gradient text ── */
-.gradient-text {
-  background: linear-gradient(135deg, oklch(0.68 0.18 350), oklch(0.65 0.12 300));
+/* ── Gold Gradient Text ── */
+.gold-text {
+  background: linear-gradient(135deg, #C6A962, #D4AF37, #A68B3C, #C6A962);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: shimmer 3s linear infinite;
 }
 
-/* ── Glass morphism ── */
+/* ── Luxury Divider ── */
+.luxury-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #C6A962 20%,
+    #D4AF37 50%,
+    #C6A962 80%,
+    transparent 100%
+  );
+}
+
+.luxury-divider-subtle {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #E8E5DE 30%,
+    #E8E5DE 70%,
+    transparent 100%
+  );
+}
+
+/* ── Glass morphism (light version) ── */
 .glass {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  background: oklch(0.19 0.015 340 / 0.8);
-  border: 1px solid oklch(1 0 0 / 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(198, 169, 98, 0.15);
 }
 
 /* ── WhatsApp button pulse ── */
@@ -231,9 +289,9 @@ html {
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  background: oklch(0.72 0.19 145);
+  background: #25D366;
   opacity: 0.4;
-  animation: pulse-soft 2s ease-in-out infinite;
+  animation: goldGlow 2s ease-in-out infinite;
   z-index: -1;
 }
 
@@ -245,7 +303,14 @@ html {
   scrollbar-width: thin;
 }
 .scroll-container::-webkit-scrollbar {
-  height: 4px;
+  height: 3px;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #D4D0C8;
+  border-radius: 3px;
+}
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #C6A962;
 }
 .scroll-container > * {
   scroll-snap-align: start;
@@ -257,24 +322,77 @@ html {
   animation: shimmer 2s linear infinite;
 }
 
-/* ── Gradient shift for hero ── */
-.hero-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
-}
-
 /* ── Product card image zoom ── */
 .card-image-zoom {
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* ── Section divider ── */
-.section-divider {
-  height: 1px;
+/* ── Premium Button Hover ── */
+.btn-luxury {
+  position: relative;
+  overflow: hidden;
+}
+.btn-luxury::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(
     90deg,
-    transparent 0%,
-    oklch(0.68 0.18 350 / 0.2) 50%,
-    transparent 100%
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
   );
+  transition: left 0.5s ease;
+}
+.btn-luxury:hover::after {
+  left: 100%;
+}
+
+/* ── Elegant Image Reveal ── */
+.image-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.image-reveal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #C6A962 0%, #D4AF37 100%);
+  transform: translateX(0);
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.image-reveal.revealed::after {
+  transform: translateX(101%);
+}
+
+/* ── Serif font utility ── */
+.font-serif {
+  font-family: Georgia, 'Playfair Display', 'Times New Roman', serif;
+}
+
+/* ── Elegant link underline ── */
+.elegant-link {
+  position: relative;
+}
+.elegant-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #C6A962;
+  transition: width 0.3s ease;
+}
+.elegant-link:hover::after {
+  width: 100%;
+}
+
+/* ── Premium focus ring ── */
+.focus-luxury:focus-visible {
+  outline: 2px solid #C6A962;
+  outline-offset: 2px;
 }

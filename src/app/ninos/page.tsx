@@ -4,183 +4,92 @@ import { useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Star,
-  Sparkles,
-  Heart,
-  ShieldCheck,
-  Palette,
-  Droplets,
-  ArrowRight,
-} from "lucide-react";
+import { Star, Sparkles, ShieldCheck, Palette, Droplets, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import { getProductsByCategory } from "@/data/products";
 
 /* ─── Animation presets ─── */
-const bounceIn = {
-  hidden: { opacity: 0, scale: 0.5, y: 40 },
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+      delay: i * 0.12,
+    },
+  }),
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
     opacity: 1,
     scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 260,
-      damping: 20,
-      delay: i * 0.1,
-    },
-  }),
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
 };
 
-const floatUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 18,
-      delay: i * 0.15,
-    },
-  }),
-};
-
-const wiggleHover = {
-  scale: 1.05,
-  rotate: [0, -3, 3, -3, 0],
-  transition: { duration: 0.5 },
-};
-
-/* ─── Decorative floating shapes ─── */
-function FloatingShapes() {
-  const shapes = [
-    { emoji: "⭐", top: "8%", left: "5%", size: 28, delay: 0 },
-    { emoji: "🎈", top: "15%", right: "8%", size: 32, delay: 1.5 },
-    { emoji: "🌈", bottom: "20%", left: "10%", size: 24, delay: 0.8 },
-    { emoji: "🦋", top: "40%", right: "5%", size: 22, delay: 2 },
-    { emoji: "🎨", bottom: "10%", right: "12%", size: 26, delay: 1 },
-    { emoji: "✨", top: "25%", left: "25%", size: 20, delay: 0.5 },
-    { emoji: "🌟", top: "60%", left: "3%", size: 24, delay: 1.8 },
-  ];
-
+/* ─── Gold decorative divider ─── */
+function GoldDivider() {
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {shapes.map((shape, i) => (
-        <motion.span
-          key={i}
-          className="absolute select-none"
-          style={{
-            top: shape.top,
-            left: shape.left,
-            right: shape.right,
-            bottom: shape.bottom,
-            fontSize: shape.size,
-          }}
-          animate={{
-            y: [0, -15, 0, 10, 0],
-            rotate: [0, 10, -10, 5, 0],
-            opacity: [0.7, 1, 0.8, 1, 0.7],
-          }}
-          transition={{
-            duration: 6 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: shape.delay,
-          }}
-        >
-          {shape.emoji}
-        </motion.span>
-      ))}
+    <div className="mx-auto flex items-center gap-3">
+      <div className="h-px w-12 bg-[#C6A962]/30 sm:w-20" />
+      <div className="h-1.5 w-1.5 rotate-45 border border-[#C6A962]/50 bg-[#FAFAF8]" />
+      <div className="h-px w-12 bg-[#C6A962]/30 sm:w-20" />
     </div>
   );
 }
 
-/* ─── Feature badge ─── */
-function FeatureBadge({
+/* ─── Feature card ─── */
+function FeatureCard({
   icon: Icon,
   title,
   description,
-  color,
   index,
 }: {
   icon: React.ElementType;
   title: string;
   description: string;
-  color: string;
   index: number;
 }) {
   return (
     <motion.div
       custom={index}
-      variants={bounceIn}
+      variants={fadeUp}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      whileHover={wiggleHover}
-      className="group relative flex flex-col items-center gap-3 rounded-3xl border-2 border-transparent bg-white p-6 text-center shadow-md transition-colors sm:flex-row sm:text-left"
-      style={
-        {
-          "--hover-color": color,
-        } as React.CSSProperties
-      }
+      viewport={{ once: true, margin: "-40px" }}
+      className="group relative bg-white p-6 text-center transition-shadow duration-300 hover:shadow-lg sm:p-8"
+      style={{ border: "1px solid #E8E5DE" }}
     >
-      {/* Icon wrapper */}
-      <div
-        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white shadow-lg"
-        style={{ backgroundColor: color }}
-      >
-        <Icon className="h-7 w-7" />
+      {/* Gold top accent line */}
+      <div className="absolute left-1/2 top-0 h-px w-10 -translate-x-1/2 bg-[#C6A962] opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:w-16" />
+
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full sm:h-14 sm:w-14" style={{ backgroundColor: "#F5F3EF" }}>
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: "#C6A962" }} />
       </div>
-      <div>
-        <h3 className="text-base font-bold text-gray-800">{title}</h3>
-        <p className="mt-0.5 text-sm text-gray-500">{description}</p>
-      </div>
-      {/* Decorative corner dot */}
-      <div
-        className="absolute -right-1 -top-1 h-4 w-4 rounded-full opacity-0 transition-opacity group-hover:opacity-100"
-        style={{ backgroundColor: color }}
-      />
+      <h3 className="font-serif text-base font-medium tracking-wide" style={{ color: "#1A1A1A" }}>
+        {title}
+      </h3>
+      <p className="mx-auto mt-2 max-w-[220px] text-sm leading-relaxed" style={{ color: "#999" }}>
+        {description}
+      </p>
     </motion.div>
   );
 }
 
-/* ─── Section divider wave ─── */
-function WaveDivider({ color = "#eab308", flip = false }) {
-  return (
-    <div className={`w-full ${flip ? "rotate-180" : ""}`}>
-      <svg
-        viewBox="0 0 1440 60"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="block w-full"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0 30C240 60 480 0 720 30C960 60 1200 0 1440 30V60H0V30Z"
-          fill={color}
-          opacity="0.15"
-        />
-        <path
-          d="M0 40C360 10 720 55 1080 20C1260 5 1380 35 1440 40V60H0V40Z"
-          fill={color}
-          opacity="0.08"
-        />
-      </svg>
-    </div>
-  );
-}
-
 /* ════════════════════════════════════════════════════════════════
-   NIÑOS PAGE
+   NIÑOS PAGE — Luxury Edition
    ════════════════════════════════════════════════════════════════ */
 export default function NinosPage() {
   const products = useMemo(() => getProductsByCategory("ninos"), []);
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-gradient-to-b from-yellow-50/40 via-green-50/30 to-sky-50/40">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#FAFAF8" }}>
       {/* ── Breadcrumbs ── */}
       <div className="mx-auto w-full max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Niños" }]} />
@@ -188,80 +97,86 @@ export default function NinosPage() {
 
       {/* ── HERO SECTION ── */}
       <section className="relative w-full">
-        {/* Background image */}
-        <div className="relative h-[320px] w-full sm:h-[380px] md:h-[440px] lg:h-[480px]">
+        <div className="relative h-[380px] w-full sm:h-[440px] md:h-[500px] lg:h-[540px]">
           <Image
             src="/images/hero-ninos.png"
-            alt="Ropa para Niños - Miss Semi Fashion"
+            alt="Colección Infantil - Miss Semi Fashion"
             fill
             className="object-cover"
             priority
           />
-          {/* Colorful gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/80 via-green-400/70 to-sky-400/75" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10" />
 
-          {/* Floating decorations */}
-          <FloatingShapes />
+          {/* Warm cream overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#F5F3EF]/85 via-[#FAFAF8]/75 to-[#F5F3EF]/90" />
+
+          {/* Subtle warm vignette */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(198,169,98,0.05)_100%)]" />
 
           {/* Hero content */}
-          <div className="relative z-10 flex h-full flex-col items-center justify-center gap-4 px-4 text-center">
-            {/* Fun badge */}
+          <div className="relative z-10 flex h-full flex-col items-center justify-center gap-5 px-6 text-center sm:gap-6 sm:px-8">
+            {/* Badge */}
             <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.8 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 15, delay: 0.2 }}
-              className="rounded-full border-2 border-white/40 bg-white/20 px-5 py-1.5 backdrop-blur-sm"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="tracking-[0.25em]"
             >
-              <span className="flex items-center gap-2 text-sm font-semibold text-white sm:text-base">
-                <Sparkles className="h-4 w-4" />
-                Diversión &amp; Comodidad
-                <Sparkles className="h-4 w-4" />
+              <span
+                className="inline-block border px-5 py-1.5 text-[11px] font-semibold uppercase sm:text-xs"
+                style={{ borderColor: "#C6A962", color: "#C6A962" }}
+              >
+                COLECCIÓN INFANTIL
               </span>
             </motion.div>
 
             {/* Main title */}
             <motion.h1
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 200,
-                damping: 12,
-                delay: 0.4,
-              }}
-              className="text-6xl font-black tracking-tight text-white drop-shadow-lg sm:text-7xl md:text-8xl lg:text-9xl"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="font-serif text-5xl font-medium tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+              style={{ color: "#1A1A1A" }}
             >
-              <span className="inline-block" style={{ textShadow: "3px 4px 0 rgba(0,0,0,0.15)" }}>
-                NIÑOS
-              </span>
+              NIÑOS
             </motion.h1>
 
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
-              className="max-w-lg text-base font-medium text-white/90 sm:text-lg md:text-xl"
+            {/* Gold decorative line */}
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="flex items-center gap-3"
             >
-              Ropa divertida, colorida y súper cómoda para los más pequeños de la casa.
-              ¡Diseños que los encantarán!
+              <div className="h-px w-16 bg-[#C6A962]/60 sm:w-24 md:w-32" />
+              <div className="h-1.5 w-1.5 rotate-45 border border-[#C6A962] bg-transparent" />
+              <div className="h-px w-16 bg-[#C6A962]/60 sm:w-24 md:w-32" />
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="max-w-md text-sm leading-relaxed sm:text-base md:max-w-lg"
+              style={{ color: "#666" }}
+            >
+              Diseños exclusivos elaborados con telas premium para los más
+              pequeños. Comodidad y elegancia en cada detalle.
             </motion.p>
 
             {/* CTA */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.75 }}
             >
               <Button
                 asChild
-                size="lg"
-                className="mt-2 rounded-full bg-white px-8 text-base font-bold text-yellow-600 shadow-lg transition-all hover:bg-yellow-50 hover:shadow-xl"
+                className="mt-1 border-[#C6A962] bg-[#C6A962] px-8 text-xs font-semibold uppercase tracking-[0.15em] text-white transition-all hover:bg-[#A68B3C] hover:border-[#A68B3C] sm:px-10 sm:text-sm"
               >
                 <a href="#productos">
                   Ver Colección
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </motion.div>
@@ -269,160 +184,162 @@ export default function NinosPage() {
         </div>
       </section>
 
-      <WaveDivider color="#eab308" />
-
       {/* ── FEATURES SECTION ── */}
-      <section className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <section className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-8 text-center"
+          className="mb-10 text-center sm:mb-12"
         >
-          <h2 className="text-2xl font-black text-gray-800 sm:text-3xl">
-            <span className="text-yellow-500">¿Por qué</span> elegirnos?
+          <h2
+            className="font-serif text-2xl font-medium tracking-wide sm:text-3xl"
+            style={{ color: "#1A1A1A" }}
+          >
+            Calidad que se siente
           </h2>
-          <p className="mt-2 text-sm text-gray-500 sm:text-base">
-            Todo lo que necesitan los peques, pensado con cariño
+          <div className="mx-auto mt-3 w-16 sm:w-20">
+            <GoldDivider />
+          </div>
+          <p className="mx-auto mt-3 max-w-sm text-sm" style={{ color: "#999" }}>
+            Cada prenda está pensada para el confort y la elegancia de los más pequeños
           </p>
         </motion.div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <FeatureBadge
+          <FeatureCard
             icon={Droplets}
             title="Telas Suaves"
-            description="Algodón premium suave al tacto, ideal para piel sensible"
-            color="#22c55e"
+            description="Algodón premium suave al tacto, cuidadosamente seleccionado para piel sensible"
             index={0}
           />
-          <FeatureBadge
+          <FeatureCard
             icon={Palette}
-            title="Divertido Diseño"
-            description="Estampados coloridos y creativos que encantan a los niños"
-            color="#eab308"
+            title="Diseño Elegante"
+            description="Estampados refinados y cortes pensados para lucir con estilo natural"
             index={1}
           />
-          <FeatureBadge
+          <FeatureCard
             icon={ShieldCheck}
-            title="Resistente al Lavado"
-            description="Mantiene colores y forma lavado tras lavado"
-            color="#38bdf8"
+            title="Resistente"
+            description="Confección duradera que mantiene su forma y color lavado tras lavado"
             index={2}
           />
         </div>
       </section>
 
-      <WaveDivider color="#22c55e" flip />
-
       {/* ── PRODUCTS SECTION ── */}
-      <section id="productos" className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-8 text-center"
-        >
-          <h2 className="text-2xl font-black text-gray-800 sm:text-3xl">
-            Nuestra{" "}
-            <span
-              className="inline-block bg-gradient-to-r from-yellow-400 via-green-400 to-sky-400 bg-clip-text text-transparent"
+      <section
+        id="productos"
+        className="w-full py-12 sm:py-16"
+        style={{ backgroundColor: "#F5F3EF" }}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-8 text-center sm:mb-10"
+          >
+            <h2
+              className="font-serif text-2xl font-medium tracking-wide sm:text-3xl"
+              style={{ color: "#1A1A1A" }}
             >
-              Colección
-            </span>
-          </h2>
-          <p className="mt-2 text-sm text-gray-500 sm:text-base">
-            Descubre las mejores prendas para niños
-          </p>
-        </motion.div>
+              Colección Infantil
+            </h2>
+            <div className="mx-auto mt-3 w-16 sm:w-20">
+              <GoldDivider />
+            </div>
+            <p className="mx-auto mt-3 max-w-md text-sm" style={{ color: "#999" }}>
+              Descubre nuestras prendas seleccionadas para los más pequeños de la familia
+            </p>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, type: "spring", stiffness: 180, damping: 20 }}
-        >
-          <ProductGrid
-            products={products}
-            title=""
-            variant="grid"
-          />
-        </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <ProductGrid products={products} title="" variant="grid" />
+          </motion.div>
+        </div>
       </section>
 
-      {/* ── FUN BANNER ── */}
-      <section className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+      {/* ── BANNER CTA ── */}
+      <section className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <motion.div
-          custom={0}
-          variants={floatUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          whileHover={wiggleHover}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-yellow-400 via-green-400 to-sky-400 p-8 text-center shadow-xl sm:p-12"
+          viewport={{ once: true, margin: "-40px" }}
+          variants={scaleIn}
+          className="relative overflow-hidden px-8 py-12 text-center sm:px-12 sm:py-14"
+          style={{ backgroundColor: "#F5F3EF", border: "1px solid #E8E5DE" }}
         >
-          {/* Background decorative circles */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-8 -top-8 h-32 w-32 rounded-full bg-white/10" />
-            <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/10" />
-            <div className="absolute left-1/3 top-1/4 h-20 w-20 rounded-full bg-white/5" />
-          </div>
+          {/* Corner gold accents */}
+          <div className="pointer-events-none absolute left-4 top-4 h-8 w-8 border-l border-t border-[#C6A962]/30 sm:left-6 sm:top-6 sm:h-12 sm:w-12" />
+          <div className="pointer-events-none absolute bottom-4 right-4 h-8 w-8 border-b border-r border-[#C6A962]/30 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12" />
 
           <div className="relative z-10">
-            <motion.div
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="mb-4 inline-block text-4xl sm:text-5xl"
+            <Sparkles className="mx-auto mb-4 h-5 w-5" style={{ color: "#C6A962" }} />
+            <h3
+              className="font-serif text-xl font-medium tracking-wide sm:text-2xl md:text-3xl"
+              style={{ color: "#1A1A1A" }}
             >
-              🎉
-            </motion.div>
-            <h3 className="text-xl font-black text-white sm:text-2xl md:text-3xl">
-              ¡Envío gratis en pedidos +$50.000!
+              Envío gratis en pedidos +$50.000
             </h3>
-            <p className="mx-auto mt-2 max-w-md text-sm text-white/80 sm:text-base">
-              Sorprende a los peques con ropa increíble y recíbela en la puerta de tu casa
-              sin costo adicional.
-            </p>
-            <Button
-              asChild
-              className="mt-6 rounded-full bg-white px-8 font-bold text-yellow-600 shadow-md transition-all hover:bg-yellow-50 hover:shadow-lg"
+            <p
+              className="mx-auto mt-3 max-w-md text-sm leading-relaxed"
+              style={{ color: "#999" }}
             >
-              <Link href="/pedidos">
-                Hacer pedido
-                <Heart className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+              Recibe la colección infantil directamente en tu puerta, sin costos
+              adicionales de envío.
+            </p>
+            <div className="mt-6">
+              <Button
+                asChild
+                className="border-[#C6A962] bg-[#C6A962] px-8 text-xs font-semibold uppercase tracking-[0.15em] text-white transition-all hover:bg-[#A68B3C] hover:border-[#A68B3C] sm:px-10 sm:text-sm"
+              >
+                <Link href="/pedidos">
+                  Hacer pedido
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </motion.div>
       </section>
 
-      {/* ── BOTTOM CTA ── */}
-      <section className="mx-auto w-full max-w-5xl px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
+      {/* ── TRUST / RATING ── */}
+      <section className="mx-auto w-full max-w-5xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="flex flex-col items-center gap-3 text-center"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0 }}
+                initial={{ opacity: 0, scale: 0.5 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ type: "spring", delay: i * 0.1 }}
+                transition={{ duration: 0.3, delay: i * 0.08 }}
               >
-                <Star className="h-6 w-6 fill-yellow-400 text-yellow-400" />
+                <Star className="h-5 w-5 fill-[#C6A962] text-[#C6A962] sm:h-6 sm:w-6" />
               </motion.div>
             ))}
           </div>
-          <p className="text-sm font-medium text-gray-500 sm:text-base">
+          <p className="text-sm font-medium" style={{ color: "#666" }}>
             Miles de familias confían en Miss Semi Fashion
           </p>
-          <p className="text-xs text-gray-400">4.8 ★ promedio en valoraciones</p>
+          <p className="text-xs" style={{ color: "#999" }}>
+            4.8 ★ promedio en valoraciones
+          </p>
         </motion.div>
       </section>
 

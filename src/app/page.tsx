@@ -5,94 +5,38 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  MessageCircle,
-  Sparkles,
   Truck,
   ShieldCheck,
   RotateCcw,
-  CreditCard,
-  TrendingUp,
-  ChevronRight,
   Star,
-  Clock,
+  ChevronRight,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { getBestSellers, getDeals } from "@/data/products";
-import { categories } from "@/data/categories";
 import ProductGrid from "@/components/amazon/ProductGrid";
+
+/* ──────────────────────────────────────────────
+   Data
+   ────────────────────────────────────────────── */
 
 const bestSellers = getBestSellers();
 const deals = getDeals();
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, ease: "easeOut" },
-  }),
-};
-
-const stagger = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.06 },
-  },
-};
-
-const trustBadges = [
-  {
-    icon: Truck,
-    title: "Envío Gratis",
-    desc: "En compras +$50.000",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Calidad Premium",
-    desc: "Telas colombianas",
-  },
-  {
-    icon: RotateCcw,
-    title: "Devoluciones",
-    desc: "30 días para devolver",
-  },
-  {
-    icon: CreditCard,
-    title: "Pago Seguro",
-    desc: "Múltiples métodos",
-  },
+const categoryLinks = [
+  { name: "Hombre", href: "/hombre", image: "/images/hero-hombre.png" },
+  { name: "Lencería", href: "/lenceria", image: "/images/hero-lenceria.png" },
+  { name: "Niños", href: "/ninos", image: "/images/hero-ninos.png" },
+  { name: "Adornos", href: "/adornos", image: "/images/hero-adornos.png" },
+  { name: "Hogar", href: "/hogar", image: "/images/hero-hogar.png" },
+  { name: "Ofertas", href: "/ofertas", image: "/images/hero.png" },
 ];
 
-const featuredCollections = [
-  {
-    title: "Pijamas",
-    description: "Descanso con estilo",
-    image: "/images/cat-pijamas.png",
-    href: "/categoria/pijamas",
-    gradient: "from-pink-600/80 to-rose-400/80",
-  },
-  {
-    title: "Blusas",
-    description: "Elegancia en cada detalle",
-    image: "/images/cat-blusas.png",
-    href: "/categoria/blusas",
-    gradient: "from-purple-600/80 to-violet-400/80",
-  },
-  {
-    title: "Deportivo",
-    description: "Rendimiento y confort",
-    image: "/images/cat-deportivo.png",
-    href: "/categoria/deportivo",
-    gradient: "from-emerald-600/80 to-teal-400/80",
-  },
-  {
-    title: "Pantalones",
-    description: "Versatilidad total",
-    image: "/images/cat-pantalones.png",
-    href: "/categoria/pantalones",
-    gradient: "from-amber-600/80 to-orange-400/80",
-  },
+const trustItems = [
+  { icon: Truck, title: "Envío Gratis", desc: "En compras +$50.000" },
+  { icon: ShieldCheck, title: "Calidad Premium", desc: "Telas colombianas" },
+  { icon: RotateCcw, title: "Devoluciones", desc: "30 días para devolver" },
+  { icon: Star, title: "Compra Segura", desc: "Pago protegido" },
 ];
 
 const testimonials = [
@@ -101,88 +45,126 @@ const testimonials = [
     location: "Bogotá",
     text: "La mejor calidad en licra que he encontrado. Mis leggings no se transparentan y el diseño es hermoso.",
     rating: 5,
-    product: "Leggings Premium",
   },
   {
     name: "Carolina S.",
     location: "Medellín",
     text: "El pijama trio es súper cómodo y la tela es suavísima. Ya es mi tercer pedido y siempre cumpliendo.",
     rating: 5,
-    product: "Pijama Trio Dama",
   },
   {
     name: "Andrea P.",
     location: "Cali",
     text: "El vestido deportivo es perfecto para mi rutina. Se ajusta genial y la tela respira. 100% recomendado.",
     rating: 5,
-    product: "Vestido Deportivo Licra",
   },
 ];
 
+/* ──────────────────────────────────────────────
+   Animation Variants
+   ────────────────────────────────────────────── */
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.7,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  }),
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+/* ──────────────────────────────────────────────
+   Page Component
+   ────────────────────────────────────────────── */
+
 export default function HomePage() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-[#FAFAF8]">
       {/* ══════════════════════════════════════════
-          HERO BANNER
+          1. HERO SECTION
           ══════════════════════════════════════════ */}
       <section className="relative w-full overflow-hidden">
-        <div className="relative h-[420px] w-full sm:h-[480px] md:h-[520px] lg:h-[560px]">
-          {/* Animated gradient background */}
-          <div className="hero-gradient absolute inset-0 bg-gradient-to-br from-rose-900 via-pink-800 to-purple-900" />
+        <div className="relative h-[520px] w-full sm:h-[580px] md:h-[640px] lg:h-[720px]">
+          {/* Background Video */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
+            poster="/images/hero.png"
+          >
+            <source src="/videos/hero-bg.mp4" type="video/mp4" />
+          </video>
 
-          {/* Decorative elements */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute left-[10%] top-[20%] h-64 w-64 rounded-full bg-pink-400/30 blur-3xl" />
-            <div className="absolute right-[15%] top-[40%] h-48 w-48 rounded-full bg-purple-400/30 blur-3xl" />
-            <div className="absolute bottom-[10%] left-[30%] h-56 w-56 rounded-full bg-rose-400/20 blur-3xl" />
-          </div>
-
-          {/* Hero image */}
-          <Image
-            src="/images/hero.png"
-            alt="Miss Semi Fashion"
-            fill
-            priority
-            className="object-cover mix-blend-overlay opacity-50"
-          />
-
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-[#1A1A1A]/60" />
 
           {/* Content */}
-          <div className="absolute inset-0 flex items-center">
-            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="mx-auto w-full max-w-4xl px-6 text-center">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7 }}
-                className="max-w-xl"
+                initial="hidden"
+                animate="visible"
+                variants={stagger}
+                className="flex flex-col items-center"
               >
-                <Badge className="mb-4 border-0 bg-white/15 px-3 py-1 text-sm font-medium text-white backdrop-blur-md">
-                  <Sparkles className="mr-1.5 h-3.5 w-3.5" />
-                  Nueva Colección 2024
-                </Badge>
+                {/* Gold line decoration */}
+                <motion.div
+                  variants={fadeUp}
+                  custom={0}
+                  className="mb-6 h-[1px] w-12 bg-[#C6A962]"
+                />
 
-                <h1 className="mb-4 text-4xl font-extrabold leading-tight tracking-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl">
-                  Confeccionamos
-                  <span className="mt-1 block text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-amber-200">
-                    prendas de calidad
-                  </span>
-                  <span className="mt-1 block text-white/90">para ti</span>
-                </h1>
+                {/* Subheading in gold */}
+                <motion.p
+                  variants={fadeUp}
+                  custom={1}
+                  className="mb-4 text-sm font-medium tracking-[0.3em] text-[#C6A962] uppercase sm:text-base"
+                >
+                  Moda Premium Colombia
+                </motion.p>
 
-                <p className="mb-6 max-w-md text-base text-white/75 sm:text-lg">
-                  Pijamas, blusas, vestidos deportivos y más — hechos en
-                  Colombia con amor y las mejores telas.
-                </p>
+                {/* Main heading */}
+                <motion.h1
+                  variants={fadeUp}
+                  custom={2}
+                  className="mb-5 font-serif text-4xl font-normal leading-tight tracking-[0.15em] text-white uppercase sm:text-5xl md:text-6xl lg:text-7xl"
+                >
+                  Miss Semi Fashion
+                </motion.h1>
 
-                <div className="flex flex-wrap gap-3">
+                {/* Description */}
+                <motion.p
+                  variants={fadeUp}
+                  custom={3}
+                  className="mx-auto mb-10 max-w-lg text-base leading-relaxed text-white/80 sm:text-lg"
+                >
+                  Descubre nuestra colección exclusiva de prendas
+                  confeccionadas en Colombia con las mejores telas y diseño.
+                </motion.p>
+
+                {/* CTAs */}
+                <motion.div
+                  variants={fadeUp}
+                  custom={4}
+                  className="flex flex-col items-center gap-4 sm:flex-row"
+                >
                   <Button
                     asChild
                     size="lg"
-                    className="h-12 rounded-xl bg-white px-6 text-base font-bold text-rose-900 shadow-xl shadow-black/20 transition-all hover:bg-white/90 hover:shadow-2xl"
+                    className="h-12 w-full rounded-none bg-[#C6A962] px-10 text-sm font-semibold tracking-wider text-[#1A1A1A] uppercase transition-all duration-300 hover:bg-[#B8963F] sm:w-auto"
                   >
-                    <Link href="/categoria/deportivo">
+                    <Link href="/ofertas">
                       Comprar Ahora
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
@@ -190,128 +172,78 @@ export default function HomePage() {
                   <Button
                     asChild
                     size="lg"
-                    variant="outline"
-                    className="h-12 rounded-xl border-white/30 bg-white/10 px-6 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
+                    className="h-12 w-full rounded-none border border-white/40 bg-transparent px-10 text-sm font-semibold tracking-wider text-white uppercase transition-all duration-300 hover:border-white/70 hover:bg-white/10 sm:w-auto"
                   >
                     <Link href="/ofertas">
-                      <TrendingUp className="mr-2 h-4 w-4" />
-                      Ver Ofertas
+                      Ver Colecciones
                     </Link>
                   </Button>
-                </div>
-
-                {/* Social proof */}
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white/50 bg-gradient-to-br from-pink-400 to-rose-500 text-[10px] font-bold text-white"
-                      >
-                        {String.fromCharCode(64 + i)}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="text-sm text-white/70">
-                    <span className="font-semibold text-white">+2,500</span>{" "}
-                    clientas felices
-                  </div>
-                </div>
+                </motion.div>
               </motion.div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ══════════════════════════════════════════
-          TRUST BADGES
-          ══════════════════════════════════════════ */}
-      <section className="relative z-10 -mt-6">
-        <div className="mx-auto max-w-5xl px-4">
+          {/* Scroll indicator */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="grid grid-cols-2 gap-3 rounded-2xl border border-border/50 bg-card p-4 shadow-xl shadow-black/5 sm:gap-0 sm:p-2 md:grid-cols-4 md:divide-x md:divide-border"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="absolute inset-x-0 bottom-8 flex justify-center"
           >
-            {trustBadges.map((badge, i) => (
-              <motion.div
-                key={badge.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + i * 0.1 }}
-                className="flex items-center gap-3 px-4 py-3"
-              >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <badge.icon className="h-5 w-5" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-foreground">
-                    {badge.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {badge.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            >
+              <ChevronRight className="h-6 w-6 rotate-90 text-white/60" />
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════
-          FEATURED COLLECTIONS
+          2. CATEGORY NAVIGATION
           ══════════════════════════════════════════ */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.15 }}
           variants={stagger}
         >
-          <motion.div variants={fadeInUp} custom={0} className="mb-6">
-            <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-              Explora Colecciones
+          {/* Section heading */}
+          <motion.div variants={fadeUp} custom={0} className="mb-10 text-center">
+            <h2 className="font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl">
+              Explora Categorías
             </h2>
-            <p className="mt-1 text-muted-foreground">
-              Encuentra el estilo perfecto para cada momento
-            </p>
+            <div className="mx-auto mt-4 h-[1px] w-10 bg-[#C6A962]" />
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4">
-            {featuredCollections.map((col, i) => (
-              <motion.div
-                key={col.title}
-                variants={fadeInUp}
-                custom={i + 1}
-              >
-                <Link href={col.href} className="group block">
-                  <div className="relative overflow-hidden rounded-2xl aspect-[3/4]">
+          {/* Category grid */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6">
+            {categoryLinks.map((cat, i) => (
+              <motion.div key={cat.name} variants={fadeUp} custom={i + 1}>
+                <Link href={cat.href} className="group block">
+                  <div className="relative aspect-[3/4] overflow-hidden">
                     <Image
-                      src={col.image}
-                      alt={col.title}
+                      src={cat.image}
+                      alt={cat.name}
                       fill
-                      sizes="(max-width: 640px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16.66vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-t ${col.gradient} transition-opacity duration-300 group-hover:opacity-90`}
-                    />
-                    {/* Decorative pattern overlay */}
-                    <div className="absolute inset-0 opacity-10">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,white_1px,transparent_1px),radial-gradient(circle_at_70%_60%,white_1px,transparent_1px),radial-gradient(circle_at_50%_80%,white_1px,transparent_1px)] bg-[length:20px_20px]" />
+                    {/* Dark overlay */}
+                    <div className="absolute inset-0 bg-[#1A1A1A]/50 transition-all duration-500 group-hover:bg-[#1A1A1A]/40" />
+
+                    {/* Centered text */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="font-serif text-lg font-normal tracking-wider text-white uppercase sm:text-xl">
+                        {cat.name}
+                      </span>
                     </div>
-                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                      <h3 className="text-xl font-bold text-white drop-shadow-lg sm:text-2xl">
-                        {col.title}
-                      </h3>
-                      <p className="mt-0.5 text-sm text-white/80">
-                        {col.description}
-                      </p>
-                      <div className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-white transition-all group-hover:gap-2.5">
-                        Explorar
-                        <ChevronRight className="h-4 w-4" />
-                      </div>
+
+                    {/* Gold underline on hover */}
+                    <div className="absolute inset-x-0 bottom-6 flex justify-center">
+                      <div className="h-[1px] w-0 bg-[#C6A962] transition-all duration-500 group-hover:w-8" />
                     </div>
                   </div>
                 </Link>
@@ -321,251 +253,240 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* Divider */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="section-divider" />
-      </div>
+      {/* ══════════════════════════════════════════
+          3. TRUST BAR
+          ══════════════════════════════════════════ */}
+      <section className="border-y border-[#E8E5DE] bg-[#FAFAF8]">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-[#E8E5DE]">
+            {trustItems.map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="flex items-center gap-3 md:px-6 md:first:pl-0 md:last:pr-0"
+              >
+                <item.icon className="h-5 w-5 shrink-0 text-[#C6A962]" strokeWidth={1.5} />
+                <div>
+                  <p className="text-sm font-medium tracking-wide text-[#1A1A1A]">
+                    {item.title}
+                  </p>
+                  <p className="text-xs text-[#999]">
+                    {item.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════
-          BEST SELLERS
+          4. BEST SELLERS
           ══════════════════════════════════════════ */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
+          variants={fadeUp}
           custom={0}
-          variants={fadeInUp}
         >
           <ProductGrid
             products={bestSellers}
             title="Más Vendidos"
             subtitle="Las favoritas de nuestras clientas"
             viewAllHref="/ofertas"
+            variant="scroll"
           />
         </motion.div>
       </section>
 
-      {/* Divider */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="section-divider" />
-      </div>
+      {/* ══════════════════════════════════════════
+          5. ELEGANT BANNER
+          ══════════════════════════════════════════ */}
+      <section className="relative overflow-hidden bg-[#1A1A1A]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex flex-col items-center gap-10 py-16 md:flex-row md:py-20 lg:py-24"
+          >
+            {/* Left content */}
+            <div className="flex-1 text-center md:text-left">
+              {/* Gold decorative line */}
+              <div className="mb-6 h-[1px] w-10 bg-[#C6A962] md:ml-0" />
+
+              <p className="mb-3 text-xs font-medium tracking-[0.3em] text-[#C6A962] uppercase sm:text-sm">
+                Nueva Colección
+              </p>
+
+              <h2 className="mb-5 font-serif text-3xl font-normal tracking-wide text-white sm:text-4xl lg:text-5xl">
+                Colección 2024
+              </h2>
+
+              <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-white/70 sm:text-base md:mx-0">
+                Prendas diseñadas con pasión y confeccionadas con las mejores
+                telas colombianas. Descubre la nueva temporada con estilo y
+                sofisticación.
+              </p>
+
+              <Button
+                asChild
+                className="h-11 rounded-none bg-[#C6A962] px-8 text-sm font-semibold tracking-wider text-[#1A1A1A] uppercase transition-all duration-300 hover:bg-[#B8963F]"
+              >
+                <Link href="/ofertas">
+                  Descubrir
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Right image */}
+            <div className="relative w-full max-w-sm shrink-0 md:max-w-md">
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src="/images/hero.png"
+                  alt="Colección 2024"
+                  fill
+                  className="object-cover"
+                />
+                {/* Subtle overlay for blending */}
+                <div className="absolute inset-0 bg-[#1A1A1A]/10" />
+              </div>
+              {/* Gold accent line at bottom */}
+              <div className="absolute -bottom-0 left-1/2 h-[2px] w-16 -translate-x-1/2 bg-[#C6A962] md:left-0 md:translate-x-0" />
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════
-          DEALS OF THE DAY
+          6. DEALS
           ══════════════════════════════════════════ */}
-      <section className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <section className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
+          variants={fadeUp}
           custom={0}
-          variants={fadeInUp}
         >
           <ProductGrid
             products={deals}
-            title="Ofertas del Día"
-            subtitle="Precios especiales por tiempo limitado"
+            title="Ofertas Especiales"
+            subtitle="Precios exclusivos por tiempo limitado"
             viewAllHref="/ofertas"
+            variant="scroll"
           />
         </motion.div>
       </section>
 
       {/* ══════════════════════════════════════════
-          PROMO BANNER
+          7. TESTIMONIALS
           ══════════════════════════════════════════ */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+      <section className="bg-[#F5F3EF] py-16 sm:py-20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            variants={stagger}
+          >
+            {/* Section heading */}
+            <motion.div variants={fadeUp} custom={0} className="mb-12 text-center">
+              <h2 className="font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl">
+                Lo que dicen nuestras clientas
+              </h2>
+              <div className="mx-auto mt-4 h-[1px] w-10 bg-[#C6A962]" />
+            </motion.div>
+
+            {/* Testimonial cards */}
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {testimonials.map((testimonial, i) => (
+                <motion.div
+                  key={testimonial.name}
+                  variants={fadeUp}
+                  custom={i + 1}
+                  className="relative bg-white p-8 transition-shadow duration-500"
+                  style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}
+                >
+                  {/* Gold quote mark */}
+                  <span className="mb-5 block font-serif text-4xl leading-none text-[#C6A962]">
+                    &ldquo;
+                  </span>
+
+                  {/* Text */}
+                  <p className="mb-6 text-sm leading-relaxed text-[#666]">
+                    {testimonial.text}
+                  </p>
+
+                  {/* Divider */}
+                  <div className="mb-5 h-[1px] w-full bg-[#E8E5DE]" />
+
+                  {/* Rating */}
+                  <div className="mb-3 flex gap-0.5">
+                    {Array.from({ length: testimonial.rating }).map((_, j) => (
+                      <Star
+                        key={j}
+                        className="h-3.5 w-3.5 fill-[#C6A962] text-[#C6A962]"
+                      />
+                    ))}
+                  </div>
+
+                  {/* Name & Location */}
+                  <p className="text-sm font-medium tracking-wide text-[#1A1A1A]">
+                    {testimonial.name}
+                  </p>
+                  <p className="text-xs text-[#999]">{testimonial.location}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          8. CTA SECTION — WHATSAPP
+          ══════════════════════════════════════════ */}
+      <section className="py-16 sm:py-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl"
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mx-auto max-w-xl px-4 text-center sm:px-6"
         >
-          {/* Gradient bg */}
-          <div className="hero-gradient bg-gradient-to-r from-emerald-700 via-green-600 to-teal-500" />
+          {/* Gold line */}
+          <div className="mx-auto mb-6 h-[1px] w-10 bg-[#C6A962]" />
 
-          {/* Decorative circles */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -right-12 -top-12 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
-            <div className="absolute -bottom-16 left-1/3 h-48 w-48 rounded-full bg-white/5 blur-2xl" />
-          </div>
+          <h2 className="mb-3 font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl">
+            ¿Necesitas ayuda?
+          </h2>
 
-          <div className="relative flex flex-col items-center gap-6 px-6 py-12 text-center md:flex-row md:px-12 md:text-left">
-            <div className="flex-1 space-y-4">
-              <Badge className="border-0 bg-white/15 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
-                <Sparkles className="mr-1.5 h-3.5 w-3.5" />
-                Programa Mayorista
-              </Badge>
-              <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-                Emprende con nosotros
-              </h2>
-              <p className="max-w-xl text-base text-white/80 sm:text-lg">
-                ¿Quieres vender ropa de calidad? Precios exclusivos con pedidos
-                desde 6 unidades. Confeccionamos prendas en licra colombiana,
-                algodón y más.
-              </p>
-              <div className="flex flex-col items-center gap-3 sm:flex-row md:justify-start">
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-12 rounded-xl bg-white px-6 text-base font-bold text-green-700 shadow-xl shadow-black/20 transition-all hover:bg-white/90"
-                >
-                  <a
-                    href="https://wa.me/573108416620?text=Hola%2C%20me%20interesa%20comprar%20al%20mayor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <MessageCircle className="mr-2 h-5 w-5" />
-                    WhatsApp
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 rounded-xl border-white/30 bg-white/10 px-6 text-base font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
-                >
-                  <Link href="/mayorista">
-                    Ver Mayorista
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            <div className="hidden flex-shrink-0 md:block">
-              <Image
-                src="/images/hero.png"
-                alt="Ventas al mayor"
-                width={280}
-                height={280}
-                className="rounded-3xl opacity-60 mix-blend-luminosity drop-shadow-2xl"
-              />
-            </div>
-          </div>
-        </motion.div>
-      </section>
+          <p className="mx-auto mb-8 max-w-md text-sm leading-relaxed text-[#999]">
+            Nuestro equipo está listo para asesorarte en la elección perfecta.
+            Escríbenos y recibe atención personalizada.
+          </p>
 
-      {/* ══════════════════════════════════════════
-          TESTIMONIALS
-          ══════════════════════════════════════════ */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={stagger}
-        >
-          <motion.div variants={fadeInUp} custom={0} className="mb-6 text-center">
-            <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-              Lo que dicen nuestras clientas
-            </h2>
-            <p className="mt-1 text-muted-foreground">
-              Miles de mujeres confían en Miss Semi Fashion
-            </p>
-          </motion.div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map((testimonial, i) => (
-              <motion.div
-                key={testimonial.name}
-                variants={fadeInUp}
-                custom={i + 1}
-                className="group relative rounded-2xl border border-border/50 bg-card p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5"
-              >
-                {/* Quote mark */}
-                <div className="absolute -top-3 left-6 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                  <span className="text-xs font-bold">&quot;</span>
-                </div>
-
-                <div className="mb-4 flex items-center gap-3 pt-1">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/60 text-sm font-bold text-primary-foreground">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">
-                      {testimonial.name}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {testimonial.location} · {testimonial.product}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mb-3 flex gap-0.5">
-                  {Array.from({ length: testimonial.rating }).map((_, j) => (
-                    <Star
-                      key={j}
-                      className="h-4 w-4 fill-amber-400 text-amber-400"
-                    />
-                  ))}
-                </div>
-
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  &ldquo;{testimonial.text}&rdquo;
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          CTA BANNER
-          ══════════════════════════════════════════ */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl bg-card border border-border/50 p-8 text-center sm:p-12"
-        >
-          {/* Decorative bg */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute -left-20 -top-20 h-60 w-60 rounded-full bg-primary/5 blur-3xl" />
-            <div className="absolute -bottom-20 -right-20 h-60 w-60 rounded-full bg-primary/5 blur-3xl" />
-          </div>
-
-          <div className="relative">
-            <div className="mb-3 flex items-center justify-center gap-2 text-primary">
-              <Clock className="h-5 w-5" />
-              <span className="text-sm font-semibold uppercase tracking-wider">
-                Atención personalizada
-              </span>
-            </div>
-            <h2 className="mb-3 text-2xl font-bold text-foreground sm:text-3xl">
-              ¿Tienes dudas o necesitas ayuda?
-            </h2>
-            <p className="mx-auto mb-6 max-w-lg text-muted-foreground">
-              Nuestro equipo está listo para ayudarte a elegir la talla perfecta
-              o resolver cualquier pregunta sobre nuestros productos.
-            </p>
-            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="h-12 rounded-xl bg-green-500 px-8 text-base font-bold text-white shadow-lg shadow-green-500/25 transition-all hover:bg-green-600 hover:shadow-xl hover:shadow-green-500/30"
-              >
-                <a
-                  href="https://wa.me/573108416620?text=Hola%2C%20necesito%20ayuda%20con%20mi%20pedido"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle className="mr-2 h-5 w-5" />
-                  Escríbenos por WhatsApp
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 rounded-xl px-8 text-base font-semibold"
-              >
-                <Link href="/ayuda">Centro de Ayuda</Link>
-              </Button>
-            </div>
-          </div>
+          <Button
+            asChild
+            size="lg"
+            className="h-12 rounded-none bg-[#25D366] px-10 text-sm font-semibold tracking-wider text-white uppercase transition-all duration-300 hover:bg-[#1EBE57]"
+          >
+            <a
+              href="https://wa.me/573108416620?text=Hola%2C%20necesito%20ayuda%20con%20mi%20pedido"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Escríbenos por WhatsApp
+            </a>
+          </Button>
         </motion.div>
       </section>
 

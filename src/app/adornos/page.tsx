@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { motion } from "framer-motion";
-import { Gem, Sparkles, Truck, Heart, Star } from "lucide-react";
+import { Gem, Sparkles, Truck, Heart, Star, ShieldCheck } from "lucide-react";
 import { getProductsByCategory } from "@/data/products";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
@@ -10,17 +10,36 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 
+/* ─── Animation Variants ─── */
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.1,
+      duration: 0.7,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  }),
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
 /* ─── Shimmer particle data ─── */
-const shimmerParticles = Array.from({ length: 18 }, (_, i) => ({
+const shimmerParticles = Array.from({ length: 12 }, (_, i) => ({
   id: i,
-  x: `${Math.random() * 100}%`,
-  y: `${Math.random() * 100}%`,
-  size: Math.random() * 4 + 2,
+  x: `${10 + Math.random() * 80}%`,
+  y: `${10 + Math.random() * 80}%`,
+  size: Math.random() * 3 + 1,
   delay: Math.random() * 4,
   duration: Math.random() * 2 + 2,
 }));
 
-/* ─── Feature badges ─── */
+/* ─── Feature cards ─── */
 const features = [
   {
     icon: Gem,
@@ -39,35 +58,19 @@ const features = [
   },
 ];
 
-/* ─── Animation variants ─── */
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.12, duration: 0.55, ease: "easeOut" },
-  }),
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.85 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" },
-  }),
-};
-
 export default function AdornosPage() {
   const products = useMemo(() => getProductsByCategory("adornos"), []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ backgroundColor: "#FAFAF8" }}>
       {/* ════════════════════════════════════════════════
           BREADCRUMBS
       ════════════════════════════════════════════════ */}
-      <div className="border-b bg-card">
-        <div className="mx-auto max-w-7xl px-4 py-3">
+      <div
+        className="border-b"
+        style={{ borderColor: "#E8E5DE" }}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "Adornos" }]} />
         </div>
       </div>
@@ -75,7 +78,7 @@ export default function AdornosPage() {
       {/* ════════════════════════════════════════════════
           HERO SECTION
       ════════════════════════════════════════════════ */}
-      <section className="relative min-h-[480px] overflow-hidden md:min-h-[560px]">
+      <section className="relative min-h-[520px] overflow-hidden md:min-h-[600px] lg:min-h-[640px]">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
@@ -85,22 +88,27 @@ export default function AdornosPage() {
             className="object-cover object-center"
             priority
           />
-          {/* Purple-Gold Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-950/90 via-purple-900/80 to-black/85" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-purple-950/40" />
+          {/* Dark charcoal overlay */}
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: "rgba(26, 26, 26, 0.85)" }}
+          />
+          {/* Subtle gradient for depth */}
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-black/20" />
         </div>
 
-        {/* Sparkle / Shimmer Particles */}
+        {/* Shimmer particles */}
         <div className="absolute inset-0 pointer-events-none">
           {shimmerParticles.map((p) => (
             <motion.span
               key={p.id}
-              className="absolute rounded-full bg-yellow-300/70"
+              className="absolute rounded-full"
               style={{
                 left: p.x,
                 top: p.y,
                 width: p.size,
                 height: p.size,
+                backgroundColor: "rgba(198, 169, 98, 0.5)",
               }}
               animate={{
                 opacity: [0, 1, 0],
@@ -116,49 +124,36 @@ export default function AdornosPage() {
           ))}
         </div>
 
-        {/* Decorative corner gems */}
-        <motion.div
-          className="absolute top-8 right-8 hidden lg:flex items-center justify-center w-20 h-20"
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="relative">
-            <Gem className="w-14 h-14 text-yellow-400/30" />
-            <Gem className="absolute inset-0 w-14 h-14 text-yellow-300/20 blur-sm" />
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="absolute bottom-16 left-8 hidden lg:flex items-center justify-center w-16 h-16"
-          animate={{ rotate: [0, -15, 15, 0] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="relative">
-            <Sparkles className="w-10 h-10 text-purple-300/25" />
-            <Sparkles className="absolute inset-0 w-10 h-10 text-purple-200/15 blur-sm" />
-          </div>
-        </motion.div>
-
         {/* Hero Content */}
-        <div className="relative z-10 mx-auto flex min-h-[480px] max-w-7xl flex-col items-center justify-center px-4 text-center md:min-h-[560px]">
-          {/* Decorative line top */}
+        <div className="relative z-10 mx-auto flex min-h-[520px] max-w-7xl flex-col items-center justify-center px-4 text-center md:min-h-[600px] lg:min-h-[640px]">
+          {/* Decorative gold line top */}
           <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: 120 }}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 120, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6 h-[2px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent"
+            className="mb-6 h-[1px]"
+            style={{
+              background: "linear-gradient(90deg, transparent, #C6A962, transparent)",
+            }}
           />
 
-          {/* Subtitle above title */}
+          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mb-3 flex items-center gap-2 text-sm font-medium uppercase tracking-[0.35em] text-purple-200/90"
+            className="mb-4 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.3em] sm:text-sm"
+            style={{ color: "#C6A962" }}
           >
-            <span className="inline-block h-px w-8 bg-yellow-400/60" />
+            <span
+              className="inline-block h-[1px] w-8"
+              style={{ backgroundColor: "rgba(198, 169, 98, 0.5)" }}
+            />
             Colección Exclusiva
-            <span className="inline-block h-px w-8 bg-yellow-400/60" />
+            <span
+              className="inline-block h-[1px] w-8"
+              style={{ backgroundColor: "rgba(198, 169, 98, 0.5)" }}
+            />
           </motion.p>
 
           {/* Main Title */}
@@ -166,19 +161,21 @@ export default function AdornosPage() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-6 text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl"
+            className="font-serif mb-6 text-5xl font-medium tracking-wide text-white sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            <span className="bg-gradient-to-b from-white via-purple-50 to-purple-200 bg-clip-text text-transparent">
-              ADORNOS
-            </span>
+            ADORNOS
           </motion.h1>
 
-          {/* Gold accent underline */}
+          {/* Gold gradient underline */}
           <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="mb-6 h-1 w-32 origin-left rounded-full bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 shadow-lg shadow-yellow-400/30"
+            className="mb-6 h-[2px] w-28 origin-center rounded-full sm:w-36"
+            style={{
+              background:
+                "linear-gradient(90deg, #A68B3C, #C6A962, #D4BA7A, #C6A962, #A68B3C)",
+            }}
           />
 
           {/* Description */}
@@ -186,10 +183,10 @@ export default function AdornosPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.7 }}
-            className="mb-8 max-w-xl text-base leading-relaxed text-purple-100/90 md:text-lg"
+            className="mb-10 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base md:text-lg"
           >
-            Descubre nuestra colección de accesorios y bisutería seleccionada para
-            complementar tu estilo con elegancia y sofisticación.
+            Descubre nuestra colección de accesorios y bisutería seleccionada
+            para complementar tu estilo con elegancia y sofisticación.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -201,7 +198,8 @@ export default function AdornosPage() {
           >
             <Button
               size="lg"
-              className="group relative overflow-hidden border border-yellow-400/40 bg-gradient-to-r from-purple-700 via-purple-600 to-purple-700 px-8 font-semibold text-white shadow-lg shadow-purple-900/40 transition-all hover:shadow-xl hover:shadow-purple-800/50"
+              className="group px-8 text-sm font-medium tracking-wide uppercase sm:text-base"
+              style={{ backgroundColor: "#C6A962", color: "#FFFFFF" }}
               onClick={() =>
                 document
                   .getElementById("productos-adornos")
@@ -209,86 +207,76 @@ export default function AdornosPage() {
               }
             >
               <span className="relative z-10 flex items-center gap-2">
-                <Gem className="h-4 w-4 text-yellow-300" />
+                <Gem className="h-4 w-4" />
                 Ver Colección
               </span>
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-yellow-400/20 via-yellow-300/10 to-transparent transition-transform duration-500 group-hover:translate-x-full" />
             </Button>
 
             <Button
               size="lg"
               variant="outline"
-              className="border-purple-400/30 bg-white/5 px-8 font-semibold text-white backdrop-blur-sm transition-all hover:border-yellow-400/50 hover:bg-white/10"
+              className="border-transparent bg-transparent px-8 text-sm font-medium tracking-wide uppercase text-white backdrop-blur-sm transition-all hover:bg-white/5 sm:text-base"
+              style={{ borderColor: "rgba(198, 169, 98, 0.5)" }}
               asChild
             >
               <Link href="/buscar?category=adornos">
-                <Star className="mr-2 h-4 w-4 text-yellow-300" />
+                <Star className="mr-2 h-4 w-4" style={{ color: "#C6A962" }} />
                 Más Vendidos
               </Link>
             </Button>
-          </motion.div>
-
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.1 }}
-            className="mt-10 flex flex-wrap items-center justify-center gap-8"
-          >
-            {[
-              { value: `${products.length}+`, label: "Productos" },
-              { value: "4.6", label: "Rating Prom." },
-              { value: "500+", label: "Clientes Felices" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <p className="text-xl font-bold text-yellow-300 md:text-2xl">
-                  {stat.value}
-                </p>
-                <p className="text-xs uppercase tracking-wider text-purple-300/70">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
           </motion.div>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════
-          FEATURE BADGES
+          FEATURES SECTION
       ════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden border-y border-purple-100/50 bg-gradient-to-b from-purple-50/80 via-background to-background">
-        {/* Subtle shimmer bg */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.06),transparent_60%)]" />
-
-        <div className="relative mx-auto max-w-7xl px-4 py-10 md:py-14">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <section style={{ backgroundColor: "#F5F3EF" }}>
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={stagger}
+            className="grid grid-cols-1 gap-6 sm:grid-cols-3"
+          >
             {features.map((feat, i) => (
               <motion.div
                 key={feat.title}
                 custom={i}
-                variants={scaleIn}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-40px" }}
-                className="group relative flex flex-col items-center rounded-2xl border border-purple-100/60 bg-white/70 p-6 text-center shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-yellow-300/60 hover:shadow-lg hover:shadow-purple-200/30"
+                variants={fadeUp}
+                className="group relative flex flex-col items-center rounded-lg border bg-white/60 p-6 text-center backdrop-blur-sm transition-all duration-300 sm:p-8"
+                style={{
+                  borderColor: "#E8E5DE",
+                }}
+                whileHover={{
+                  borderColor: "rgba(198, 169, 98, 0.4)",
+                  boxShadow: "0 4px 24px rgba(198, 169, 98, 0.08)",
+                }}
               >
-                {/* Gold glow on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-yellow-400/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
                 {/* Icon container */}
-                <div className="relative mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-purple-100 to-purple-50 shadow-md transition-all duration-300 group-hover:from-yellow-100 group-hover:to-yellow-50 group-hover:shadow-yellow-200/40">
-                  <feat.icon className="h-6 w-6 text-purple-600 transition-colors duration-300 group-hover:text-yellow-600" />
+                <div
+                  className="mb-4 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300"
+                  style={{ backgroundColor: "rgba(198, 169, 98, 0.1)" }}
+                >
+                  <feat.icon
+                    className="h-6 w-6 transition-colors duration-300"
+                    style={{ color: "#C6A962" }}
+                  />
                 </div>
 
-                <h3 className="mb-1 text-base font-bold text-foreground">
+                <h3
+                  className="font-serif mb-2 text-base font-medium"
+                  style={{ color: "#1A1A1A" }}
+                >
                   {feat.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
+                <p className="text-sm leading-relaxed" style={{ color: "#666" }}>
                   {feat.description}
                 </p>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -296,27 +284,51 @@ export default function AdornosPage() {
           PRODUCTS SECTION
       ════════════════════════════════════════════════ */}
       <section id="productos-adornos" className="scroll-mt-20">
-        <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-8 flex flex-col items-center text-center"
+            className="mb-8 flex flex-col items-center text-center sm:mb-10"
           >
-            <div className="mb-3 flex items-center gap-2">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-yellow-400" />
-              <Sparkles className="h-5 w-5 text-yellow-500" />
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-yellow-400" />
+            <div className="mb-3 flex items-center gap-3">
+              <span
+                className="h-[1px] w-10"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, #C6A962)",
+                }}
+              />
+              <Sparkles
+                className="h-4 w-4"
+                style={{ color: "#C6A962" }}
+              />
+              <span
+                className="h-[1px] w-10"
+                style={{
+                  background:
+                    "linear-gradient(270deg, transparent, #C6A962)",
+                }}
+              />
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Nuestra Colección de{" "}
-              <span className="bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+            <h2 className="font-serif text-2xl font-medium tracking-wide sm:text-3xl md:text-4xl">
+              <span style={{ color: "#1A1A1A" }}>
+                Nuestra Colección de{" "}
+              </span>
+              <span
+                style={{
+                  color: "#C6A962",
+                }}
+              >
                 Adornos
               </span>
             </h2>
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
+            <p
+              className="mt-3 max-w-md text-sm leading-relaxed sm:text-base"
+              style={{ color: "#999" }}
+            >
               Encuentra collares, aretes, bolsos y más. Cada pieza ha sido
               cuidadosamente seleccionada para ti.
             </p>
@@ -343,11 +355,11 @@ export default function AdornosPage() {
               animate={{ opacity: 1 }}
               className="flex flex-col items-center py-20 text-center"
             >
-              <Gem className="mb-4 h-16 w-16 text-purple-200" />
-              <h3 className="mb-2 text-lg font-semibold text-foreground">
+              <Gem className="mb-4 h-16 w-16" style={{ color: "#E8E5DE" }} />
+              <h3 className="font-serif mb-2 text-lg font-medium" style={{ color: "#1A1A1A" }}>
                 Próximamente
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm" style={{ color: "#999" }}>
                 Estamos preparando una colección espectacular de adornos para ti.
               </p>
             </motion.div>
@@ -356,24 +368,31 @@ export default function AdornosPage() {
       </section>
 
       {/* ════════════════════════════════════════════════
-          LUXURY CTA BANNER
+          CTA BANNER
       ════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(234,179,8,0.08),transparent_60%)]" />
+      <section className="relative overflow-hidden" style={{ backgroundColor: "#1A1A1A" }}>
+        {/* Subtle gold radial glow */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 50%, rgba(198, 169, 98, 0.06), transparent 70%)",
+          }}
+        />
 
-        {/* Floating sparkles */}
+        {/* Subtle floating particles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute h-1 w-1 rounded-full bg-yellow-300/40"
+              className="absolute h-[1px] w-[1px] rounded-full"
               style={{
-                left: `${10 + i * 12}%`,
-                top: `${20 + (i % 3) * 25}%`,
+                left: `${15 + i * 14}%`,
+                top: `${25 + (i % 3) * 20}%`,
+                backgroundColor: "rgba(198, 169, 98, 0.35)",
               }}
               animate={{
-                opacity: [0.2, 0.8, 0.2],
+                opacity: [0.2, 0.7, 0.2],
                 scale: [0.8, 1.5, 0.8],
               }}
               transition={{
@@ -386,7 +405,7 @@ export default function AdornosPage() {
           ))}
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 md:py-20">
+        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
           <div className="flex flex-col items-center text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -394,37 +413,39 @@ export default function AdornosPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Heart className="mx-auto mb-4 h-10 w-10 text-yellow-400/80" />
-              <h2 className="mb-3 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+              <Heart
+                className="mx-auto mb-5 h-8 w-8"
+                style={{ color: "#C6A962" }}
+              />
+              <h2 className="font-serif mb-3 text-2xl font-medium text-white sm:text-3xl md:text-4xl">
                 ¿Buscas el regalo{" "}
-                <span className="bg-gradient-to-r from-yellow-300 to-yellow-400 bg-clip-text text-transparent">
-                  perfecto
-                </span>
-                ?
+                <span style={{ color: "#C6A962" }}>perfecto</span>?
               </h2>
-              <p className="mx-auto mb-8 max-w-lg text-purple-200/80">
+              <p className="mx-auto mb-8 max-w-lg text-sm leading-relaxed sm:text-base" style={{ color: "rgba(255,255,255,0.6)" }}>
                 Sorprende a esa persona especial con nuestros adornos exclusivos.
                 Calidad garantizada y envío discreto a toda Colombia.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-yellow-500 to-yellow-400 px-8 font-bold text-purple-950 shadow-lg shadow-yellow-500/25 transition-all hover:from-yellow-400 hover:to-yellow-300 hover:shadow-xl hover:shadow-yellow-400/30"
+                  className="px-8 text-sm font-medium tracking-wide uppercase sm:text-base"
+                  style={{ backgroundColor: "#C6A962", color: "#FFFFFF" }}
                   asChild
                 >
                   <Link href="/carrito">
-                    <Gem className="mr-2 h-5 w-5" />
+                    <Gem className="mr-2 h-4 w-4" />
                     Comprar Ahora
                   </Link>
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-purple-400/30 bg-white/5 px-8 font-semibold text-white backdrop-blur-sm transition-all hover:border-yellow-400/40 hover:bg-white/10"
+                  className="border-transparent bg-transparent px-8 text-sm font-medium tracking-wide uppercase text-white transition-all hover:bg-white/5 sm:text-base"
+                  style={{ borderColor: "rgba(198, 169, 98, 0.4)" }}
                   asChild
                 >
                   <Link href="/cuenta/deseos">
-                    <Heart className="mr-2 h-5 w-5 text-pink-400" />
+                    <Heart className="mr-2 h-4 w-4" style={{ color: "#C6A962" }} />
                     Mi Lista de Deseos
                   </Link>
                 </Button>
@@ -435,20 +456,23 @@ export default function AdornosPage() {
       </section>
 
       {/* ════════════════════════════════════════════════
-          TRUST / GUARANTEE SECTION
+          TRUST SECTION
       ════════════════════════════════════════════════ */}
-      <section className="border-t border-purple-50 bg-gradient-to-b from-background to-purple-50/40">
-        <div className="mx-auto max-w-7xl px-4 py-10 md:py-14">
+      <section
+        className="border-t"
+        style={{ borderColor: "#E8E5DE", backgroundColor: "#F5F3EF" }}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            variants={stagger}
             className="grid grid-cols-2 gap-6 md:grid-cols-4"
           >
             {[
               {
-                icon: Gem,
+                icon: ShieldCheck,
                 label: "Autenticidad",
                 desc: "100% garantizado",
               },
@@ -472,18 +496,20 @@ export default function AdornosPage() {
                 key={item.label}
                 custom={i}
                 variants={fadeUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-purple-100/80 shadow-sm transition-colors hover:bg-yellow-100">
-                  <item.icon className="h-5 w-5 text-purple-600 transition-colors hover:text-yellow-600" />
+                <div
+                  className="mb-3 flex h-12 w-12 items-center justify-center rounded-full transition-colors"
+                  style={{ backgroundColor: "rgba(198, 169, 98, 0.08)" }}
+                >
+                  <item.icon className="h-5 w-5" style={{ color: "#C6A962" }} />
                 </div>
-                <p className="text-sm font-semibold text-foreground">
+                <p className="text-sm font-medium" style={{ color: "#1A1A1A" }}>
                   {item.label}
                 </p>
-                <p className="text-xs text-muted-foreground">{item.desc}</p>
+                <p className="text-xs" style={{ color: "#999" }}>
+                  {item.desc}
+                </p>
               </motion.div>
             ))}
           </motion.div>

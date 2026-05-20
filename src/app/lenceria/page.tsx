@@ -53,21 +53,40 @@ const features = [
   },
 ];
 
+/* ─── Subcategory data ─── */
+const subcategories = [
+  {
+    name: "Conjuntos Íntimos",
+    image: "/images/hero-lenceria.png",
+    href: "/buscar?q=conjunto+íntimo",
+  },
+  {
+    name: "Bralettes",
+    image: "/images/hero-lenceria.png",
+    href: "/buscar?q=bralette",
+  },
+  {
+    name: "Pijamas Sensuales",
+    image: "/images/hero-lenceria.png",
+    href: "/buscar?q=babydoll",
+  },
+];
+
 export default function LenceriaPage() {
   const products = useMemo(() => getProductsByCategory("lenceria"), []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#fff5f7] via-[#fef7f9] to-background">
+    <main className="min-h-screen bg-[#FAFAF8]">
       {/* ── Breadcrumbs ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Lencería" }]} />
       </div>
 
       {/* ════════════════════════════════════════════════════════════════
-          HERO SECTION
+          HERO SECTION — Romantic Luxury
          ════════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
-        {/* Background image with romantic pink gradient overlay */}
+        {/* Background image with warm gold-toned overlay */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero-lenceria.png"
@@ -76,46 +95,14 @@ export default function LenceriaPage() {
             className="object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#fce7f3]/90 via-[#f43f5e]/70 to-[#fce7f3]/85" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#fce7f3]/60 via-transparent to-transparent" />
+          {/* Gold-toned overlay — warm & luxurious */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#C6A962]/70 via-[#FAF0EB]/85 to-[#C6A962]/50" />
+          {/* Bottom fade to page bg */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAF8]/80 via-transparent to-transparent" />
         </div>
 
-        {/* Decorative floating hearts */}
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
-          aria-hidden
-        >
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-white/20"
-              style={{
-                left: `${15 + i * 15}%`,
-                top: `${10 + (i % 3) * 25}%`,
-              }}
-              animate={{
-                y: [0, -18, 0],
-                rotate: [0, 8, -4, 0],
-                opacity: [0.15, 0.3, 0.15],
-              }}
-              transition={{
-                duration: 4 + i * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: i * 0.6,
-              }}
-            >
-              <Heart
-                className="h-6 w-6 sm:h-8 sm:w-8"
-                fill="currentColor"
-                strokeWidth={0}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
         {/* Hero content */}
-        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28 md:py-36 lg:py-40">
+        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 py-20 text-center sm:px-6 sm:py-28 md:py-36 lg:py-44">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -125,82 +112,68 @@ export default function LenceriaPage() {
             }}
             className="flex flex-col items-center gap-6"
           >
-            {/* Decorative diamond */}
+            {/* Brand line */}
             <motion.div variants={fadeIn} className="flex items-center gap-3">
-              <span className="h-px w-10 bg-white/50 sm:w-16" />
-              <span className="text-xs font-medium tracking-[0.3em] text-white/80 uppercase sm:text-sm">
+              <span className="h-px w-10 bg-[#1A1A1A]/25 sm:w-16" />
+              <span className="text-[11px] font-medium tracking-[0.3em] text-[#1A1A1A]/60 uppercase sm:text-xs">
                 Miss Semi Fashion
               </span>
-              <span className="h-px w-10 bg-white/50 sm:w-16" />
+              <span className="h-px w-10 bg-[#1A1A1A]/25 sm:w-16" />
             </motion.div>
 
-            {/* Main title */}
+            {/* Main serif title */}
             <motion.h1
               variants={fadeUp}
               custom={0}
-              className="text-5xl font-extralight tracking-[0.15em] text-white drop-shadow-lg sm:text-6xl md:text-7xl lg:text-8xl"
-              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+              className="font-serif text-5xl font-normal tracking-[0.12em] text-[#1A1A1A] sm:text-6xl md:text-7xl lg:text-8xl"
+              style={{ textShadow: "0 2px 20px rgba(198,169,98,0.35)" }}
             >
               LENCIERÍA
             </motion.h1>
 
-            {/* Subtitle */}
+            {/* Elegant description */}
             <motion.p
               variants={fadeUp}
               custom={1}
-              className="max-w-xl text-base font-light leading-relaxed text-white/90 sm:text-lg md:text-xl"
+              className="max-w-xl text-base font-light leading-relaxed text-[#1A1A1A]/75 sm:text-lg md:text-xl"
             >
               Descubre nuestra colección de lencería diseñada para realzar tu
               sensualidad con elegancia y comodidad. Piezas que celebran la
               feminidad en cada detalle.
             </motion.p>
 
-            {/* CTA buttons */}
-            <motion.div
-              variants={fadeUp}
-              custom={2}
-              className="flex flex-col gap-3 sm:flex-row"
-            >
+            {/* CTA — Gold luxury button */}
+            <motion.div variants={fadeUp} custom={2}>
               <Button
                 asChild
                 size="lg"
-                className="min-w-[180px] rounded-full border-2 border-white/30 bg-white/20 text-base font-medium text-white backdrop-blur-sm transition-all hover:bg-white/30 hover:shadow-lg hover:shadow-rose-500/10 sm:text-lg"
+                className="min-w-[200px] rounded-none border border-[#C6A962] bg-[#C6A962] px-10 text-[13px] font-medium tracking-[0.15em] text-white uppercase shadow-sm transition-all duration-300 hover:bg-[#B89A50] hover:shadow-md hover:shadow-[#C6A962]/20 sm:min-w-[220px] sm:text-sm"
               >
-                <a href="#coleccion">
-                  Ver Colección
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="ghost"
-                size="lg"
-                className="rounded-full text-base font-light text-white/90 transition-all hover:bg-white/10 hover:text-white sm:text-lg"
-              >
-                <Link href="/ofertas">Ofertas Especiales</Link>
+                <a href="#coleccion">Ver Colección</a>
               </Button>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* Bottom wave divider */}
+        {/* Bottom scallop / wave divider into page background */}
         <div className="absolute -bottom-1 left-0 right-0 z-10">
           <svg
-            viewBox="0 0 1440 80"
+            viewBox="0 0 1440 60"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="w-full"
             preserveAspectRatio="none"
           >
             <path
-              d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"
-              fill="#fef7f9"
+              d="M0,30 C240,55 480,5 720,30 C960,55 1200,5 1440,30 L1440,60 L0,60 Z"
+              fill="#FAFAF8"
             />
           </svg>
         </div>
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          FEATURE BADGES
+          FEATURE BADGES — Cream Cards with Gold Icon Circles
          ════════════════════════════════════════════════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
@@ -214,27 +187,22 @@ export default function LenceriaPage() {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.4 }}
                 variants={scaleIn}
-                className="group relative overflow-hidden rounded-2xl border border-rose-100 bg-gradient-to-br from-white via-[#fff5f7] to-[#fce7f3]/50 p-6 shadow-sm shadow-rose-100/50 transition-all duration-300 hover:border-rose-200 hover:shadow-md hover:shadow-rose-200/30"
+                className="group relative overflow-hidden rounded-sm border border-[#E8E5DE] bg-[#F5F3EF] p-6 transition-all duration-300 hover:border-[#C6A962]/50 hover:shadow-md hover:shadow-[#C6A962]/8"
               >
-                {/* Subtle heart watermark */}
-                <Heart
-                  className="absolute -right-4 -top-4 h-24 w-24 text-rose-100/50 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110"
-                  fill="currentColor"
-                  strokeWidth={0}
-                />
-
-                <div className="relative flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 shadow-md shadow-rose-200/50">
-                    <Icon className="h-6 w-6 text-white" strokeWidth={1.8} />
+                <div className="flex flex-col items-center text-center">
+                  {/* Gold circle icon */}
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-[#C6A962]/30 bg-[#C6A962]/10 transition-all duration-300 group-hover:border-[#C6A962]/60 group-hover:bg-[#C6A962]/20">
+                    <Icon
+                      className="h-6 w-6 text-[#C6A962]"
+                      strokeWidth={1.5}
+                    />
                   </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-rose-900 sm:text-base">
-                      {feature.title}
-                    </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-rose-700/70 sm:text-sm">
-                      {feature.description}
-                    </p>
-                  </div>
+                  <h3 className="text-sm font-semibold tracking-wide text-[#1A1A1A] sm:text-base">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-[#666] sm:text-sm">
+                    {feature.description}
+                  </p>
                 </div>
               </motion.div>
             );
@@ -243,13 +211,13 @@ export default function LenceriaPage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          COLLECTION INTRO
+          PRODUCT COLLECTION — Centered Header with Gold Heart Divider
          ════════════════════════════════════════════════════════════════ */}
       <motion.section
         id="coleccion"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.15 }}
         variants={{
           hidden: {},
           visible: { transition: { staggerChildren: 0.1 } },
@@ -259,18 +227,18 @@ export default function LenceriaPage() {
         {/* Section header */}
         <motion.div variants={fadeUp} custom={0} className="mb-10 text-center">
           <div className="mx-auto mb-4 flex items-center justify-center gap-3">
-            <span className="h-px w-8 bg-rose-200 sm:w-14" />
+            <span className="h-px w-10 bg-[#E8E5DE] sm:w-16" />
             <Heart
-              className="h-5 w-5 text-rose-400"
+              className="h-5 w-5 text-[#C6A962]"
               fill="currentColor"
               strokeWidth={0}
             />
-            <span className="h-px w-8 bg-rose-200 sm:w-14" />
+            <span className="h-px w-10 bg-[#E8E5DE] sm:w-16" />
           </div>
-          <h2 className="text-2xl font-light tracking-wide text-rose-900 sm:text-3xl md:text-4xl">
+          <h2 className="font-serif text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl md:text-4xl">
             Nuestra Colección
           </h2>
-          <p className="mx-auto mt-3 max-w-lg text-sm text-rose-600/80 sm:text-base">
+          <p className="mx-auto mt-3 max-w-lg text-sm text-[#999] sm:text-base">
             Cada pieza ha sido cuidadosamente seleccionada para ofrecerte
             confort, estilo y esa confianza que mereces.
           </p>
@@ -278,15 +246,12 @@ export default function LenceriaPage() {
 
         {/* Product grid */}
         <motion.div variants={fadeUp} custom={1}>
-          <ProductGrid
-            products={products}
-            variant="grid"
-          />
+          <ProductGrid products={products} variant="grid" />
         </motion.div>
       </motion.section>
 
       {/* ════════════════════════════════════════════════════════════════
-          ROMANTIC BANNER / CTA
+          CTA BANNER — Gold Gradient with White Text
          ════════════════════════════════════════════════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <motion.div
@@ -294,13 +259,13 @@ export default function LenceriaPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl"
+          className="relative overflow-hidden rounded-sm"
         >
-          {/* Gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-500 via-pink-500 to-rose-600" />
+          {/* Gold gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#C6A962] via-[#D4AF37] to-[#C6A962]" />
 
-          {/* Decorative pattern */}
-          <div className="absolute inset-0 opacity-10">
+          {/* Subtle geometric pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.06]">
             <svg
               className="h-full w-full"
               width="100%"
@@ -310,7 +275,7 @@ export default function LenceriaPage() {
             >
               <defs>
                 <pattern
-                  id="hearts-pattern"
+                  id="diamond-pattern"
                   x="0"
                   y="0"
                   width="40"
@@ -318,12 +283,14 @@ export default function LenceriaPage() {
                   patternUnits="userSpaceOnUse"
                 >
                   <path
-                    d="M20 35 C20 35 10 25 10 18 C10 13 14 10 18 10 C20 10 20 12 20 12 C20 12 20 10 22 10 C26 10 30 13 30 18 C30 25 20 35 20 35Z"
-                    fill="white"
+                    d="M20 0 L40 20 L20 40 L0 20 Z"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="0.5"
                   />
                 </pattern>
               </defs>
-              <rect width="100%" height="100%" fill="url(#hearts-pattern)" />
+              <rect width="100%" height="100%" fill="url(#diamond-pattern)" />
             </svg>
           </div>
 
@@ -346,10 +313,7 @@ export default function LenceriaPage() {
               />
             </motion.div>
 
-            <h3
-              className="text-3xl font-extralight tracking-widest text-white sm:text-4xl md:text-5xl"
-              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-            >
+            <h3 className="font-serif text-3xl font-normal tracking-widest text-white sm:text-4xl md:text-5xl">
               Siéntete Especial
             </h3>
             <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
@@ -359,7 +323,7 @@ export default function LenceriaPage() {
             <Button
               asChild
               size="lg"
-              className="mt-8 min-w-[200px] rounded-full border-2 border-white/40 bg-white/20 text-base font-medium text-white backdrop-blur-sm transition-all hover:bg-white/30 hover:shadow-lg hover:shadow-rose-900/20 sm:text-lg"
+              className="mt-8 min-w-[200px] rounded-none bg-[#1A1A1A] px-10 text-[13px] font-medium tracking-[0.15em] text-white uppercase transition-all duration-300 hover:bg-[#333] hover:shadow-lg sm:min-w-[220px] sm:text-sm"
             >
               <Link href="/">Explorar Todo</Link>
             </Button>
@@ -368,7 +332,7 @@ export default function LenceriaPage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════════════
-          SUBCATEGORY QUICK LINKS
+          SUBCATEGORY CARDS — Elegant Image Cards
          ════════════════════════════════════════════════════════════════ */}
       <section className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8">
         <motion.div
@@ -383,29 +347,13 @@ export default function LenceriaPage() {
           <motion.h2
             variants={fadeUp}
             custom={0}
-            className="mb-8 text-center text-2xl font-light tracking-wide text-rose-900 sm:text-3xl"
+            className="font-serif mb-8 text-center text-2xl font-normal tracking-wide text-[#1A1A1A] sm:text-3xl"
           >
             Explora por Categoría
           </motion.h2>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6">
-            {[
-              {
-                name: "Conjuntos Íntimos",
-                image: "/images/hero-lenceria.png",
-                href: "/buscar?q=conjunto+íntimo",
-              },
-              {
-                name: "Bralettes",
-                image: "/images/hero-lenceria.png",
-                href: "/buscar?q=bralette",
-              },
-              {
-                name: "Pijamas Sensuales",
-                image: "/images/hero-lenceria.png",
-                href: "/buscar?q=babydoll",
-              },
-            ].map((cat, i) => (
+            {subcategories.map((cat, i) => (
               <motion.div
                 key={cat.name}
                 custom={i + 1}
@@ -413,20 +361,24 @@ export default function LenceriaPage() {
               >
                 <Link
                   href={cat.href}
-                  className="group relative block overflow-hidden rounded-2xl border border-rose-100 shadow-sm transition-all duration-300 hover:border-rose-300 hover:shadow-lg hover:shadow-rose-200/30"
+                  className="group relative block overflow-hidden rounded-sm border border-[#E8E5DE] transition-all duration-500 hover:border-[#C6A962]/50 hover:shadow-lg hover:shadow-[#C6A962]/10"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <Image
                       src={cat.image}
                       alt={cat.name}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-rose-900/70 via-rose-900/20 to-transparent" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-base font-medium tracking-wide text-white drop-shadow-md sm:text-lg">
+                    {/* Elegant overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/60 via-[#1A1A1A]/15 to-transparent transition-all duration-500 group-hover:from-[#1A1A1A]/70" />
+                    {/* Category name */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                      <span className="text-sm font-medium tracking-[0.1em] text-white drop-shadow-md sm:text-base">
                         {cat.name}
                       </span>
+                      {/* Gold underline that appears on hover */}
+                      <span className="h-px w-0 bg-[#C6A962] transition-all duration-500 group-hover:w-12" />
                     </div>
                   </div>
                 </Link>

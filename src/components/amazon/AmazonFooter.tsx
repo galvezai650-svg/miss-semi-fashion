@@ -1,48 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowUp,
-  Instagram,
-  Facebook,
-  MessageCircle,
-} from "lucide-react";
+import { ArrowUp, Instagram, Facebook, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const footerSections = [
   {
-    title: "Conócenos",
+    title: "Tienda",
+    links: [
+      { label: "Hombre", href: "/hombre" },
+      { label: "Lencería", href: "/lenceria" },
+      { label: "Niños", href: "/ninos" },
+      { label: "Adornos", href: "/adornos" },
+      { label: "Hogar", href: "/hogar" },
+      { label: "Ofertas", href: "/ofertas" },
+    ],
+  },
+  {
+    title: "Empresa",
     links: [
       { label: "Sobre nosotros", href: "/nosotros" },
+      { label: "Blog", href: "/blog" },
       { label: "Empleo", href: "/empleo" },
       { label: "Prensa", href: "/prensa" },
-      { label: "Blog", href: "/blog" },
+      { label: "Vende con nosotros", href: "/vender" },
     ],
   },
   {
-    title: "Gana Dinero",
-    links: [
-      { label: "Vende en Miss Semi", href: "/vender" },
-      { label: "Programa Mayorista", href: "/mayorista" },
-      { label: "Afiliados", href: "/afiliados" },
-    ],
-  },
-  {
-    title: "Métodos de Pago",
-    links: [
-      { label: "Contra entrega", href: "/pago/contra-entrega" },
-      { label: "Abonos", href: "/pago/abonos" },
-      { label: "Transferencias", href: "/pago/transferencias" },
-      { label: "Nequi / Daviplata", href: "/pago/nequi-daviplata" },
-    ],
-  },
-  {
-    title: "¿Necesitas Ayuda?",
+    title: "Soporte",
     links: [
       { label: "Centro de ayuda", href: "/ayuda" },
       { label: "Devoluciones", href: "/devoluciones" },
-      { label: "Contacto WhatsApp", href: "/ayuda" },
       { label: "Garantía", href: "/garantia" },
+      { label: "Mis Pedidos", href: "/pedidos" },
+      { label: "WhatsApp", href: "/ayuda" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Contra entrega", href: "/pago/contra-entrega" },
+      { label: "Afiliados", href: "/afiliados" },
+      { label: "Mayorista", href: "/mayorista" },
     ],
   },
 ];
@@ -53,30 +53,90 @@ export default function AmazonFooter() {
   }
 
   return (
-    <footer className="w-full">
-      {/* ── Back to Top ── */}
-      <button
-        onClick={scrollToTop}
-        className="flex w-full items-center justify-center gap-2 bg-foreground px-4 py-3 text-sm font-medium text-background transition-colors hover:bg-foreground/90"
-      >
-        <ArrowUp className="h-4 w-4" />
-        Volver arriba
-      </button>
+    <footer className="w-full border-t border-[#E8E5DE] bg-[#1A1A1A] text-[#CCC]">
+      {/* ── Newsletter Section ── */}
+      <div className="border-b border-[#333]">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-14 text-center md:flex-row md:text-left">
+          <div className="flex-1">
+            <h3 className="font-serif text-xl font-medium text-white md:text-2xl">
+              Únete al mundo Miss Semi Fashion
+            </h3>
+            <p className="mt-2 text-sm text-[#999]">
+              Recibe ofertas exclusivas, novedades y estilo directo en tu
+              bandeja.
+            </p>
+          </div>
+          <div className="flex w-full gap-2 md:max-w-sm">
+            <input
+              type="email"
+              placeholder="Tu correo electrónico"
+              className="h-11 flex-1 rounded-none border border-[#444] bg-[#2A2A2A] px-4 text-sm text-white placeholder:text-[#666] focus:border-[#C6A962] focus:outline-none"
+            />
+            <Button className="h-11 rounded-none bg-[#C6A962] px-6 font-medium text-[#1A1A1A] hover:bg-[#D4AF37]">
+              Suscribir
+            </Button>
+          </div>
+        </div>
+      </div>
 
       {/* ── Main Footer Content ── */}
-      <div className="bg-secondary/30">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-10 sm:grid-cols-2 md:grid-cols-4 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-14">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4 lg:gap-16">
+          {/* Brand Column */}
+          <div>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/images/logo.png"
+                alt="Miss Semi Fashion"
+                width={140}
+                height={42}
+                className="h-8 w-auto opacity-90"
+              />
+            </Link>
+            <p className="mt-4 text-sm leading-relaxed text-[#888]">
+              Confeccionamos prendas de calidad premium. Moda para toda la
+              familia, hecha en Colombia con amor y las mejores telas.
+            </p>
+            {/* Social */}
+            <div className="mt-6 flex items-center gap-3">
+              <a
+                href="https://wa.me/573108416620"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-all hover:border-[#C6A962] hover:text-[#C6A962]"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-all hover:border-[#C6A962] hover:text-[#C6A962]"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-all hover:border-[#C6A962] hover:text-[#C6A962]"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Link Sections */}
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="mb-4 text-sm font-bold text-foreground">
+              <h3 className="mb-5 text-xs font-semibold tracking-[0.2em] text-[#C6A962] uppercase">
                 {section.title}
               </h3>
-              <ul className="flex flex-col gap-2.5">
+              <ul className="flex flex-col gap-3">
                 {section.links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-xs text-muted-foreground transition-colors hover:text-foreground hover:underline"
+                      className="text-[13px] text-[#888] transition-colors hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -88,49 +148,21 @@ export default function AmazonFooter() {
         </div>
       </div>
 
-      {/* ── Social & Branding ── */}
-      <div className="bg-secondary/50">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-6 text-center sm:flex-row sm:justify-between lg:px-8">
-          <div>
-            <p className="text-sm font-bold text-foreground">
-              Miss Semi Fashion
-            </p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              Confeccionamos prendas de calidad · Hecho en Colombia 🇨🇴
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="https://wa.me/573108416620"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-green-500/10 text-green-400 transition-all hover:bg-green-500/20 hover:scale-110"
-              aria-label="WhatsApp"
-            >
-              <MessageCircle className="h-4 w-4" />
-            </a>
-            <a
-              href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-pink-500/10 text-pink-400 transition-all hover:bg-pink-500/20 hover:scale-110"
-              aria-label="Instagram"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-            <a
-              href="#"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-500/10 text-blue-400 transition-all hover:bg-blue-500/20 hover:scale-110"
-              aria-label="Facebook"
-            >
-              <Facebook className="h-4 w-4" />
-            </a>
-          </div>
+      {/* ── Bottom Bar ── */}
+      <div className="border-t border-[#333]">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
+          <p className="text-[12px] text-[#666]">
+            &copy; {new Date().getFullYear()} Miss Semi Fashion. Todos los
+            derechos reservados.
+          </p>
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-2 text-[12px] tracking-[0.1em] text-[#888] transition-colors hover:text-[#C6A962] uppercase"
+          >
+            Volver arriba
+            <ArrowUp className="h-3.5 w-3.5" />
+          </button>
         </div>
-      </div>
-
-      {/* ── Bottom Strip ── */}
-      <div className="bg-foreground px-4 py-4 text-center text-xs text-background/70">
-        &copy; {new Date().getFullYear()} Miss Semi Fashion. Todos los
-        derechos reservados. Envíos CO / Internacionales.
       </div>
     </footer>
   );

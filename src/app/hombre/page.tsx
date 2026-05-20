@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Truck, Award, Ruler, ChevronRight, Shield } from "lucide-react";
+import { Truck, Shield, Ruler, ChevronRight, ArrowRight } from "lucide-react";
 import { getProductsByCategory } from "@/data/products";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductGrid from "@/components/amazon/ProductGrid";
@@ -17,13 +17,17 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" },
+    transition: {
+      delay: i * 0.1,
+      duration: 0.7,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
   }),
 };
 
-const staggerContainer = {
+const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.1 } },
 };
 
 /* ── Feature Badges ── */
@@ -34,7 +38,7 @@ const features = [
     desc: "En pedidos superiores a $50.000",
   },
   {
-    icon: Award,
+    icon: Shield,
     title: "Telas Premium",
     desc: "Algodón y lino de alta calidad",
   },
@@ -45,124 +49,152 @@ const features = [
   },
 ];
 
-/* ── Category Subcategories ── */
+/* ── Subcategories ── */
 const subcategories = [
-  { name: "Camisas", count: 1, href: "/buscar?q=camisa+hombre" },
-  { name: "Pantalones", count: 1, href: "/buscar?q=pantalon+hombre" },
-  { name: "Conjuntos", count: 1, href: "/buscar?q=conjunto+hombre" },
+  { name: "Camisas", count: 1, href: "/buscar?q=camisa+hombre", img: "/images/hero-hombre.png" },
+  { name: "Pantalones", count: 1, href: "/buscar?q=pantalon+hombre", img: "/images/hero-hombre.png" },
+  { name: "Conjuntos", count: 1, href: "/buscar?q=conjunto+hombre", img: "/images/hero-hombre.png" },
+];
+
+/* ── Hero Stats ── */
+const heroStats = [
+  { value: "500+", label: "Clientes" },
+  { value: "100%", label: "Premium" },
+  { value: "24h", label: "Envío" },
 ];
 
 export default function HombrePage() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen" style={{ background: "#FAFAF8" }}>
       {/* ════════════════════════════════════════════════════════════
           HERO SECTION
           ════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden" style={{ height: "clamp(320px, 50vw, 520px)" }}>
+      <section
+        className="relative w-full overflow-hidden"
+        style={{ minHeight: "clamp(400px, 55vw, 580px)" }}
+      >
         {/* Background Image */}
         <Image
           src="/images/hero-hombre.png"
-          alt="Moda Hombre - Miss Semi Fashion"
+          alt="Moda Hombre - Colección Caballero"
           fill
           className="object-cover object-center"
           priority
           sizes="100vw"
         />
 
-        {/* Dark Navy Overlay with Geometric Pattern */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.85) 40%, rgba(51,65,85,0.78) 100%)",
-          }}
-        />
+        {/* Charcoal Overlay */}
+        <div className="absolute inset-0" style={{ background: "rgba(26,26,26,0.85)" }} />
 
-        {/* Geometric Accent Lines */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute -top-20 -right-20 w-[500px] h-[500px] border border-[#3b82f6]/10"
-            style={{ transform: "rotate(45deg)" }}
-          />
-          <div
-            className="absolute -top-10 -right-10 w-[400px] h-[400px] border border-[#3b82f6]/5"
-            style={{ transform: "rotate(45deg)" }}
-          />
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#3b82f6]/40 to-transparent" />
-          <div className="absolute top-8 left-0 w-24 h-px bg-[#3b82f6]/30" />
-          <div className="absolute bottom-8 right-0 w-24 h-px bg-[#3b82f6]/30" />
-        </div>
+        {/* Subtle gold accent line at bottom */}
+        <div className="absolute bottom-0 left-0 w-full h-px" style={{ background: "linear-gradient(to right, transparent, #C6A962, transparent)" }} />
 
-        {/* Hero Content */}
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            {/* Top Badge */}
-            <div className="mb-4 inline-flex items-center gap-2 rounded-none border border-[#3b82f6]/30 bg-[#3b82f6]/10 px-4 py-1.5">
-              <Shield className="h-4 w-4 text-[#3b82f6]" />
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#3b82f6]">
-                Colección 2024
+        {/* Hero Content — Left Aligned */}
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-4 sm:px-6 lg:px-8" style={{ minHeight: "clamp(400px, 55vw, 580px)" }}>
+          <div className="max-w-2xl">
+            {/* Gold Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mb-5"
+            >
+              <span
+                className="inline-block text-[11px] font-medium uppercase tracking-[0.25em]"
+                style={{ color: "#C6A962" }}
+              >
+                Colección Caballero
               </span>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="font-black uppercase tracking-[0.15em] text-white drop-shadow-lg"
-            style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)", lineHeight: 1 }}
-          >
-            Moda
-            <span className="block mt-1" style={{ color: "#3b82f6" }}>
-              Hombre
-            </span>
-          </motion.h1>
-
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="mt-4 mb-5 h-px w-32 bg-gradient-to-r from-transparent via-[#3b82f6] to-transparent origin-center"
-          />
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="max-w-xl text-sm sm:text-base text-slate-300 leading-relaxed"
-          >
-            Descubre la nueva colección masculina. Diseños modernos con telas premium
-            que combinan elegancia y comodidad para el hombre contemporáneo.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.55 }}
-            className="mt-6 flex gap-3"
-          >
-            <Button
-              asChild
-              className="rounded-none bg-[#3b82f6] px-8 py-2.5 font-bold uppercase tracking-wider text-white hover:bg-[#2563eb]"
-              style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+            {/* Serif Heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="font-serif leading-none"
+              style={{ fontSize: "clamp(2.8rem, 7vw, 5rem)", color: "#FFFFFF" }}
             >
-              <Link href="#productos">
-                Ver Colección
-                <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-none border-slate-500 bg-transparent px-8 py-2.5 font-bold uppercase tracking-wider text-white hover:bg-white/10"
+              Moda{" "}
+              <span style={{ color: "#C6A962" }}>Hombre</span>
+            </motion.h1>
+
+            {/* Gold Decorative Line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mt-5 mb-5 h-px w-16 origin-left"
+              style={{ background: "#C6A962" }}
+            />
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="max-w-lg text-sm sm:text-base leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.7)" }}
             >
-              <Link href="#categorias">Categorías</Link>
-            </Button>
-          </motion.div>
+              Descubre la nueva colección masculina. Diseños modernos con telas
+              premium que combinan elegancia y comodidad para el hombre
+              contemporáneo.
+            </motion.p>
+
+            {/* CTA + Stats Row */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mt-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8"
+            >
+              {/* CTA Button */}
+              <div>
+                <Button
+                  asChild
+                  className="rounded-none px-8 py-3 text-[12px] font-medium uppercase tracking-[0.2em] text-white transition-all duration-300"
+                  style={{ background: "#C6A962" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "#B89A4D")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "#C6A962")}
+                >
+                  <Link href="#productos">
+                    Ver Colección
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+
+              {/* Right Stats */}
+              <div className="flex gap-8 sm:gap-10">
+                {heroStats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      delay: 0.7 + i * 0.12,
+                      duration: 0.5,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                    className="text-center"
+                  >
+                    <p
+                      className="font-serif text-2xl sm:text-3xl font-light"
+                      style={{ color: "#C6A962" }}
+                    >
+                      {stat.value}
+                    </p>
+                    <p
+                      className="mt-0.5 text-[10px] uppercase tracking-[0.2em]"
+                      style={{ color: "rgba(255,255,255,0.5)" }}
+                    >
+                      {stat.label}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -176,29 +208,47 @@ export default function HombrePage() {
 
         {/* Feature Badges */}
         <motion.div
-          variants={staggerContainer}
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 gap-3 sm:grid-cols-3 mb-8"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-12"
         >
           {features.map((feat, i) => (
             <motion.div
               key={feat.title}
               variants={fadeUp}
               custom={i}
-              className="group relative flex items-center gap-4 border border-slate-200 bg-slate-50 px-5 py-4 transition-all duration-300 hover:border-[#3b82f6]/30 hover:bg-[#3b82f6]/5 hover:shadow-lg hover:shadow-[#3b82f6]/5"
+              className="group relative flex items-center gap-4 bg-white px-6 py-5 transition-all duration-500"
+              style={{ border: "1px solid #E8E5DE" }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderTopColor = "#C6A962";
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.06)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderTopColor = "#E8E5DE";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             >
-              {/* Left accent bar on hover */}
-              <div className="absolute left-0 top-0 h-full w-1 bg-[#3b82f6] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center" />
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#1e293b] text-[#3b82f6] transition-colors group-hover:bg-[#3b82f6] group-hover:text-white">
+              <div
+                className="flex h-12 w-12 shrink-0 items-center justify-center transition-colors duration-300"
+                style={{
+                  background: "rgba(198,169,98,0.08)",
+                  color: "#C6A962",
+                }}
+              >
                 <feat.icon className="h-5 w-5" />
               </div>
               <div>
-                <p className="font-bold text-sm text-[#1e293b] tracking-wide uppercase">
+                <p
+                  className="text-[13px] font-semibold uppercase tracking-wider"
+                  style={{ color: "#1A1A1A" }}
+                >
                   {feat.title}
                 </p>
-                <p className="text-xs text-slate-500 mt-0.5">{feat.desc}</p>
+                <p className="mt-0.5 text-[13px]" style={{ color: "#999" }}>
+                  {feat.desc}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -206,43 +256,73 @@ export default function HombrePage() {
       </div>
 
       {/* ════════════════════════════════════════════════════════════
-          SUBCATEGORY QUICK LINKS
+          SUBCATEGORIES
           ════════════════════════════════════════════════════════════ */}
-      <section id="categorias" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-14">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-6 w-1 bg-[#3b82f6]" />
-            <h2 className="text-lg font-bold uppercase tracking-wider text-[#1e293b]">
+          {/* Section Header with Gold Bar */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-6 w-1" style={{ background: "#C6A962" }} />
+            <h2
+              className="font-serif text-xl sm:text-2xl font-normal tracking-wide"
+              style={{ color: "#1A1A1A" }}
+            >
               Categorías
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {subcategories.map((sub, i) => (
               <motion.div
                 key={sub.name}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
+                variants={fadeUp}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-30px" }}
               >
-                <Link
-                  href={sub.href}
-                  className="group relative flex items-center justify-between border border-slate-200 bg-white px-5 py-4 transition-all duration-300 hover:border-[#1e293b] hover:bg-[#1e293b] hover:text-white"
-                >
-                  <div>
-                    <p className="font-bold text-sm uppercase tracking-wide">{sub.name}</p>
-                    <p className="text-xs text-slate-400 group-hover:text-slate-300 mt-0.5">
-                      {sub.count} producto{sub.count !== 1 ? "s" : ""}
-                    </p>
+                <Link href={sub.href} className="group block relative overflow-hidden">
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src={sub.img}
+                      alt={sub.name}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 33vw"
+                    />
+                    {/* Dark Overlay */}
+                    <div
+                      className="absolute inset-0 transition-opacity duration-500"
+                      style={{ background: "rgba(26,26,26,0.55)" }}
+                    />
+
+                    {/* Gold border on hover */}
+                    <div
+                      className="absolute inset-0 border-2 opacity-0 transition-opacity duration-500"
+                      style={{ borderColor: "#C6A962" }}
+                    />
+
+                    {/* Content */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+                      <h3
+                        className="font-serif text-xl sm:text-2xl font-normal text-white tracking-wide transition-transform duration-500 group-hover:-translate-y-0.5"
+                      >
+                        {sub.name}
+                      </h3>
+                      <p
+                        className="mt-1 text-[11px] uppercase tracking-[0.2em]"
+                        style={{ color: "#C6A962" }}
+                      >
+                        {sub.count} producto{sub.count !== 1 ? "s" : ""}
+                      </p>
+                    </div>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-slate-400 group-hover:text-[#3b82f6] transition-colors" />
-                  {/* Corner accent */}
-                  <div className="absolute top-0 right-0 h-0 w-0 border-t-[20px] border-t-[#3b82f6] border-l-[20px] border-l-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
               </motion.div>
             ))}
@@ -253,39 +333,42 @@ export default function HombrePage() {
       {/* ════════════════════════════════════════════════════════════
           PRODUCTS SECTION
           ════════════════════════════════════════════════════════════ */}
-      <section id="productos" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-6"
-        >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="h-6 w-1 bg-[#3b82f6]" />
-            <h2 className="text-lg font-bold uppercase tracking-wider text-[#1e293b]">
-              Nuestra Colección
-            </h2>
-          </div>
-          <p className="text-sm text-slate-500 ml-7">
-            {hombreProducts.length} producto{hombreProducts.length !== 1 ? "s" : ""} disponible{hombreProducts.length !== 1 ? "s" : ""} para hombre
-          </p>
-        </motion.div>
+      <section
+        id="productos"
+        className="py-14"
+        style={{ background: "#F5F3EF" }}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Section Header with Gold Left Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="mb-8"
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-6 w-1" style={{ background: "#C6A962" }} />
+              <h2
+                className="font-serif text-xl sm:text-2xl font-normal tracking-wide"
+                style={{ color: "#1A1A1A" }}
+              >
+                Nuestra Colección
+              </h2>
+            </div>
+            <p className="ml-7 text-sm" style={{ color: "#999" }}>
+              {hombreProducts.length} producto
+              {hombreProducts.length !== 1 ? "s" : ""} disponible
+              {hombreProducts.length !== 1 ? "s" : ""} para hombre
+            </p>
+          </motion.div>
 
-        {/* Product Grid - Masculine Wrapper */}
-        <div className="relative">
-          {/* Geometric corner accents */}
-          <div className="absolute -top-3 -left-3 h-8 w-8 border-t-2 border-l-2 border-[#1e293b]/20" />
-          <div className="absolute -top-3 -right-3 h-8 w-8 border-t-2 border-r-2 border-[#1e293b]/20" />
-          <div className="absolute -bottom-3 -left-3 h-8 w-8 border-b-2 border-l-2 border-[#1e293b]/20" />
-          <div className="absolute -bottom-3 -right-3 h-8 w-8 border-b-2 border-r-2 border-[#1e293b]/20" />
-
+          {/* Product Grid */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
           >
             <ProductGrid
               products={hombreProducts}
@@ -298,82 +381,86 @@ export default function HombrePage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════════
-          STYLE BANNER CTA
+          BANNER CTA
           ════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ background: "#0f172a" }}>
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(45deg, #3b82f6 0px, #3b82f6 1px, transparent 1px, transparent 30px), repeating-linear-gradient(-45deg, #3b82f6 0px, #3b82f6 1px, transparent 1px, transparent 30px)",
-            }}
-          />
-        </div>
+      <section className="relative overflow-hidden" style={{ background: "#1A1A1A" }}>
+        {/* Subtle gold top accent */}
+        <div className="absolute top-0 left-0 w-full h-px" style={{ background: "linear-gradient(to right, transparent, #C6A962, transparent)" }} />
 
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        {/* Decorative corner accents */}
+        <div className="absolute top-6 left-6 w-16 h-16 pointer-events-none" style={{ borderTop: "1px solid rgba(198,169,98,0.2)", borderLeft: "1px solid rgba(198,169,98,0.2)" }} />
+        <div className="absolute bottom-6 right-6 w-16 h-16 pointer-events-none" style={{ borderBottom: "1px solid rgba(198,169,98,0.2)", borderRight: "1px solid rgba(198,169,98,0.2)" }} />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col md:flex-row items-center gap-8 md:gap-12"
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex flex-col items-center text-center"
           >
-            {/* Left text */}
-            <div className="flex-1 text-center md:text-left">
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#3b82f6] mb-3">
-                Estilo que marca la diferencia
-              </p>
-              <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-wide text-white leading-tight">
-                Tu look dice
-                <span className="text-[#3b82f6]"> todo</span> de ti
-              </h3>
-              <p className="mt-4 text-slate-400 text-sm sm:text-base max-w-md leading-relaxed">
-                Cada prenda está diseñada para el hombre que no sigue tendencias,
-                las crea. Calidad premium con la confianza que mereces.
-              </p>
-              <div className="mt-6 flex gap-3 justify-center md:justify-start">
-                <Button
-                  asChild
-                  className="rounded-none bg-[#3b82f6] px-7 py-2.5 font-bold uppercase tracking-wider text-white hover:bg-[#2563eb]"
-                >
-                  <Link href="/buscar?q=hombre">
-                    Explorar Todo
-                    <ChevronRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+            {/* Gold Label */}
+            <span
+              className="mb-4 inline-block text-[11px] font-medium uppercase tracking-[0.25em]"
+              style={{ color: "#C6A962" }}
+            >
+              Estilo que marca la diferencia
+            </span>
 
-            {/* Right stats */}
-            <div className="grid grid-cols-3 gap-6 text-center">
-              {[
-                { value: "500+", label: "Clientes felices" },
-                { value: "100%", label: "Telas premium" },
-                { value: "24h", label: "Envío rápido" },
-              ].map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1, duration: 0.4 }}
-                >
-                  <p className="text-2xl sm:text-3xl font-black text-[#3b82f6]">
-                    {stat.value}
-                  </p>
-                  <p className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider mt-1">
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+            {/* Heading */}
+            <h3
+              className="font-serif leading-tight"
+              style={{
+                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                color: "#FFFFFF",
+              }}
+            >
+              Tu look dice{" "}
+              <span style={{ color: "#C6A962" }}>todo</span> de ti
+            </h3>
+
+            {/* Decorative Line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mt-5 mb-5 h-px w-12 origin-center"
+              style={{ background: "#C6A962" }}
+            />
+
+            {/* Description */}
+            <p
+              className="max-w-lg text-sm sm:text-base leading-relaxed"
+              style={{ color: "rgba(255,255,255,0.55)" }}
+            >
+              Cada prenda está diseñada para el hombre que no sigue tendencias,
+              las crea. Calidad premium con la confianza que mereces.
+            </p>
+
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="mt-8"
+            >
+              <Button
+                asChild
+                className="rounded-none px-8 py-3 text-[12px] font-medium uppercase tracking-[0.2em] text-white transition-all duration-300"
+                style={{ background: "#C6A962" }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#B89A4D")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#C6A962")}
+              >
+                <Link href="/buscar?q=hombre">
+                  Explorar Todo
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
-
-        {/* Bottom accent line */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#1e293b] via-[#3b82f6] to-[#1e293b]" />
       </section>
     </main>
   );

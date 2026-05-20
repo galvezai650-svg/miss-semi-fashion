@@ -75,45 +75,42 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5">
+    <div className="group relative flex flex-col overflow-hidden bg-white transition-all duration-500">
       {/* ── Image Container ── */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+      <div className="relative aspect-[3/4] overflow-hidden bg-[#F5F3EF]">
         <Link href={`/producto/${product.id}`} className="block h-full w-full">
           <Image
             src={product.image}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-            className="card-image-zoom object-cover group-hover:scale-110"
+            className="card-image-zoom object-cover group-hover:scale-105"
           />
         </Link>
-
-        {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         {/* ── Badges ── */}
         <div className="absolute left-3 top-3 z-10 flex flex-col gap-1.5">
           {product.isDeal && product.dealDiscount && (
-            <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg shadow-orange-500/25 border-0 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide">
+            <Badge className="border-0 bg-[#1A1A1A] px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-white uppercase">
               -{product.dealDiscount}%
             </Badge>
           )}
           {!product.isDeal && product.isBestSeller && (
-            <Badge className="bg-gradient-to-r from-amber-500 to-yellow-400 text-foreground shadow-lg shadow-amber-500/25 border-0 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide">
-              Top
+            <Badge className="border border-[#C6A962]/30 bg-white/90 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-[#C6A962] uppercase backdrop-blur-sm">
+              Best Seller
             </Badge>
           )}
         </div>
 
         {/* ── Action Buttons (show on hover) ── */}
-        <div className="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+        <div className="absolute right-3 top-3 z-10 flex flex-col gap-2 opacity-0 translate-x-2 transition-all duration-400 group-hover:opacity-100 group-hover:translate-x-0">
           <button
             onClick={handleToggleWishlist}
             className={cn(
-              "flex h-9 w-9 items-center justify-center rounded-full shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-110",
+              "flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-white/90 shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-110",
               isInWishlist
-                ? "bg-red-500/90 text-white hover:bg-red-600"
-                : "bg-black/70 text-white hover:bg-black/90"
+                ? "text-[#C6A962] hover:bg-[#C6A962] hover:text-white"
+                : "text-[#666] hover:bg-white"
             )}
             aria-label={
               isInWishlist
@@ -122,15 +119,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             }
           >
             <Heart
-              className={cn(
-                "h-4 w-4",
-                isInWishlist && "fill-current"
-              )}
+              className={cn("h-4 w-4", isInWishlist && "fill-current")}
             />
           </button>
           <Link
             href={`/producto/${product.id}`}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-black/70 shadow-lg backdrop-blur-md text-white transition-all duration-200 hover:scale-110 hover:bg-black/90"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/50 bg-white/90 text-[#666] shadow-sm backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white"
             aria-label="Ver producto"
           >
             <Eye className="h-4 w-4" />
@@ -138,37 +132,39 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* ── Quick Add to Cart (bottom of image on hover) ── */}
-        <div className="absolute bottom-3 left-3 right-3 z-10 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <Button
-            onClick={handleAddToCart}
-            className={cn(
-              "w-full gap-2 rounded-xl font-semibold shadow-lg backdrop-blur-sm transition-all duration-200",
-              isInCart
-                ? "bg-green-500 text-white hover:bg-green-600 shadow-green-500/25"
-                : "bg-black/80 text-white hover:bg-black/95"
-            )}
-          >
-            {isInCart ? (
-              <>
-                <Check className="h-4 w-4" />
-                En el carrito
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="h-4 w-4" />
-                Agregar
-              </>
-            )}
-          </Button>
+        <div className="absolute bottom-0 left-0 right-0 z-10 translate-y-full transition-transform duration-400 group-hover:translate-y-0">
+          <div className="bg-gradient-to-t from-black/20 to-transparent p-3 pt-8">
+            <Button
+              onClick={handleAddToCart}
+              className={cn(
+                "w-full gap-2 rounded-none border-0 bg-[#1A1A1A] text-[12px] font-medium tracking-wider text-white shadow-lg uppercase transition-all duration-300",
+                isInCart
+                  ? "bg-[#C6A962] hover:bg-[#A68B3C]"
+                  : "hover:bg-[#333]"
+              )}
+            >
+              {isInCart ? (
+                <>
+                  <Check className="h-3.5 w-3.5" />
+                  En el carrito
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="h-3.5 w-3.5" />
+                  Agregar al carrito
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* ── Info Section ── */}
-      <div className="flex flex-1 flex-col gap-1.5 p-3.5">
-        {/* Rating & Reviews */}
+      <div className="flex flex-1 flex-col gap-2 border-t border-[#F0EDE8] p-4">
+        {/* Rating */}
         <div className="flex items-center gap-1.5">
           <StarRating rating={product.rating} size="sm" />
-          <span className="text-[11px] text-muted-foreground">
+          <span className="text-[11px] text-[#AAA]">
             ({product.reviewCount.toLocaleString("es-CO")})
           </span>
         </div>
@@ -176,35 +172,26 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Title */}
         <Link
           href={`/producto/${product.id}`}
-          className="line-clamp-2 text-sm font-medium leading-snug text-foreground transition-colors hover:text-primary"
+          className="line-clamp-2 text-[13px] font-normal leading-snug text-[#4A4A4A] transition-colors hover:text-[#1A1A1A]"
         >
           {product.name}
         </Link>
 
         {/* Price Block */}
-        <div className="mt-auto flex items-end gap-2 pt-1">
+        <div className="mt-auto flex items-end gap-2.5 pt-2">
           {product.originalPrice && product.originalPrice > product.price && (
-            <span className="text-xs text-muted-foreground line-through">
+            <span className="text-[12px] text-[#BBB] line-through">
               {formatPrice(product.originalPrice)}
             </span>
           )}
-          <span className="text-xl font-bold text-foreground">
+          <span className="text-lg font-medium text-[#1A1A1A]">
             {formatPrice(product.price)}
           </span>
         </div>
 
-        {/* Shipping & Prime */}
+        {/* Shipping */}
         <div className="flex items-center gap-2 pt-0.5">
-          {product.isPrime && (
-            <Badge
-              variant="outline"
-              className="h-5 border-primary/30 bg-primary/5 px-1.5 text-[10px] font-semibold text-primary"
-            >
-              <span className="mr-0.5 inline-block h-1.5 w-1.5 rounded-full bg-primary" />
-              Prime
-            </Badge>
-          )}
-          <span className="flex items-center gap-1 text-[11px] text-green-400">
+          <span className="flex items-center gap-1 text-[11px] text-[#999]">
             <Truck className="h-3 w-3" />
             Envío gratis
           </span>
