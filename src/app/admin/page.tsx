@@ -14,6 +14,7 @@ import {
   Loader2,
   Eye,
   EyeOff,
+  RefreshCw,
   ChevronDown,
   Search,
   TrendingUp,
@@ -176,6 +177,8 @@ export default function AdminPage() {
     endsAt: "",
   });
   const [savingPromo, setSavingPromo] = useState(false);
+  const [seeding, setSeeding] = useState(false);
+  const [seedMsg, setSeedMsg] = useState("");
 
   // Auth
   useEffect(() => {
@@ -425,6 +428,27 @@ export default function AdminPage() {
     window.location.href = "/";
   }
 
+  async function syncData() {
+    setSeeding(true);
+    setSeedMsg("");
+    try {
+      const res = await authFetch("/api/admin/seed", { method: "POST" });
+      if (res?.ok) {
+        const data = await res.json();
+        setSeedMsg(`${data.created} productos nuevos sincronizados (${data.skipped} ya existían)`);
+        fetchProducts();
+        fetchStats();
+        fetchPromotions();
+      } else {
+        setSeedMsg("Error al sincronizar");
+      }
+    } catch {
+      setSeedMsg("Error de conexión");
+    } finally {
+      setSeeding(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A]">
@@ -595,6 +619,36 @@ export default function AdminPage() {
                   </div>
                 </div>
               )}
+
+              {/* Sync / Seed data */}
+              <div className="mt-8 rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <h3 className="text-sm font-medium text-[#B3B3B3]">
+                      Sincronizar Catálogo
+                    </h3>
+                    <p className="mt-1 text-xs text-[#666]">
+                      Carga los productos base de la tienda a la base de datos si no existen.
+                    </p>
+                  </div>
+                  <Button
+                    onClick={syncData}
+                    disabled={seeding}
+                    variant="outline"
+                    className="gap-2 border-[#C6A962]/30 text-[#C6A962] hover:bg-[#C6A962]/10 hover:text-[#C6A962]"
+                  >
+                    {seeding ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <RefreshCw className="h-4 w-4" />
+                    )}
+                    {seeding ? "Sincronizando..." : "Sincronizar"}
+                  </Button>
+                </div>
+                {seedMsg && (
+                  <p className="mt-3 text-xs text-green-400">{seedMsg}</p>
+                )}
+              </div>
             </div>
           )}
 
