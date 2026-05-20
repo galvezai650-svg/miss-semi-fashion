@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -29,4 +23,56 @@ model Post {
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  description      String   @default("")
+  shortDescription String   @default("")
+  image            String   @default("")
+  images           String   @default("[]")
+  price            Float
+  originalPrice    Float?
+  priceMayorista   Float?
+  category         String   @default("")
+  categorySlug     String   @default("")
+  subcategory      String   @default("")
+  sizes            String   @default("[]")
+  colors           String   @default("[]")
+  fabric           String   @default("")
+  inStock          Boolean  @default(true)
+  stockCount       Int      @default(0)
+  rating           Float    @default(4.5)
+  reviewCount      Int      @default(0)
+  isPrime          Boolean  @default(true)
+  isBestSeller     Boolean  @default(false)
+  isDeal           Boolean  @default(false)
+  dealDiscount     Int?
+  tags             String   @default("[]")
+  sortOrder        Int      @default(0)
+  active           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Promotion {
+  id          String   @id @default(cuid())
+  name        String
+  description String   @default("")
+  discount    Int
+  type        String   @default("percentage")
+  active      Boolean  @default(true)
+  startsAt    DateTime @default(now())
+  endsAt      DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AdminSession {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 }
