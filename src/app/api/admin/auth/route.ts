@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Admin password from environment or default
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "misssemi2024";
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "MSF2026";
 
     if (password !== ADMIN_PASSWORD) {
       return NextResponse.json({ error: "Contraseña incorrecta" }, { status: 401 });
