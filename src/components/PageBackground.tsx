@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function PageBackground({ children }: { children: React.ReactNode }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -19,8 +19,8 @@ export default function PageBackground({ children }: { children: React.ReactNode
         <source src="/videos/page-bg.mp4" type="video/mp4" />
       </video>
 
-      {/* Semi-transparent overlay so text remains readable */}
-      <div className="fixed inset-0 z-[1] bg-[#FAFAF8]/75" />
+      {/* Dark overlay so text remains readable but video is visible */}
+      <div className="fixed inset-0 z-[1] bg-[#0A0A0A]/80" />
 
       {/* Page content above video */}
       <div className="relative z-[2]">
