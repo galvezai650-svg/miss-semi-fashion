@@ -88,7 +88,7 @@ const stagger = {
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col bg-[#0A0A0A]">
+    <div className="flex flex-col" style={{ background: "transparent" }}>
       {/* ══════════════════════════════════════════
           1. HERO SECTION
           ══════════════════════════════════════════ */}
@@ -256,7 +256,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           3. TRUST BAR
           ══════════════════════════════════════════ */}
-      <section className="border-y border-[#2A2A2A] bg-[#111111]">
+      <section className="border-y border-white/10 bg-black/40 backdrop-blur-xl">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:gap-0 md:divide-x md:divide-[#2A2A2A]">
             {trustItems.map((item, i) => (
@@ -307,7 +307,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           5. ELEGANT BANNER
           ══════════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-[#111111]">
+      <section className="relative overflow-hidden bg-black/40 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -388,7 +388,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════
           7. TESTIMONIALS
           ══════════════════════════════════════════ */}
-      <section className="bg-[#111111] py-16 sm:py-20">
+      <section className="bg-black/40 backdrop-blur-xl py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
@@ -411,7 +411,7 @@ export default function HomePage() {
                   key={testimonial.name}
                   variants={fadeUp}
                   custom={i + 1}
-                  className="relative border border-[#2A2A2A] bg-[#0A0A0A] p-8 transition-all duration-500 hover:border-[#C6A962]/20"
+                  className="relative border border-white/10 bg-black/50 backdrop-blur-md p-8 transition-all duration-500 hover:border-[#C6A962]/30"
                 >
                   {/* Gold quote mark */}
                   <span className="mb-5 block font-serif text-4xl leading-none text-[#C6A962]">

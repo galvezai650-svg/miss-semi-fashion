@@ -118,7 +118,7 @@ export default function ProductGrid({
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2A2A] bg-[#111111] p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
+            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
             aria-label="Anterior"
           >
             <ChevronLeft className="h-4 w-4 text-[#999]" />
@@ -143,7 +143,7 @@ export default function ProductGrid({
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-[#2A2A2A] bg-[#111111] p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
+            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
             aria-label="Siguiente"
           >
             <ChevronRight className="h-4 w-4 text-[#999]" />
@@ -151,8 +151,8 @@ export default function ProductGrid({
         )}
 
         {/* Edge fade */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[#0A0A0A] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#0A0A0A] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-black/40 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-black/40 to-transparent" />
       </div>
     </section>
   );

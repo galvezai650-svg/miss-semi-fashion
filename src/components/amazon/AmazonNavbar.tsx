@@ -73,9 +73,9 @@ export default function AmazonNavbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#2A2A2A] bg-[#0A0A0A]/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-xl">
       {/* ── Top Bar ── */}
-      <div className="hidden border-b border-[#1A1A1A] bg-[#111111] lg:block">
+      <div className="hidden border-b border-white/5 bg-black/30 lg:block">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-6">
           <p className="text-[11px] tracking-[0.15em] text-[#888] uppercase">
             Envío gratis en compras superiores a $50.000 COP

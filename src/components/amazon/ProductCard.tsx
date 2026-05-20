@@ -75,7 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <div className="group relative flex flex-col overflow-hidden bg-[#111111] border border-[#2A2A2A] transition-all duration-500 hover:border-[#C6A962]/30">
+    <div className="group relative flex flex-col overflow-hidden border border-white/10 bg-black/50 backdrop-blur-md transition-all duration-500 hover:border-[#C6A962]/30">
       {/* ── Image Container ── */}
       <div className="relative aspect-[3/4] overflow-hidden bg-[#151515]">
         <Link href={`/producto/${product.id}`} className="block h-full w-full">
