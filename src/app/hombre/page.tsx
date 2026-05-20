@@ -1,15 +1,14 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Truck, Shield, Ruler, ChevronRight, ArrowRight } from "lucide-react";
-import { getProductsByCategory } from "@/data/products";
+import type { Product } from "@/data/products";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import { Button } from "@/components/ui/button";
-
-const hombreProducts = getProductsByCategory("hombre");
 
 /* ── Animation Variants ── */
 const fadeUp = {
@@ -64,6 +63,15 @@ const heroStats = [
 ];
 
 export default function HombrePage() {
+  const [hombreProducts, setHombreProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products?category=hombre")
+      .then((r) => r.json())
+      .then((data) => setHombreProducts(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
+
   return (
     <main className="min-h-screen" style={{ background: "#0A0A0A" }}>
       {/* ════════════════════════════════════════════════════════════

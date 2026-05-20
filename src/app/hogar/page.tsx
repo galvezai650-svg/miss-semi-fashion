@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductGrid from "@/components/amazon/ProductGrid";
-import { getProductsByCategory } from "@/data/products";
+import type { Product } from "@/data/products";
 
 /* ─── Animation Variants ─── */
 const fadeUp = {
@@ -75,10 +75,14 @@ const subcategories = [
 ];
 
 export default function HogarPage() {
-  const hogarProducts = useMemo(
-    () => getProductsByCategory("hogar"),
-    []
-  );
+  const [hogarProducts, setHogarProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products?category=hogar")
+      .then((r) => r.json())
+      .then((data) => setHogarProducts(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#0A0A0A" }}>

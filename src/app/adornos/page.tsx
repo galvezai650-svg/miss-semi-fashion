@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Gem, Sparkles, Truck, Heart, Star, ShieldCheck } from "lucide-react";
-import { getProductsByCategory } from "@/data/products";
+import type { Product } from "@/data/products";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -59,7 +59,14 @@ const features = [
 ];
 
 export default function AdornosPage() {
-  const products = useMemo(() => getProductsByCategory("adornos"), []);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products?category=adornos")
+      .then((r) => r.json())
+      .then((data) => setProducts(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#0A0A0A" }}>

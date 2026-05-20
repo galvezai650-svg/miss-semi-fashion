@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Tag, Clock, TrendingUp } from "lucide-react";
-import { getDeals, getBestSellers, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Badge } from "@/components/ui/badge";
@@ -45,9 +45,18 @@ function sortProducts(products: Product[], sort: string): Product[] {
 export default function OfertasPage() {
   const [sortBy, setSortBy] = useState("relevance");
   const [minDiscount, setMinDiscount] = useState(0);
+  const [allDeals, setAllDeals] = useState<Product[]>([]);
+  const [bestSellers, setBestSellers] = useState<Product[]>([]);
 
-  const allDeals = useMemo(() => getDeals(), []);
-  const bestSellers = useMemo(() => getBestSellers(), []);
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/products?deals=true").then((r) => r.json()),
+      fetch("/api/products?bestSellers=true").then((r) => r.json()),
+    ]).then(([dealsData, sellersData]) => {
+      setAllDeals(Array.isArray(dealsData) ? dealsData : []);
+      setBestSellers(Array.isArray(sellersData) ? sellersData : []);
+    }).catch(() => {});
+  }, []);
 
   const dealsWithSellers = useMemo(() => {
     if (allDeals.length >= 4) return allDeals;

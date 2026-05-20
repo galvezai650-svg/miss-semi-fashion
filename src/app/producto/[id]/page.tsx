@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,11 +30,7 @@ import StarRating from "@/components/amazon/StarRating";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import { useCartStore } from "@/stores/cart-store";
 import { useWishlistStore } from "@/stores/wishlist-store";
-import {
-  getProductById,
-  getRelatedProducts,
-  type Product,
-} from "@/data/products";
+import type { Product } from "@/data/products";
 
 function formatPrice(price: number): string {
   return `$${price.toLocaleString("es-CO")}`;
@@ -70,10 +66,18 @@ export default function ProductDetailPage() {
   const router = useRouter();
   const id = params.id as string;
 
-  const product = getProductById(id);
-  const relatedProducts = product
-    ? getRelatedProducts(product.id, product.categorySlug)
-    : [];
+  const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/products/${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.product) setProduct(data.product);
+        if (data.related) setRelatedProducts(data.related);
+      })
+      .catch(() => {});
+  }, [id]);
 
   const addItem = useCartStore((s) => s.addItem);
   const items = useCartStore((s) => s.items);
@@ -86,25 +90,16 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("descripcion");
 
-  // Product not found
+  // Product not found or loading
   if (!product) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
         <div className="rounded-full bg-muted p-6">
-          <Package className="h-10 w-10 text-muted-foreground" />
+          <Package className="h-10 w-10 animate-spin text-muted-foreground" />
         </div>
         <h1 className="text-2xl font-bold text-foreground">
-          Producto no encontrado
+          Cargando producto...
         </h1>
-        <p className="text-muted-foreground">
-          El producto que buscas no existe o fue removido.
-        </p>
-        <Button asChild>
-          <Link href="/">
-            <Home className="mr-2 h-4 w-4" />
-            Volver al inicio
-          </Link>
-        </Button>
       </div>
     );
   }

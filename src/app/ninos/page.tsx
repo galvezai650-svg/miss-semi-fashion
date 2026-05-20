@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ import { Star, Sparkles, ShieldCheck, Palette, Droplets, ArrowRight } from "luci
 import { Button } from "@/components/ui/button";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductGrid from "@/components/amazon/ProductGrid";
-import { getProductsByCategory } from "@/data/products";
+import type { Product } from "@/data/products";
 
 /* ─── Animation presets ─── */
 const fadeUp = {
@@ -86,7 +86,14 @@ function FeatureCard({
    NIÑOS PAGE — Luxury Edition
    ════════════════════════════════════════════════════════════════ */
 export default function NinosPage() {
-  const products = useMemo(() => getProductsByCategory("ninos"), []);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products?category=ninos")
+      .then((r) => r.json())
+      .then((data) => setProducts(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#0A0A0A" }}>

@@ -497,3 +497,32 @@ Stage Summary:
 - Borders: #2A2A2A throughout
 - Gold accents preserved as-is
 - No functionality changes
+
+---
+Task ID: 1
+Agent: Main
+Task: Connect frontend to database so admin changes reflect in user UI
+
+Work Log:
+- Identified root cause: All 10+ frontend pages imported from static `src/data/products.ts` instead of DB
+- Rewrote `/api/products/route.ts` to read from Prisma DB with query filters (?category, ?search, ?bestSellers, ?deals)
+- Created `/api/products/[id]/route.ts` for single product + related products
+- Created `/api/admin/seed/route.ts` for admin seed sync endpoint
+- Updated 10 frontend files to use fetch() from API:
+  - `src/app/page.tsx` (homepage: bestSellers + deals)
+  - `src/app/hombre/page.tsx` (category: hombre)
+  - `src/app/lenceria/page.tsx` (category: lenceria)
+  - `src/app/ninos/page.tsx` (category: ninos)
+  - `src/app/adornos/page.tsx` (category: adornos)
+  - `src/app/hogar/page.tsx` (category: hogar)
+  - `src/app/ofertas/page.tsx` (deals + bestSellers)
+  - `src/app/categoria/[slug]/page.tsx` (dynamic category)
+  - `src/app/buscar/page.tsx` (search)
+  - `src/app/producto/[id]/page.tsx` (product detail + related)
+- Seeded 21 products + 3 promotions from static data to DB
+- Added "Sincronizar Catálogo" button in admin dashboard
+
+Stage Summary:
+- Admin CRUD operations now immediately reflect in user-facing pages
+- All products/pages/search/category pages read from DB via /api/products
+- Product type still imported from @/data/products for TypeScript compatibility

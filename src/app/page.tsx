@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -13,15 +14,8 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getBestSellers, getDeals } from "@/data/products";
 import ProductGrid from "@/components/amazon/ProductGrid";
-
-/* ──────────────────────────────────────────────
-   Data
-   ────────────────────────────────────────────── */
-
-const bestSellers = getBestSellers();
-const deals = getDeals();
+import type { Product } from "@/data/products";
 
 const categoryLinks = [
   { name: "Hombre", href: "/hombre", image: "/images/hero-hombre.png" },
@@ -87,6 +81,20 @@ const stagger = {
    ────────────────────────────────────────────── */
 
 export default function HomePage() {
+  const [bestSellers, setBestSellers] = useState<Product[]>([]);
+  const [deals, setDeals] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products?bestSellers=true")
+      .then((r) => r.json())
+      .then((data) => setBestSellers(Array.isArray(data) ? data : []))
+      .catch(() => {});
+    fetch("/api/products?deals=true")
+      .then((r) => r.json())
+      .then((data) => setDeals(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
+
   return (
     <div className="flex flex-col" style={{ background: "transparent" }}>
       {/* ══════════════════════════════════════════

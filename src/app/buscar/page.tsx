@@ -10,7 +10,7 @@ import {
   ArrowUpDown,
   ShoppingCart,
 } from "lucide-react";
-import { searchProducts, type Product } from "@/data/products";
+import type { Product } from "@/data/products";
 import { categories } from "@/data/categories";
 import ProductCard from "@/components/amazon/ProductCard";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
@@ -52,6 +52,31 @@ function filterByPrice(products: Product[], range: string): Product[] {
   return products.filter((p) => p.price >= min && p.price <= max);
 }
 
+function useSearchResults(query: string): Product[] {
+  const [results, setResults] = useState<Product[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const url = query
+      ? `/api/products?search=${encodeURIComponent(query)}`
+      : "/api/products";
+    fetch(url)
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled) {
+          const filtered = query
+            ? (Array.isArray(data) ? data : [])
+            : [];
+          setResults(filtered);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [query]);
+
+  return results;
+}
+
 function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -60,8 +85,7 @@ function SearchContent() {
   const [sortBy, setSortBy] = useState("relevance");
   const [priceRange, setPriceRange] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
-
-  const results = useMemo(() => searchProducts(query), [query]);
+  const results = useSearchResults(query);
 
   const displayedResults = useMemo(() => {
     const filtered = filterByPrice(results, priceRange);
@@ -78,10 +102,6 @@ function SearchContent() {
       })
       .filter(Boolean) as { name: string; slug: string }[];
   }, [results]);
-
-  useEffect(() => {
-    setSearchInput(query);
-  }, [query]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
