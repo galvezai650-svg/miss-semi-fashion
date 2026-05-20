@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import AmazonNavbar from "@/components/amazon/AmazonNavbar";
 import AmazonFooter from "@/components/amazon/AmazonFooter";
 import WhatsAppFloat from "@/components/amazon/WhatsAppFloat";
+import PageBackground from "@/components/PageBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,11 +48,13 @@ export default function RootLayout({
         className={`${geistSans.variable} font-sans antialiased`}
         style={{ backgroundColor: "#FAFAF8", color: "#1A1A1A" }}
       >
+      <PageBackground>
         <AmazonNavbar />
         <main className="min-h-screen">{children}</main>
         <AmazonFooter />
         <WhatsAppFloat />
         <Toaster />
+      </PageBackground>
       </body>
     </html>
   );
