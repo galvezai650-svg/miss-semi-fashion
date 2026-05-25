@@ -76,3 +76,25 @@ model AdminSession {
   createdAt DateTime @default(now())
   expiresAt DateTime
 }
+
+model Order {
+  id              String   @id @default(cuid())
+  orderId         String   @unique
+  customerName    String
+  customerPhone   String
+  customerEmail   String
+  customerDoc     String   @default("")
+  address         String
+  department      String   @default("")
+  municipality    String   @default("")
+  neighborhood    String   @default("")
+  instructions    String   @default("")
+  items           String
+  total           Float
+  shipping        Float    @default(0)
+  paymentMethod   String   @default("contra-entrega")
+  status          String   @default("Confirmada")
+  whatsappSent    Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

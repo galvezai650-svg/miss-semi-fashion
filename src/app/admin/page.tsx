@@ -137,6 +137,7 @@ export default function AdminPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [promotions, setPromotions] = useState<Promotion[]>([]);
+  const [orders, setOrders] = useState<Array<Record<string, unknown>>>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Product form
@@ -234,12 +235,20 @@ export default function AdminPage() {
     }
   }, [authFetch]);
 
+  const fetchOrders = useCallback(async () => {
+    const res = await authFetch("/api/admin/orders");
+    if (res?.ok) {
+      const data = await res.json();
+      setOrders(data.orders || []);
+    }
+  }, [authFetch]);
+
   useEffect(() => {
     if (!token) return;
-    Promise.all([fetchStats(), fetchProducts(), fetchPromotions()]).then(() =>
+    Promise.all([fetchStats(), fetchProducts(), fetchPromotions(), fetchOrders()]).then(() =>
       setLoading(false)
     );
-  }, [token, fetchStats, fetchProducts, fetchPromotions]);
+  }, [token, fetchStats, fetchProducts, fetchPromotions, fetchOrders]);
 
   // Product CRUD
   function openNewProduct() {
@@ -867,16 +876,124 @@ export default function AdminPage() {
 
           {/* ═══ ORDERS ═══ */}
           {tab === "orders" && (
-            <div className="rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl p-8 text-center">
-              <ShoppingBag className="mx-auto mb-4 h-12 w-12 text-[#C6A962]/40" />
-              <h3 className="mb-2 font-serif text-lg text-[#E5E5E5]">
-                Gestión de Pedidos
-              </h3>
-              <p className="text-sm text-[#888] max-w-md mx-auto">
-                Los pedidos se registran desde el checkout del cliente. Los datos
-                se almacenan localmente en el navegador del cliente y se
-                confirman por WhatsApp.
-              </p>
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="font-serif text-xl text-white">
+                  Pedidos ({orders.length})
+                </h3>
+                <button
+                  onClick={fetchOrders}
+                  className="flex items-center gap-2 rounded-lg border border-[#C6A962]/30 bg-[#C6A962]/10 px-4 py-2 text-sm text-[#C6A962] transition-all hover:bg-[#C6A962]/20"
+                >
+                  <RotateCcw className="h-3.5 w-3.5" />
+                  Actualizar
+                </button>
+              </div>
+
+              {orders.length === 0 ? (
+                <div className="rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl p-8 text-center">
+                  <ShoppingBag className="mx-auto mb-4 h-12 w-12 text-[#C6A962]/40" />
+                  <p className="text-sm text-[#888]">
+                    Aún no hay pedidos registrados
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-1">
+                  {orders.map((order: Record<string, unknown>) => {
+                    const orderItems = (() => {
+                      try { return JSON.parse(order.items as string); } catch { return []; }
+                    })();
+                    const created = new Date(order.createdAt as string);
+                    return (
+                      <div key={order.id as string} className="rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl p-5">
+                        {/* Header */}
+                        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                          <div>
+                            <p className="text-xs text-[#666]">Pedido</p>
+                            <p className="text-sm font-bold text-[#E5E5E5]">
+                              #{order.orderId}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className="text-xs text-[#666]">
+                              {created.toLocaleDateString("es-CO")}
+                            </span>
+                            <span className="rounded-full px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{
+                              backgroundColor:
+                                order.status === "Confirmada" ? "rgba(37,99,235,0.15)" :
+                                order.status === "En camino" ? "rgba(245,158,11,0.15)" :
+                                order.status === "Entregado" ? "rgba(34,197,94,0.15)" :
+                                order.status === "Cancelada" ? "rgba(239,68,68,0.15)" :
+                                "rgba(255,255,255,0.05)",
+                              color:
+                                order.status === "Confirmada" ? "#60a5fa" :
+                                order.status === "En camino" ? "#f59e0b" :
+                                order.status === "Entregado" ? "#22c55e" :
+                                order.status === "Cancelada" ? "#ef4444" :
+                                "#999",
+                            }}>
+                              {order.status as string}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Customer */}
+                        <div className="mb-3 grid grid-cols-2 gap-2 rounded-lg bg-black/30 p-3 text-xs">
+                          <div>
+                            <span className="text-[#666]">👤</span>{" "}
+                            <span className="text-[#CCC]">{order.customerName}</span>
+                          </div>
+                          <div>
+                            <span className="text-[#666]">📱</span>{" "}
+                            <span className="text-[#CCC]">{order.customerPhone}</span>
+                          </div>
+                          <div>
+                            <span className="text-[#666]">📧</span>{" "}
+                            <span className="text-[#CCC]">{order.customerEmail || "-"}</span>
+                          </div>
+                          <div>
+                            <span className="text-[#666]📍</span>{" "}
+                            <span className="text-[#CCC]">{order.address}, {order.municipality}</span>
+                          </div>
+                        </div>
+
+                        {/* Items */}
+                        <div className="space-y-1.5">
+                          {(orderItems as Array<{name: string; size: string; quantity: number; price: number}>).map((item, i) => (
+                            <div key={i} className="flex items-center justify-between rounded-md bg-black/20 px-3 py-2 text-xs">
+                              <div>
+                                <span className="text-[#E5E5E5]">{item.name}</span>
+                                <span className="ml-2 text-[#888]">T:{item.size} · x{item.quantity}</span>
+                              </div>
+                              <span className="font-medium text-[#C6A962]">
+                                ${((item.price || 0) * (item.quantity || 1)).toLocaleString("es-CO")}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Total */}
+                        <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-3">
+                          <span className="text-sm text-[#888]">
+                            Total ({(orderItems as unknown[]).length} producto{(orderItems as unknown[]).length !== 1 ? "s" : ""})
+                          </span>
+                          <span className="text-base font-bold text-[#E5E5E5]">
+                            ${(order.total as number).toLocaleString("es-CO")}
+                          </span>
+                        </div>
+
+                        {/* WhatsApp sent indicator */}
+                        {order.whatsappSent && (
+                          <div className="mt-2 flex items-center gap-1.5 text-[10px] text-green-400/70">
+                            <MessageSquare className="h-3 w-3" />
+                            Enviado por WhatsApp
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>

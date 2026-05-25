@@ -185,36 +185,73 @@ function CheckoutContent() {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const newOrderId = `MSF-${Date.now().toString(36).toUpperCase()}`;
-      const cartTotal = totalPrice();
+    const orderItems = items.map((item) => ({
+      productId: item.productId,
+      name: item.name,
+      image: item.image,
+      price: item.price,
+      size: item.size,
+      quantity: item.quantity,
+    }));
 
-      const order: Order = {
-        id: newOrderId,
-        date: new Date().toISOString(),
-        status: "Confirmada",
+    const cartTotal = totalPrice();
+
+    // Send order to DB + WhatsApp
+    fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customerName: form.fullName,
+        customerPhone: form.phone,
+        customerEmail: form.email,
+        customerDoc: form.documentId,
+        address: form.address,
+        department: selectedDepartment?.name || form.department,
+        municipality: form.municipality,
+        neighborhood: form.neighborhood,
+        instructions: form.specialInstructions,
+        items: orderItems,
         total: cartTotal,
-        items: items.map((item) => ({
-          productId: item.productId,
-          name: item.name,
-          image: item.image,
-          price: item.price,
-          size: item.size,
-          quantity: item.quantity,
-        })),
-        shippingAddress: `${form.address}, ${form.neighborhood ? form.neighborhood + ", " : ""}${form.municipality}, ${selectedDepartment?.name || form.department}`,
         paymentMethod: "contra-entrega",
-        email: form.email,
-        phone: form.phone,
-      };
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          // Save to local Zustand store too
+          const newOrderId = data.orderId;
+          const order: Order = {
+            id: newOrderId,
+            date: new Date().toISOString(),
+            status: "Confirmada",
+            total: cartTotal,
+            items: orderItems,
+            shippingAddress: `${form.address}, ${form.neighborhood ? form.neighborhood + ", " : ""}${form.municipality}, ${selectedDepartment?.name || form.department}`,
+            paymentMethod: "contra-entrega",
+            email: form.email,
+            phone: form.phone,
+          };
 
-      addOrder(order);
-      clearCart();
-      setOrderId(newOrderId);
-      setIsSubmitting(false);
-      setShowSuccess(true);
-      setCurrentStep(3);
-    }, 1500);
+          addOrder(order);
+          clearCart();
+          setOrderId(newOrderId);
+          setShowSuccess(true);
+          setCurrentStep(3);
+
+          // Open WhatsApp
+          if (data.whatsappUrl) {
+            window.open(data.whatsappUrl, "_blank");
+          }
+        } else {
+          toast.error(data.error || "Error al procesar el pedido");
+        }
+        setIsSubmitting(false);
+      })
+      .catch((err) => {
+        console.error("Order error:", err);
+        toast.error("Error de conexión. Intenta de nuevo.");
+        setIsSubmitting(false);
+      });
   }
 
   const cartTotal = totalPrice();
