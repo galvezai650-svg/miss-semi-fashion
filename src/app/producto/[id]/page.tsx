@@ -69,7 +69,8 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
 
-  useEffect(() => {
+  // Fetch product data — also refetches when tab becomes visible
+  const fetchProduct = () => {
     fetch(`/api/products/${id}`)
       .then((r) => r.json())
       .then((data) => {
@@ -77,6 +78,20 @@ export default function ProductDetailPage() {
         if (data.related) setRelatedProducts(data.related);
       })
       .catch(() => {});
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        fetchProduct();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
   }, [id]);
 
   const addItem = useCartStore((s) => s.addItem);
