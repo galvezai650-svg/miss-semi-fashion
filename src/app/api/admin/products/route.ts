@@ -66,6 +66,24 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { name, price, category, categorySlug, image } = body
 
+    // Helper: ensure list fields are stored as JSON arrays
+    function toArray(val: unknown): string[] {
+      if (Array.isArray(val)) return val.map(String);
+      if (typeof val === "string") {
+        const trimmed = val.trim();
+        if (!trimmed) return [];
+        // Try JSON parse first (e.g. "[\"S\",\"M\"]")
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed)) return parsed.map(String);
+          if (typeof parsed === "string") return parsed.trim() ? [parsed.trim()] : [];
+        } catch {}
+        // Otherwise treat as comma-separated
+        return trimmed.split(",").map((s) => s.trim()).filter(Boolean);
+      }
+      return [];
+    }
+
     // Validate required fields
     if (!name || price === undefined || !category || !categorySlug || !image) {
       return NextResponse.json(
@@ -98,9 +116,9 @@ export async function POST(request: NextRequest) {
         description: body.description || '',
         shortDescription: body.shortDescription || '',
         image,
-        images: body.images ? JSON.stringify(body.images) : '[]',
-        sizes: body.sizes ? JSON.stringify(body.sizes) : '[]',
-        colors: body.colors ? JSON.stringify(body.colors) : '[]',
+        images: JSON.stringify(toArray(body.images)),
+        sizes: JSON.stringify(toArray(body.sizes)),
+        colors: JSON.stringify(toArray(body.colors)),
         fabric: body.fabric || '',
         inStock: body.inStock !== undefined ? body.inStock : true,
         stockCount: body.stockCount || 0,
@@ -110,7 +128,7 @@ export async function POST(request: NextRequest) {
         isBestSeller: body.isBestSeller || false,
         isDeal: body.isDeal || false,
         dealDiscount: body.dealDiscount || null,
-        tags: body.tags ? JSON.stringify(body.tags) : '[]',
+        tags: JSON.stringify(toArray(body.tags)),
         sortOrder: body.sortOrder || 0,
         active: body.active !== undefined ? body.active : true,
       },

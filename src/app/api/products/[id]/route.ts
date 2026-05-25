@@ -10,10 +10,30 @@ const noCacheHeaders = {
 };
 
 function safeJSON(str: string, fallback: unknown[] = []) {
+  if (!str) return fallback;
   try {
-    const arr = JSON.parse(str);
-    return Array.isArray(arr) ? arr : fallback;
+    const parsed = JSON.parse(str);
+    if (Array.isArray(parsed)) return parsed;
+    // If parsed result is a string, treat as comma-separated or single value
+    if (typeof parsed === "string") {
+      const trimmed = parsed.trim();
+      if (!trimmed) return fallback;
+      if (trimmed.includes(",")) {
+        return trimmed.split(",").map((s) => s.trim()).filter(Boolean);
+      }
+      return [trimmed];
+    }
+    return fallback;
   } catch {
+    // Fallback: treat the raw string as comma-separated or single value
+    if (typeof str === "string") {
+      const trimmed = str.trim();
+      if (!trimmed) return fallback;
+      if (trimmed.includes(",")) {
+        return trimmed.split(",").map((s) => s.trim()).filter(Boolean);
+      }
+      return [trimmed];
+    }
     return fallback;
   }
 }

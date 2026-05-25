@@ -579,3 +579,23 @@ Stage Summary:
 - All storefront pages were already connected to DB via /api/products endpoints
 - Admin changes already reflect immediately on storefront (from previous session work)
 - Product "SPORT" with external image URL now displays correctly
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: Fix sizes/tags/colors storage bug and ensure all pages show updated data from admin
+
+Work Log:
+- Found bug: admin sends sizes as comma-separated string "S, M, L", API does JSON.stringify("S, M, L") storing '"S, M, L"' instead of '["S","M","L"]'
+- Public API safeJSON returned [] for malformed data, so product detail showed no size selector
+- Fixed safeJSON in /api/products/route.ts and /api/products/[id]/route.ts to handle: JSON arrays, comma-separated strings, and single values
+- Added toArray() helper to admin POST and PUT routes to properly convert any input format to JSON arrays
+- Fixed 3 products with bad data in DB (sizes/colors stored as stringified strings)
+- Product detail page already had visibilitychange listener from previous fix
+- All category pages use useLiveFetch which has visibilitychange listener
+
+Stage Summary:
+- Admin can now save sizes as "S, M, L" or ["S","M","L"] - both work correctly
+- Product detail page now shows size selector with proper sizes
+- Colors and tags also fixed for all products
+- All changes from admin reflect on both category pages and product detail pages when switching tabs

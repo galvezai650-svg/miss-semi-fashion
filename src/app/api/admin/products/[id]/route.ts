@@ -54,6 +54,22 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
     const body = await request.json()
 
+    // Helper: ensure list fields are stored as JSON arrays
+    function toArray(val: unknown): string[] {
+      if (Array.isArray(val)) return val.map(String);
+      if (typeof val === "string") {
+        const trimmed = val.trim();
+        if (!trimmed) return [];
+        try {
+          const parsed = JSON.parse(trimmed);
+          if (Array.isArray(parsed)) return parsed.map(String);
+          if (typeof parsed === "string") return parsed.trim() ? [parsed.trim()] : [];
+        } catch {}
+        return trimmed.split(",").map((s) => s.trim()).filter(Boolean);
+      }
+      return [];
+    }
+
     const updateData: Record<string, unknown> = {}
     const allowedFields = [
       'name', 'description', 'shortDescription', 'image', 'images',
@@ -71,7 +87,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         } else if (['stockCount', 'rating', 'reviewCount', 'dealDiscount', 'sortOrder'].includes(field)) {
           updateData[field] = parseInt(body[field], 10)
         } else if (['sizes', 'colors', 'images', 'tags'].includes(field)) {
-          updateData[field] = JSON.stringify(body[field])
+          updateData[field] = JSON.stringify(toArray(body[field]))
         } else {
           updateData[field] = body[field]
         }
