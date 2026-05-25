@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -16,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import type { Product } from "@/data/products";
+import { useLiveFetch } from "@/hooks/useLiveFetch";
 
 const categoryLinks = [
   { name: "Hombre", href: "/hombre", image: "/images/hero-hombre.png" },
@@ -81,19 +81,8 @@ const stagger = {
    ────────────────────────────────────────────── */
 
 export default function HomePage() {
-  const [bestSellers, setBestSellers] = useState<Product[]>([]);
-  const [deals, setDeals] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch("/api/products?bestSellers=true")
-      .then((r) => r.json())
-      .then((data) => setBestSellers(Array.isArray(data) ? data : []))
-      .catch(() => {});
-    fetch("/api/products?deals=true")
-      .then((r) => r.json())
-      .then((data) => setDeals(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, []);
+  const { data: bestSellers } = useLiveFetch<Product>("/api/products?bestSellers=true");
+  const { data: deals } = useLiveFetch<Product>("/api/products?deals=true");
 
   return (
     <div className="flex flex-col" style={{ background: "transparent" }}>

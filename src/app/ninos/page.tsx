@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -9,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import type { Product } from "@/data/products";
+import { useLiveFetch } from "@/hooks/useLiveFetch";
 
 /* ─── Animation presets ─── */
 const fadeUp = {
@@ -86,14 +86,7 @@ function FeatureCard({
    NIÑOS PAGE — Luxury Edition
    ════════════════════════════════════════════════════════════════ */
 export default function NinosPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch("/api/products?category=ninos")
-      .then((r) => r.json())
-      .then((data) => setProducts(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, []);
+  const { data: products } = useLiveFetch<Product>("/api/products?category=ninos");
 
   return (
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: "#0A0A0A" }}>

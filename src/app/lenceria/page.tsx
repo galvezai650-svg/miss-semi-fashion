@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -9,6 +8,7 @@ import type { Product } from "@/data/products";
 import ProductGrid from "@/components/amazon/ProductGrid";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
+import { useLiveFetch } from "@/hooks/useLiveFetch";
 
 /* ─── Animation helpers ─── */
 const fadeUp = {
@@ -73,14 +73,7 @@ const subcategories = [
 ];
 
 export default function LenceriaPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch("/api/products?category=lenceria")
-      .then((r) => r.json())
-      .then((data) => setProducts(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, []);
+  const { data: products } = useLiveFetch<Product>("/api/products?category=lenceria");
 
   return (
     <main className="min-h-screen bg-[#0A0A0A]">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -28,6 +28,7 @@ import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import ProductCard from "@/components/amazon/ProductCard";
 import { getCategoryBySlug } from "@/data/categories";
 import type { Product } from "@/data/products";
+import { useLiveFetch } from "@/hooks/useLiveFetch";
 
 /* ─── Filter types ─── */
 interface Filters {
@@ -239,14 +240,7 @@ export default function CategoryPage() {
   const slug = params.slug as string;
 
   const category = getCategoryBySlug(slug);
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch(`/api/products?category=${encodeURIComponent(slug)}`)
-      .then((r) => r.json())
-      .then((data) => setAllProducts(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, [slug]);
+  const { data: allProducts } = useLiveFetch<Product>(`/api/products?category=${encodeURIComponent(slug)}`);
 
   const [filters, setFilters] = useState<Filters>({
     priceRanges: [],

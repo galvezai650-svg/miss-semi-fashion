@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Gem, Sparkles, Truck, Heart, Star, ShieldCheck } from "lucide-react";
 import type { Product } from "@/data/products";
@@ -9,6 +8,7 @@ import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { useLiveFetch } from "@/hooks/useLiveFetch";
 
 /* ─── Animation Variants ─── */
 const fadeUp = {
@@ -59,14 +59,7 @@ const features = [
 ];
 
 export default function AdornosPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    fetch("/api/products?category=adornos")
-      .then((r) => r.json())
-      .then((data) => setProducts(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, []);
+  const { data: products } = useLiveFetch<Product>("/api/products?category=adornos");
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#0A0A0A" }}>

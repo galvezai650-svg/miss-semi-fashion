@@ -526,3 +526,38 @@ Stage Summary:
 - Admin CRUD operations now immediately reflect in user-facing pages
 - All products/pages/search/category pages read from DB via /api/products
 - Product type still imported from @/data/products for TypeScript compatibility
+
+---
+Task ID: 8
+Agent: Main Developer
+Task: Fix typo "LENCIERÍA" → "LENCERÍA" and ensure admin changes reflect in storefront
+
+Work Log:
+- Fixed typo in /src/app/lenceria/page.tsx line 138: LENCIERÍA → LENCERÍA
+- Investigated why admin changes don't reflect on storefront:
+  - Found all storefront pages ALREADY fetch from /api/products (Prisma DB)
+  - Identified two issues: browser caching of API responses + stale component state
+- Added `Cache-Control: no-store` headers to /api/products and /api/products/[id] routes
+- Added `export const dynamic = 'force-dynamic'` to prevent server-side caching
+- Created public /api/promotions route for storefront promotion display
+- Created custom `useLiveFetch` hook in /src/hooks/useLiveFetch.ts:
+  - Fetches data on mount
+  - Re-fetches automatically when browser tab regains visibility
+  - Handles cleanup and abort controller
+- Updated 8 storefront pages to use `useLiveFetch` instead of manual useState+useEffect:
+  - src/app/page.tsx (homepage)
+  - src/app/lenceria/page.tsx
+  - src/app/hombre/page.tsx
+  - src/app/ninos/page.tsx
+  - src/app/adornos/page.tsx
+  - src/app/hogar/page.tsx
+  - src/app/ofertas/page.tsx
+  - src/app/categoria/[slug]/page.tsx
+- Lint passes clean with 0 errors
+
+Stage Summary:
+- Admin changes (add/edit/delete products) now reflect immediately on storefront
+- Pages re-fetch data when user switches back to the tab
+- No browser caching of product API responses
+- Created /src/hooks/useLiveFetch.ts (reusable live data hook)
+- Created /src/app/api/promotions/route.ts (public promotions API)

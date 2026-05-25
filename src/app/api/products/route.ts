@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+export const dynamic = 'force-dynamic';
+
+const noCacheHeaders = {
+  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+  'Pragma': 'no-cache',
+  'Expires': '0',
+};
+
 function safeJSON(str: string, fallback: unknown[] = []) {
   try {
     const arr = JSON.parse(str);
@@ -59,7 +67,7 @@ export async function GET(request: NextRequest) {
     });
 
     const formatted = products.map(formatProduct);
-    return NextResponse.json(formatted);
+    return NextResponse.json(formatted, { headers: noCacheHeaders });
   } catch (error) {
     console.error("Products GET error:", error);
     return NextResponse.json(

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Tag, Clock, TrendingUp } from "lucide-react";
 import type { Product } from "@/data/products";
@@ -8,6 +8,7 @@ import ProductGrid from "@/components/amazon/ProductGrid";
 import Breadcrumbs from "@/components/amazon/Breadcrumbs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useLiveFetch } from "@/hooks/useLiveFetch";
 
 const sortOptions = [
   { label: "Relevancia", value: "relevance" },
@@ -45,18 +46,8 @@ function sortProducts(products: Product[], sort: string): Product[] {
 export default function OfertasPage() {
   const [sortBy, setSortBy] = useState("relevance");
   const [minDiscount, setMinDiscount] = useState(0);
-  const [allDeals, setAllDeals] = useState<Product[]>([]);
-  const [bestSellers, setBestSellers] = useState<Product[]>([]);
-
-  useEffect(() => {
-    Promise.all([
-      fetch("/api/products?deals=true").then((r) => r.json()),
-      fetch("/api/products?bestSellers=true").then((r) => r.json()),
-    ]).then(([dealsData, sellersData]) => {
-      setAllDeals(Array.isArray(dealsData) ? dealsData : []);
-      setBestSellers(Array.isArray(sellersData) ? sellersData : []);
-    }).catch(() => {});
-  }, []);
+  const { data: allDeals } = useLiveFetch<Product>("/api/products?deals=true");
+  const { data: bestSellers } = useLiveFetch<Product>("/api/products?bestSellers=true");
 
   const dealsWithSellers = useMemo(() => {
     if (allDeals.length >= 4) return allDeals;
