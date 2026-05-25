@@ -135,7 +135,7 @@ export default function LenceriaPage() {
               className="font-serif text-5xl font-normal tracking-[0.12em] text-white sm:text-6xl md:text-7xl lg:text-8xl"
               style={{ textShadow: "0 2px 30px rgba(0,0,0,0.8), 0 0 40px rgba(198,169,98,0.3)" }}
             >
-              LENCIERÍA
+              LENCERÍA
             </motion.h1>
 
             {/* Elegant description */}
