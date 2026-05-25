@@ -561,3 +561,21 @@ Stage Summary:
 - No browser caching of product API responses
 - Created /src/hooks/useLiveFetch.ts (reusable live data hook)
 - Created /src/app/api/promotions/route.ts (public promotions API)
+
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix Next.js image config error for external image URLs (www.image2url.com)
+
+Work Log:
+- User reported runtime error: "hostname www.image2url.com is not configured under images in your next.config.js"
+- Identified that user added product "SPORT" via admin panel with external image URL from image2url.com
+- Updated next.config.ts to add remotePatterns for image2url.com (and cloudinary/imgix for future use)
+- Verified all 21 products are in DB and all pages already fetch from API (useLiveFetch)
+- Server restarted automatically and confirmed working
+
+Stage Summary:
+- Fixed next.config.ts with remotePatterns for **.image2url.com, **.cloudinary.com, **.imgix.net
+- All storefront pages were already connected to DB via /api/products endpoints
+- Admin changes already reflect immediately on storefront (from previous session work)
+- Product "SPORT" with external image URL now displays correctly
