@@ -10,10 +10,12 @@ export interface OrderItem {
   quantity: number;
 }
 
+export type OrderStatus = 'pendiente' | 'confirmado' | 'preparando' | 'en-camino' | 'entregado' | 'cancelado';
+
 export interface Order {
   id: string;
   date: string;
-  status: 'pendiente' | 'en-camino' | 'entregado' | 'cancelado';
+  status: OrderStatus;
   items: OrderItem[];
   subtotal: number;
   shipping: number;

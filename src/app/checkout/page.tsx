@@ -223,13 +223,18 @@ function CheckoutContent() {
           const order: Order = {
             id: newOrderId,
             date: new Date().toISOString(),
-            status: "Confirmada",
+            status: "confirmado",
             total: cartTotal,
             items: orderItems,
-            shippingAddress: `${form.address}, ${form.neighborhood ? form.neighborhood + ", " : ""}${form.municipality}, ${selectedDepartment?.name || form.department}`,
+            subtotal: cartTotal,
+            shipping: 0,
+            shippingAddress: {
+              name: form.fullName,
+              address: `${form.address}${form.neighborhood ? ", " + form.neighborhood : ""}`,
+              city: `${form.municipality}, ${selectedDepartment?.name || form.department}`,
+              phone: form.phone,
+            },
             paymentMethod: "contra-entrega",
-            email: form.email,
-            phone: form.phone,
           };
 
           addOrder(order);
@@ -383,7 +388,7 @@ function CheckoutContent() {
                           animate={{
                             width: activeStep > step.step ? "100%" : "0%",
                           }}
-                          transition={{ duration: 0.5, ease: "easeInOut" }}
+                          transition={{ duration: 0.5, ease: "easeInOut" as const }}
                         />
                       </div>
                     </div>

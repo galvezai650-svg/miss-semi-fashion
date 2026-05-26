@@ -43,56 +43,74 @@ const TRACKING_STEPS: { label: string; icon: React.ElementType }[] = [
   { label: "Entregado", icon: CheckCircle2 },
 ];
 
+const STATUS_LABELS: Record<OrderStatus, string> = {
+  pendiente: 'Pendiente',
+  confirmado: 'Confirmado',
+  preparando: 'Preparando',
+  'en-camino': 'En camino',
+  entregado: 'Entregado',
+  cancelado: 'Cancelado',
+};
+
 function getStatusBadge(status: OrderStatus) {
+  const label = STATUS_LABELS[status] || status;
   switch (status) {
-    case "Entregada":
+    case "entregado":
       return (
         <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
           <CheckCircle2 className="mr-1 h-3 w-3" />
-          {status}
+          {label}
         </Badge>
       );
-    case "En camino":
+    case "en-camino":
       return (
         <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100">
           <Truck className="mr-1 h-3 w-3" />
-          {status}
+          {label}
         </Badge>
       );
-    case "Confirmada":
+    case "confirmado":
       return (
         <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">
-          {status}
+          {label}
         </Badge>
       );
-    case "Preparando":
+    case "preparando":
       return (
         <Badge className="bg-indigo-100 text-indigo-700 hover:bg-indigo-100">
-          {status}
+          {label}
         </Badge>
       );
-    case "Cancelada":
+    case "pendiente":
+      return (
+        <Badge className="bg-gray-100 text-gray-700 hover:bg-gray-100">
+          {label}
+        </Badge>
+      );
+    case "cancelado":
       return (
         <Badge variant="destructive" className="hover:bg-red-100">
-          {status}
+          {label}
         </Badge>
       );
     default:
-      return <Badge variant="outline">{status}</Badge>;
+      return <Badge variant="outline">{label}</Badge>;
   }
 }
 
 function getStatusStepIndex(status: OrderStatus): number {
   switch (status) {
-    case "Confirmada":
+    case "pendiente":
       return 0;
-    case "Preparando":
+    case "confirmado":
+      return 0;
+    case "preparando":
       return 1;
-    case "En camino":
+    case "en-camino":
       return 2;
-    case "Entregada":
+    case "entregado":
       return 3;
-    case "Cancelada":
+    case "cancelado":
       return -1;
     default:
       return 0;
@@ -245,7 +263,7 @@ export default function PedidosPage() {
                     <div>
                       <span className="text-xs text-muted-foreground">Envio</span>
                       <p className="text-sm text-foreground">
-                        {order.shippingAddress}
+                        {order.shippingAddress.address}, {order.shippingAddress.city}
                       </p>
                     </div>
                   </div>
@@ -384,14 +402,14 @@ export default function PedidosPage() {
                 <div className="flex items-center gap-2 text-sm">
                   <MapPin className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">
-                    {trackingOrder.shippingAddress}
+                    {trackingOrder.shippingAddress.address}, {trackingOrder.shippingAddress.city}
                   </span>
                 </div>
                 {getStatusBadge(trackingOrder.status)}
               </div>
 
               {/* Estimated Delivery */}
-              {trackingOrder.status !== "Cancelada" && (
+              {trackingOrder.status !== "cancelado" && (
                 <div className="rounded-lg border border-blue-200 bg-blue-50 p-3">
                   <p className="text-sm text-blue-800">
                     <strong>Entrega estimada:</strong>{" "}
@@ -401,7 +419,7 @@ export default function PedidosPage() {
               )}
 
               {/* Tracking Timeline */}
-              {trackingOrder.status !== "Cancelada" ? (
+              {trackingOrder.status !== "cancelado" ? (
                 <div className="space-y-4">
                   <h4 className="text-sm font-semibold text-foreground">
                     Estado del envio

@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
       >
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "linear" as const }}
           className="rounded-full bg-muted p-6"
         >
           <Package className="h-10 w-10 text-muted-foreground" />
@@ -160,6 +160,7 @@ export default function ProductDetailPage() {
       toast.error("Por favor selecciona una talla");
       return;
     }
+    if (!product) return;
     for (let i = 0; i < quantity; i++) {
       addItem({
         productId: product.id,
@@ -177,6 +178,7 @@ export default function ProductDetailPage() {
       toast.error("Por favor selecciona una talla");
       return;
     }
+    if (!product) return;
     addItem({
       productId: product.id,
       name: product.name,
@@ -188,6 +190,7 @@ export default function ProductDetailPage() {
   }
 
   function handleToggleWishlist() {
+    if (!product) return;
     if (isInWishlist) {
       wishlistRemoveItem(product.id);
       toast.success("Eliminado de tu lista de deseos");
@@ -197,7 +200,6 @@ export default function ProductDetailPage() {
         name: product.name,
         image: product.image,
         price: product.price,
-        addedAt: new Date().toISOString(),
       });
       toast.success("Agregado a tu lista de deseos");
     }
@@ -377,7 +379,7 @@ export default function ProductDetailPage() {
               {/* Shipping */}
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-green-400">
-                  <motion.div animate={{ y: [0, -2, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
+                  <motion.div animate={{ y: [0, -2, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" as const }}>
                     <Truck className="h-4 w-4" />
                   </motion.div>
                   <span className="text-sm font-semibold">

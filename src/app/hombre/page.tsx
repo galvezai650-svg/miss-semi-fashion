@@ -19,7 +19,7 @@ const fadeUp = {
     transition: {
       delay: i * 0.1,
       duration: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
     },
   }),
 };
@@ -98,7 +98,7 @@ export default function HombrePage() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="mb-5"
             >
               <span
@@ -113,7 +113,7 @@ export default function HombrePage() {
             <motion.h1
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="font-serif leading-none"
               style={{ fontSize: "clamp(2.8rem, 7vw, 5rem)", color: "#FFFFFF" }}
             >
@@ -125,7 +125,7 @@ export default function HombrePage() {
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="mt-5 mb-5 h-px w-16 origin-left"
               style={{ background: "#C6A962" }}
             />
@@ -147,7 +147,7 @@ export default function HombrePage() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.6, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="mt-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8"
             >
               {/* CTA Button */}
@@ -176,7 +176,7 @@ export default function HombrePage() {
                     transition={{
                       delay: 0.7 + i * 0.12,
                       duration: 0.5,
-                      ease: [0.25, 0.46, 0.45, 0.94],
+                      ease: [0.25, 0.46, 0.45, 0.94] as const,
                     }}
                     className="text-center"
                   >
@@ -265,7 +265,7 @@ export default function HombrePage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }}
         >
           {/* Section Header with Gold Bar */}
           <div className="flex items-center gap-3 mb-6">
@@ -347,7 +347,7 @@ export default function HombrePage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }}
             className="mb-8"
           >
             <div className="flex items-center gap-3 mb-2">
@@ -399,7 +399,7 @@ export default function HombrePage() {
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }}
             className="flex flex-col items-center text-center"
           >
             {/* Gold Label */}
@@ -427,7 +427,7 @@ export default function HombrePage() {
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="mt-5 mb-5 h-px w-12 origin-center"
               style={{ background: "#C6A962" }}
             />
@@ -446,7 +446,7 @@ export default function HombrePage() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.5, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="mt-8"
             >
               <Button

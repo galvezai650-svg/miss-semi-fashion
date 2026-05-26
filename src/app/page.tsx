@@ -66,7 +66,7 @@ const fadeUp = {
     transition: {
       delay: i * 0.08,
       duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.22, 1, 0.36, 1] as const,
     },
   }),
 };
@@ -189,7 +189,7 @@ export default function HomePage() {
           >
             <motion.div
               animate={{ y: [0, 6, 0] }}
-              transition={{ repeat: Infinity, duration: 2.5, ease: [0.4, 0, 0.6, 1] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: [0.4, 0, 0.6, 1] as const }}
             >
               <ChevronRight className="h-6 w-6 rotate-90 text-[#C6A962]/60" />
             </motion.div>
@@ -263,7 +263,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ delay: i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
                 className="flex items-center gap-3 md:px-6 md:first:pl-0 md:last:pr-0"
               >
                 <item.icon className="h-5 w-5 shrink-0 text-[#C6A962]" strokeWidth={1.5} />
@@ -311,7 +311,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
             className="flex flex-col items-center gap-10 py-16 md:flex-row md:py-20 lg:py-24"
           >
             {/* Left content */}
@@ -455,7 +455,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
           className="mx-auto max-w-xl px-4 text-center sm:px-6"
         >
           {/* Gold line */}

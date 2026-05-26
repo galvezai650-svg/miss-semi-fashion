@@ -913,7 +913,7 @@ export default function AdminPage() {
                           <div>
                             <p className="text-xs text-[#666]">Pedido</p>
                             <p className="text-sm font-bold text-[#E5E5E5]">
-                              #{order.orderId}
+                              #{String(order.orderId)}
                             </p>
                           </div>
                           <div className="flex items-center gap-3">
@@ -943,19 +943,19 @@ export default function AdminPage() {
                         <div className="mb-3 grid grid-cols-2 gap-2 rounded-lg bg-black/30 p-3 text-xs">
                           <div>
                             <span className="text-[#666]">👤</span>{" "}
-                            <span className="text-[#CCC]">{order.customerName}</span>
+                            <span className="text-[#CCC]">{String(order.customerName)}</span>
                           </div>
                           <div>
                             <span className="text-[#666]">📱</span>{" "}
-                            <span className="text-[#CCC]">{order.customerPhone}</span>
+                            <span className="text-[#CCC]">{String(order.customerPhone)}</span>
                           </div>
                           <div>
                             <span className="text-[#666]">📧</span>{" "}
-                            <span className="text-[#CCC]">{order.customerEmail || "-"}</span>
+                            <span className="text-[#CCC]">{String(order.customerEmail || "-")}</span>
                           </div>
                           <div>
                             <span className="text-[#666]">📍</span>{" "}
-                            <span className="text-[#CCC]">{order.address}, {order.municipality}</span>
+                            <span className="text-[#CCC]">{String(order.address)}, {String(order.municipality)}</span>
                           </div>
                         </div>
 
@@ -985,7 +985,7 @@ export default function AdminPage() {
                         </div>
 
                         {/* WhatsApp sent indicator */}
-                        {order.whatsappSent && (
+                        {!!order.whatsappSent && (
                           <div className="mt-2 flex items-center gap-1.5 text-[10px] text-green-400/70">
                             <MessageSquare className="h-3 w-3" />
                             Enviado por WhatsApp

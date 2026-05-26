@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'miss-semi-fashion',
-      script: '.next/standalone/server.js',
+      script: 'node_modules/.bin/next',
+      args: 'start -p 3000',
       cwd: '/home/z/my-project',
       env: {
         NODE_ENV: 'production',

@@ -757,3 +757,92 @@ Stage Summary:
 - Updated: /src/components/amazon/AmazonNavbar.tsx (added Mujer nav link)
 - Route /mujer returns HTTP 200
 - Dark luxury theme consistent with existing pages
+
+---
+Task ID: 13-a
+Agent: TS Fix Agent
+Task: Fix TypeScript errors in category pages
+
+Work Log:
+- Identified framer-motion `Variants` type incompatibility with `ease` properties across 6 category pages
+- Fixed `ease: [0.25, 0.46, 0.45, 0.94]` → `ease: [0.25, 0.46, 0.45, 0.94] as const` in adornos (1 instance)
+- Fixed `ease: "easeInOut"` → `ease: "easeInOut" as const` in adornos (2 instances)
+- Fixed `ease: "easeOut"` → `ease: "easeOut" as const` in hogar (3 instances)
+- Fixed `ease: [0.25, 0.46, 0.45, 0.94]` → `ease: [0.25, 0.46, 0.45, 0.94] as const` in hombre (11 instances)
+- Fixed `ease: "easeOut"` → `ease: "easeOut" as const` in lenceria (4 instances)
+- Fixed `ease: "easeOut"` → `ease: "easeOut" as const` in mujer (5 instances)
+- Fixed `ease: [0.22, 1, 0.36, 1]` → `ease: [0.22, 1, 0.36, 1] as const` in ninos (2 instances)
+- Also fixed mujer/page.tsx `useLiveFetch<Product[]>` → `useLiveFetch<Product>` (double-array type mismatch)
+
+Stage Summary:
+- 6 files updated with `as const` assertions on all `ease` properties: adornos, hogar, hombre, lenceria, mujer, ninos
+- 1 additional type fix in mujer (useLiveFetch generic parameter)
+- Total: 29 `ease` fixes + 1 generic type fix = 30 fixes across 6 files
+- `npx tsc --noEmit` returns 0 errors for all 6 target files
+---
+Task ID: 13-c
+Agent: TS Fix Agent
+Task: Fix TypeScript errors in admin page
+
+Work Log:
+- Read admin/page.tsx around error lines 916-962
+- Identified root cause: `orders.map((order: Record<string, unknown>)` makes all order properties `unknown`, which can't be used as ReactNode in JSX
+- Fixed 5 direct `unknown` rendering errors by wrapping with `String()`:
+  - Line 916: `{order.orderId}` → `{String(order.orderId)}`
+  - Line 946: `{order.customerName}` → `{String(order.customerName)}`
+  - Line 950: `{order.customerPhone}` → `{String(order.customerPhone)}`
+  - Line 954: `{order.customerEmail || "-"}` → `{String(order.customerEmail || "-")}`
+  - Line 958: `{order.address}, {order.municipality}` → `{String(order.address)}, {String(order.municipality)}`
+- Fixed hidden `unknown` type in conditional render: `{order.whatsappSent && (...)}` → `{!!order.whatsappSent && (...)}` (double negation converts `unknown` to `boolean`, making the `&&` expression `false | JSX.Element` which IS valid ReactNode)
+- Restored `{/* Items */}` JSX comment that was temporarily removed during debugging
+- Verified with `npx tsc --noEmit`: 0 errors for src/app/admin/page.tsx
+
+Stage Summary:
+- 7 TS errors fixed in /src/app/admin/page.tsx (lines 916, 946, 950, 954, 958×2, 962)
+- All fixes use `String()` coercion for direct renders and `!!` for boolean narrowing in conditionals
+- Zero TypeScript errors remain for admin/page.tsx
+---
+Task ID: 13-b
+Agent: TS Fix Agent  
+Task: Fix TypeScript errors in main pages
+
+Work Log:
+- Fixed cart-store.ts: exported `CartItem` interface (was declared locally but not exported)
+- Fixed orders-store.ts: exported `OrderStatus` type alias, expanded status union from 4 values to 6 (`'pendiente' | 'confirmado' | 'preparando' | 'en-camino' | 'entregado' | 'cancelado'`)
+- Fixed page.tsx: added `as const` to 5 ease array values (`[0.22, 1, 0.36, 1]` and `[0.4, 0, 0.6, 1]`) fixing 12 Variants type errors
+- Fixed checkout/page.tsx: changed status from `"Confirmada"` to `"confirmado"`, restructured shippingAddress from string to required object shape `{ name, address, city, phone }`, added missing `subtotal` and `shipping` fields, removed extra `email`/`phone` fields, added `as const` to ease string
+- Fixed pedidos/page.tsx: updated all status comparisons from Spanish capitalized ("Confirmada", "Entregada", etc.) to matching union values ("confirmado", "entregado", etc.), added STATUS_LABELS map for display, fixed shippingAddress rendering from object-as-ReactNode to destructured `{address}, {city}`, updated getStatusStepIndex and getStatusBadge to match new union values
+- Fixed seguridad/page.tsx: changed `user` to `currentUser` in both destructuring and all 3 useState initializers
+- Fixed producto/[id]/page.tsx: added `if (!product) return` null guards in handleAddToCart, handleBuyNow, handleToggleWishlist; removed invalid `addedAt` property from wishlistAddItem call; added `as const` to `ease: "linear"` and `ease: "easeInOut"`
+- Fixed ProductCard.tsx: replaced `toggleItem` (non-existent on WishlistStore) with `addItem`/`removeItem` + conditional logic; added `as const` to ease array
+
+Stage Summary:
+- 9 files modified across stores and pages
+- 0 TypeScript errors remaining in all target files
+- All ease type errors resolved with `as const` assertions
+- Type mismatches in Order status, CartItem export, AuthState property, and WishlistStore API all resolved
+---
+Task ID: 13
+Agent: Main Agent
+Task: Fix all TypeScript errors and deployment config
+
+Work Log:
+- Fixed 81 TypeScript errors across 14 files in src/
+  - Category pages (adornos, hogar, hombre, lenceria, mujer, ninos): Added `as const` to framer-motion ease properties
+  - Main pages (page.tsx, producto/[id], checkout, carrito, pedidos): Fixed ease types, type assertions, store exports
+  - Admin page: Fixed unknown-to-ReactNode errors with String() coercion
+  - cuenta/seguridad: Fixed user → currentUser property name
+  - ProductCard: Fixed toggleItem → addItem/removeItem
+- Removed `output: standalone` from next.config.ts (not needed for Z.ai)
+- Changed `ignoreBuildErrors: true` → `false` (strict TypeScript)
+- Updated tsconfig.json to exclude examples/ and skills/ from compilation
+- Updated build script to `next build` (no standalone copy)
+- Updated PM2 ecosystem to use `next start` instead of standalone server
+- Exported CartItem from cart-store.ts and OrderStatus from orders-store.ts
+
+Stage Summary:
+- 0 TypeScript errors in src/ (verified with npx tsc --noEmit)
+- Build compiles successfully with strict TypeScript checking
+- ESLint passes clean with 0 errors
+- PM2 running with next start on port 3000 (HTTP 200)
+- Project ready for Z.ai deployment

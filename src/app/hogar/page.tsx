@@ -25,7 +25,7 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.12, duration: 0.55, ease: "easeOut" },
+    transition: { delay: i * 0.12, duration: 0.55, ease: "easeOut" as const },
   }),
 };
 
@@ -41,7 +41,7 @@ const scaleIn = {
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: "easeOut" },
+    transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
 
@@ -385,7 +385,7 @@ export default function HogarPage() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" as const }}
           className="relative overflow-hidden rounded-3xl"
           style={{
             background: "linear-gradient(135deg, #c2703e 0%, #d4a574 50%, #fb923c 100%)",

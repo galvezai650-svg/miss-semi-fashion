@@ -38,7 +38,9 @@ function formatPrice(price: number): string {
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
   const items = useCartStore((state) => state.items);
-  const { toggleItem, items: wishlistItems } = useWishlistStore();
+  const wishlistAddItem = useWishlistStore((state) => state.addItem);
+  const wishlistRemoveItem = useWishlistStore((state) => state.removeItem);
+  const wishlistItems = useWishlistStore((state) => state.items);
 
   const isInCart = items.some((item) => item.productId === product.id);
   const isInWishlist = wishlistItems.some(
@@ -63,17 +65,18 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   function handleToggleWishlist(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    toggleItem({
-      productId: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.price,
-    });
-    toast.success(
-      isInWishlist
-        ? "Eliminado de lista de deseos"
-        : "Agregado a lista de deseos"
-    );
+    if (isInWishlist) {
+      wishlistRemoveItem(product.id);
+      toast.success("Eliminado de lista de deseos");
+    } else {
+      wishlistAddItem({
+        productId: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+      });
+      toast.success("Agregado a lista de deseos");
+    }
   }
 
   return (
@@ -84,7 +87,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       transition={{
         duration: 0.6,
         delay: Math.min(index * 0.06, 0.4),
-        ease: [0.22, 1, 0.36, 1],
+        ease: [0.22, 1, 0.36, 1] as const,
       }}
       className="group relative flex flex-col overflow-hidden border border-white/10 bg-black/50 backdrop-blur-md card-lift hover:border-[#C6A962]/30"
     >

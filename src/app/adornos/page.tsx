@@ -19,7 +19,7 @@ const fadeUp = {
     transition: {
       delay: i * 0.1,
       duration: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: [0.25, 0.46, 0.45, 0.94] as const,
     },
   }),
 };
@@ -119,7 +119,7 @@ export default function AdornosPage() {
                 duration: p.duration,
                 delay: p.delay,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
               }}
             />
           ))}
@@ -400,7 +400,7 @@ export default function AdornosPage() {
                 duration: 3 + i * 0.5,
                 delay: i * 0.4,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "easeInOut" as const,
               }}
             />
           ))}

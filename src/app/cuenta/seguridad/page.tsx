@@ -31,11 +31,11 @@ import { useRouter } from "next/navigation";
 
 export default function SeguridadPage() {
   const router = useRouter();
-  const { isLoggedIn, user, updateProfile, changePassword, logout, deleteAccount } = useAuthStore();
+  const { isLoggedIn, currentUser, updateProfile, changePassword, logout, deleteAccount } = useAuthStore();
 
-  const [name, setName] = useState(user?.name ?? "");
-  const [email, setEmail] = useState(user?.email ?? "");
-  const [phone, setPhone] = useState(user?.phone ?? "");
+  const [name, setName] = useState(currentUser?.name ?? "");
+  const [email, setEmail] = useState(currentUser?.email ?? "");
+  const [phone, setPhone] = useState(currentUser?.phone ?? "");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
