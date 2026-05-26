@@ -91,17 +91,14 @@ export default function HomePage() {
           ══════════════════════════════════════════ */}
       <section className="relative w-full overflow-hidden">
         <div className="relative h-[520px] w-full sm:h-[580px] md:h-[640px] lg:h-[720px]">
-          {/* Background Video */}
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-            poster="/images/hero.png"
-          >
-            <source src="/videos/hero-bg.mp4" type="video/mp4" />
-          </video>
+          {/* Background Image (replacing video for faster load) */}
+          <Image
+            src="/images/hero.png"
+            alt="Miss Semi Fashion Hero"
+            fill
+            quality={100}
+            className="object-cover"
+          />
 
           {/* Dark overlay */}
           <div className="absolute inset-0 bg-[#0A0A0A]/70" />
