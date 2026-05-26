@@ -50,5 +50,32 @@ test
 prompt
 
 server.log
+
 # Skills directory
 /skills/
+
+# Database files
+*.db
+*.db-journal
+db/
+
+# PM2
+ecosystem.config.*
+pm2-wrapper.sh
+
+# Logs
+logs/
+
+# Z.ai internal
+.zscripts/
+Caddyfile
+download/
+
+# Examples
+/examples/
+
+# Worklog
+worklog.md
+
+# Mini services (internal)
+mini-services/
