@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 import ProductCard from "./ProductCard";
 
 interface ProductGridProps {
@@ -61,7 +62,13 @@ export default function ProductGrid({
     return (
       <section className="w-full">
         {title && (
-          <div className="mb-6 flex items-end justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-6 flex items-end justify-between"
+          >
             <div>
               <h2 className="font-serif text-xl font-medium text-[#E5E5E5] sm:text-2xl">
                 {title}
@@ -73,16 +80,16 @@ export default function ProductGrid({
             {viewAllHref && (
               <Link
                 href={viewAllHref}
-                className="hidden text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-colors hover:text-[#D4AF37] sm:block"
+                className="hidden text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-colors duration-300 hover:text-[#D4AF37] sm:block"
               >
                 Ver todo
               </Link>
             )}
-          </div>
+          </motion.div>
         )}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products.map((product, i) => (
+            <ProductCard key={product.id} product={product} index={i} />
           ))}
         </div>
       </section>
@@ -93,7 +100,13 @@ export default function ProductGrid({
   return (
     <section className="w-full">
       {title && (
-        <div className="mb-5 flex items-end justify-between">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-5 flex items-end justify-between"
+        >
           <div>
             <h2 className="font-serif text-xl font-medium text-[#E5E5E5] sm:text-2xl">
               {title}
@@ -105,24 +118,27 @@ export default function ProductGrid({
           {viewAllHref && (
             <Link
               href={viewAllHref}
-              className="group/link flex items-center gap-1.5 text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-all hover:text-[#D4AF37]"
+              className="group/link flex items-center gap-1.5 text-[12px] font-medium tracking-wider text-[#C6A962] uppercase transition-all duration-300 hover:text-[#D4AF37]"
             >
               Ver todo
-              <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
+              <ChevronRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/link:translate-x-0.5" />
             </Link>
           )}
-        </div>
+        </motion.div>
       )}
 
       <div className="relative group/scroll">
         {canScrollLeft && (
-          <button
+          <motion.button
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={() => scroll("left")}
-            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
+            className="absolute -left-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md p-2 shadow-sm transition-all duration-300 hover:border-[#C6A962]/30 hover:shadow-md md:flex"
             aria-label="Anterior"
           >
             <ChevronLeft className="h-4 w-4 text-[#999]" />
-          </button>
+          </motion.button>
         )}
 
         <div
@@ -130,24 +146,27 @@ export default function ProductGrid({
           onScroll={checkScroll}
           className="scroll-container flex gap-4 pb-2"
         >
-          {products.map((product) => (
+          {products.map((product, i) => (
             <div
               key={product.id}
               className="w-[180px] shrink-0 sm:w-[200px] md:w-[220px] lg:w-[230px]"
             >
-              <ProductCard product={product} />
+              <ProductCard product={product} index={i} />
             </div>
           ))}
         </div>
 
         {canScrollRight && (
-          <button
+          <motion.button
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
             onClick={() => scroll("right")}
-            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md p-2 shadow-sm transition-all hover:border-[#C6A962]/30 hover:shadow-md md:flex"
+            className="absolute -right-2 top-1/2 z-20 hidden -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md p-2 shadow-sm transition-all duration-300 hover:border-[#C6A962]/30 hover:shadow-md md:flex"
             aria-label="Siguiente"
           >
             <ChevronRight className="h-4 w-4 text-[#999]" />
-          </button>
+          </motion.button>
         )}
 
         {/* Edge fade */}

@@ -6,6 +6,7 @@ import { ArrowUp, Instagram, Facebook, MessageCircle, ShieldCheck } from "lucide
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   Dialog,
   DialogContent,
@@ -95,11 +96,23 @@ export default function AmazonFooter() {
   }
 
   return (
-    <footer className="w-full border-t border-white/10 bg-black/60 backdrop-blur-xl text-[#CCC]">
+    <motion.footer
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full border-t border-white/10 bg-black/60 backdrop-blur-xl text-[#CCC]"
+    >
       {/* ── Newsletter Section ── */}
       <div className="border-b border-[#333]">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-14 text-center md:flex-row md:text-left">
-          <div className="flex-1">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1"
+          >
             <h3 className="font-serif text-xl font-medium text-white md:text-2xl">
               Únete al mundo Miss Semi Fashion
             </h3>
@@ -107,17 +120,23 @@ export default function AmazonFooter() {
               Recibe ofertas exclusivas, novedades y estilo directo en tu
               bandeja.
             </p>
-          </div>
-          <div className="flex w-full gap-2 md:max-w-sm">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="flex w-full gap-2 md:max-w-sm"
+          >
             <input
               type="email"
               placeholder="Tu correo electrónico"
-              className="h-11 flex-1 rounded-none border border-[#444] bg-[#2A2A2A] px-4 text-sm text-white placeholder:text-[#666] focus:border-[#C6A962] focus:outline-none"
+              className="input-glow h-11 flex-1 rounded-none border border-[#444] bg-[#2A2A2A] px-4 text-sm text-white placeholder:text-[#666]"
             />
-            <Button className="h-11 rounded-none bg-[#C6A962] px-6 font-medium text-[#1A1A1A] hover:bg-[#D4AF37]">
+            <Button className="btn-press h-11 rounded-none bg-[#C6A962] px-6 font-medium text-[#1A1A1A] hover:bg-[#D4AF37]">
               Suscribir
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -125,14 +144,19 @@ export default function AmazonFooter() {
       <div className="mx-auto max-w-7xl px-6 py-14">
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4 lg:gap-16">
           {/* Brand Column */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
             <Link href="/" className="inline-block">
               <Image
                 src="/images/logo.png"
                 alt="Miss Semi Fashion"
                 width={140}
                 height={42}
-                className="h-8 w-auto opacity-90"
+                className="h-8 w-auto opacity-90 transition-opacity duration-300 hover:opacity-100"
               />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-[#888]">
@@ -141,35 +165,41 @@ export default function AmazonFooter() {
             </p>
             {/* Social */}
             <div className="mt-6 flex items-center gap-3">
-              <a
-                href="https://wa.me/573108416620"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-all hover:border-[#C6A962] hover:text-[#C6A962]"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-all hover:border-[#C6A962] hover:text-[#C6A962]"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-all hover:border-[#C6A962] hover:text-[#C6A962]"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
+              {[
+                { href: "https://wa.me/573108416620", icon: MessageCircle, label: "WhatsApp" },
+                { href: "#", icon: Instagram, label: "Instagram" },
+                { href: "#", icon: Facebook, label: "Facebook" },
+              ].map((social, i) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-[#444] text-[#888] transition-colors duration-300 hover:border-[#C6A962] hover:text-[#C6A962]"
+                  aria-label={social.label}
+                >
+                  <social.icon className="h-4 w-4" />
+                </motion.a>
+              ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Link Sections */}
-          {footerSections.map((section) => (
-            <div key={section.title}>
+          {footerSections.map((section, sectionIdx) => (
+            <motion.div
+              key={section.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                duration: 0.6,
+                delay: (sectionIdx + 1) * 0.08,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
               <h3 className="mb-5 text-xs font-semibold tracking-[0.2em] text-[#C6A962] uppercase">
                 {section.title}
               </h3>
@@ -178,14 +208,14 @@ export default function AmazonFooter() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[13px] text-[#888] transition-colors hover:text-white"
+                      className="text-[13px] text-[#888] transition-colors duration-300 hover:text-white"
                     >
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -195,18 +225,20 @@ export default function AmazonFooter() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
           <button
             onClick={() => setAdminModalOpen(true)}
-            className="cursor-pointer text-[12px] text-[#666] transition-colors hover:text-[#C6A962]"
+            className="cursor-pointer text-[12px] text-[#666] transition-colors duration-300 hover:text-[#C6A962]"
           >
             &copy; {new Date().getFullYear()} Miss Semi Fashion. Todos los
             derechos reservados.
           </button>
-          <button
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-[12px] tracking-[0.1em] text-[#888] transition-colors hover:text-[#C6A962] uppercase"
+            className="btn-press flex items-center gap-2 text-[12px] tracking-[0.1em] text-[#888] transition-colors duration-300 hover:text-[#C6A962] uppercase"
           >
             Volver arriba
             <ArrowUp className="h-3.5 w-3.5" />
-          </button>
+          </motion.button>
         </div>
       </div>
 
@@ -236,13 +268,19 @@ export default function AmazonFooter() {
                   setError("");
                 }}
                 placeholder="••••••••"
-                className="h-11 border-[#2A2A2A] bg-[#1A1A1A] text-[#E5E5E5] placeholder:text-[#555] focus:border-[#C6A962] focus:ring-[#C6A962]/20"
+                className="input-glow h-11 border-[#2A2A2A] bg-[#1A1A1A] text-[#E5E5E5] placeholder:text-[#555]"
                 autoFocus
               />
             </div>
 
             {error && (
-              <p className="text-sm text-red-400">{error}</p>
+              <motion.p
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-sm text-red-400"
+              >
+                {error}
+              </motion.p>
             )}
 
             <DialogFooter className="pt-2">
@@ -261,7 +299,7 @@ export default function AmazonFooter() {
               <Button
                 type="submit"
                 disabled={loading || !password}
-                className="bg-[#C6A962] text-[#0A0A0A] hover:bg-[#D4AF37] disabled:opacity-50"
+                className="btn-press bg-[#C6A962] text-[#0A0A0A] hover:bg-[#D4AF37] disabled:opacity-50"
               >
                 {loading ? "Accediendo..." : "Acceder"}
               </Button>
@@ -269,6 +307,6 @@ export default function AmazonFooter() {
           </form>
         </DialogContent>
       </Dialog>
-    </footer>
+    </motion.footer>
   );
 }

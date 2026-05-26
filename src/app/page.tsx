@@ -59,21 +59,21 @@ const testimonials = [
    ────────────────────────────────────────────── */
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.1,
-      duration: 0.7,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      delay: i * 0.08,
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
     },
   }),
 };
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  visible: { transition: { staggerChildren: 0.06 } },
 };
 
 /* ──────────────────────────────────────────────
@@ -188,8 +188,8 @@ export default function HomePage() {
             className="absolute inset-x-0 bottom-8 flex justify-center"
           >
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: [0.4, 0, 0.6, 1] }}
             >
               <ChevronRight className="h-6 w-6 rotate-90 text-[#C6A962]/60" />
             </motion.div>
@@ -259,10 +259,10 @@ export default function HomePage() {
             {trustItems.map((item, i) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ delay: i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 className="flex items-center gap-3 md:px-6 md:first:pl-0 md:last:pr-0"
               >
                 <item.icon className="h-5 w-5 shrink-0 text-[#C6A962]" strokeWidth={1.5} />
@@ -307,10 +307,10 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-black/40 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center gap-10 py-16 md:flex-row md:py-20 lg:py-24"
           >
             {/* Left content */}
@@ -450,10 +450,10 @@ export default function HomePage() {
           ══════════════════════════════════════════ */}
       <section className="py-16 sm:py-20">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto max-w-xl px-4 text-center sm:px-6"
         >
           {/* Gold line */}

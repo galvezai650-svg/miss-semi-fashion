@@ -82,9 +82,9 @@ export default function OfertasPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.15),transparent_70%)]" />
         <div className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-3"
           >
             <Tag className="h-10 w-10 text-white md:h-12 md:w-12" />
@@ -103,9 +103,9 @@ export default function OfertasPage() {
       <div className="mx-auto max-w-7xl px-4 py-6">
         {/* Deal Timer */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -16 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="mb-6 flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-3"
         >
           <Clock className="h-5 w-5 animate-pulse text-red-500" />
@@ -122,7 +122,7 @@ export default function OfertasPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="mb-6 flex flex-wrap items-center gap-4 rounded-lg border bg-card p-4 shadow-sm"
         >
           {/* Sort */}
@@ -178,9 +178,9 @@ export default function OfertasPage() {
 
         {/* Featured Bestsellers */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="mt-10 flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-orange-600" />

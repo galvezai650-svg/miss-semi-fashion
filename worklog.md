@@ -622,3 +622,70 @@ Stage Summary:
 - Updated /src/app/admin/page.tsx (ChipInput component, sizes/colors as arrays, fixed imports)
 - Category pages already use useLiveFetch with visibilitychange - confirmed working
 - Product detail page already has visibilitychange listener - confirmed working
+---
+Task ID: 9
+Agent: Main Agent
+Task: Add smoother animations across the entire site
+
+Work Log:
+- Enhanced globals.css with new animations and utility classes:
+  - New keyframes: slideInLeft, slideInRight, gentlePulse, underlineExpand
+  - Updated all animation durations to use smoother cubic-bezier(0.22, 1, 0.36, 1) easing
+  - Added new CSS utility classes: card-lift, link-smooth, btn-press, input-glow, badge-soft
+  - Added stagger delay utilities (stagger-1 through stagger-8)
+  - Added page transition CSS classes
+  - Smoothed all transition timings from 0.3-0.7s with softer curves
+- Updated ProductCard.tsx:
+  - Added framer-motion staggered entrance animation (index-based delay)
+  - Applied card-lift hover effect (subtle -4px translateY + shadow)
+  - Smoothed action button transitions from 400ms to 500ms
+  - Added spring-based whileHover/whileTap on wishlist and eye buttons
+  - Smoothed image zoom from 700ms to 800ms with better easing
+  - Added index prop for grid staggering
+- Updated ProductGrid.tsx:
+  - Passes index to ProductCard for staggered entrance
+  - Added motion entrance animation for section headers
+  - Added animated scroll navigation buttons (fade in/out)
+- Created PageTransition.tsx component with ScrollReveal sub-component
+- Updated AmazonNavbar.tsx:
+  - Added entrance slide-down animation (y: -20 → 0)
+  - Smoothed search overlay open/close transition (0.4s)
+  - Changed AnimatePresence to mode="wait"
+- Updated AmazonFooter.tsx:
+  - Added entrance animation (fade in on scroll)
+  - Newsletter section: staggered left/right slide in
+  - Social media icons: spring-based whileHover with scale+lift
+  - Footer link sections: staggered vertical entrance
+  - Error messages: animated entrance
+  - Back to top button: whileHover lift + whileTap press
+- Updated product detail page (producto/[id]/page.tsx):
+  - Page wrapper: smooth fade-up entrance
+  - Image gallery: smooth scale transition on image change
+  - Main image hover: 700ms zoom with smooth easing
+  - Thumbnail hover/tap: spring animations
+  - Size selector chips: staggered entrance (scale 0.8 → 1)
+  - Quantity number: scale bounce on change
+  - Add to cart/Buy now buttons: whileTap press feedback
+  - Wishlist heart: scale bounce on add
+  - Links: subtle hover slide (x: 0 → 4)
+  - Review cards: staggered entrance with hover border glow
+  - Rating bars: animated width fill on scroll
+  - User avatar circles: spring scale entrance
+- Updated homepage (page.tsx):
+  - Refined fadeUp animation timing (0.8s, 0.08s stagger)
+  - Reduced scroll indicator bounce amplitude and increased duration
+  - Smoothed trust bar items entrance
+  - Refined elegant banner and CTA section transitions
+- Updated ofertas page:
+  - Smoothed all motion transitions with better easing curves
+  - Reduced movement amounts (20px → 16px, 24px → 20px)
+  - Increased durations for smoother feel
+
+Stage Summary:
+- 7 files updated: globals.css, ProductCard.tsx, ProductGrid.tsx, AmazonNavbar.tsx, AmazonFooter.tsx, producto/[id]/page.tsx, page.tsx, ofertas/page.tsx
+- 1 file created: PageTransition.tsx
+- All animations now use cubic-bezier(0.22, 1, 0.36, 1) for buttery smooth feel
+- Staggered grid animations on product cards
+- Spring-based micro-interactions on buttons and interactive elements
+- Smoother page section reveals on scroll
+- Lint passes clean with 0 errors

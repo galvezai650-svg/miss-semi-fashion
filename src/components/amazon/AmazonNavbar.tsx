@@ -73,7 +73,12 @@ export default function AmazonNavbar() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-xl">
+    <motion.header
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-xl"
+    >
       {/* ── Top Bar ── */}
       <div className="hidden border-b border-white/5 bg-black/30 lg:block">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-6">
@@ -294,13 +299,13 @@ export default function AmazonNavbar() {
       </div>
 
       {/* ── Search Overlay (desktop) ── */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {searchOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden border-t border-[#2A2A2A] bg-[#0A0A0A]"
           >
             <form
@@ -328,6 +333,6 @@ export default function AmazonNavbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }

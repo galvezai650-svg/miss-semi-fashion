@@ -36,6 +36,22 @@ function formatPrice(price: number): string {
   return `$${price.toLocaleString("es-CO")}`;
 }
 
+/* ─── Animation helpers ─── */
+const smoothEase = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      delay,
+      ease: smoothEase,
+    },
+  }),
+};
+
 /* ─── Mock Reviews ─── */
 const MOCK_REVIEWS = [
   {
@@ -108,14 +124,23 @@ export default function ProductDetailPage() {
   // Product not found or loading
   if (!product) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
-        <div className="rounded-full bg-muted p-6">
-          <Package className="h-10 w-10 animate-spin text-muted-foreground" />
-        </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4"
+      >
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+          className="rounded-full bg-muted p-6"
+        >
+          <Package className="h-10 w-10 text-muted-foreground" />
+        </motion.div>
         <h1 className="text-2xl font-bold text-foreground">
           Cargando producto...
         </h1>
-      </div>
+      </motion.div>
     );
   }
 
@@ -186,7 +211,12 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="flex flex-col">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: smoothEase }}
+      className="flex flex-col"
+    >
       {/* Breadcrumbs */}
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
@@ -201,15 +231,19 @@ export default function ProductDetailPage() {
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* ── Left Column: Images + Title ── */}
-          <div className="flex-1">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            className="flex-1"
+          >
             {/* Image gallery */}
             <div className="space-y-3">
               {/* Main image */}
               <motion.div
                 key={selectedImage}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, ease: smoothEase }}
                 className="relative aspect-square w-full overflow-hidden rounded-lg border bg-muted"
               >
                 <Image
@@ -217,7 +251,7 @@ export default function ProductDetailPage() {
                   alt={product.name}
                   fill
                   sizes="(max-width: 1024px) 100vw, 60vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105"
                   priority
                 />
                 {product.isDeal && (
@@ -229,12 +263,18 @@ export default function ProductDetailPage() {
 
               {/* Thumbnails */}
               {images.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto pb-1">
+                <motion.div
+                  variants={fadeUp}
+                  custom={0.2}
+                  className="flex gap-2 overflow-x-auto pb-1"
+                >
                   {images.map((img, i) => (
-                    <button
+                    <motion.button
                       key={i}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={() => setSelectedImage(i)}
-                      className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors ${
+                      className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors duration-300 ${
                         selectedImage === i
                           ? "border-primary"
                           : "border-transparent hover:border-muted-foreground/30"
@@ -247,14 +287,14 @@ export default function ProductDetailPage() {
                         sizes="64px"
                         className="object-cover"
                       />
-                    </button>
+                    </motion.button>
                   ))}
-                </div>
+                </motion.div>
               )}
             </div>
 
             {/* Product Title + Rating */}
-            <div className="mt-4 space-y-2">
+            <motion.div variants={fadeUp} custom={0.3} className="mt-4 space-y-2">
               <h1 className="text-2xl font-bold text-foreground lg:text-3xl">
                 {product.name}
               </h1>
@@ -265,18 +305,25 @@ export default function ProductDetailPage() {
                   {product.reviewCount.toLocaleString("es-CO")} calificaciones
                 </span>
                 <Separator orientation="vertical" className="h-4" />
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={handleCalificaciones}
                   className="text-sm text-primary hover:underline"
                 >
                   Calificaciones
-                </button>
+                </motion.button>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* ── Right Column: Purchase Box ── */}
-          <div className="w-full lg:w-[380px] lg:flex-shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: smoothEase }}
+            className="w-full lg:w-[380px] lg:flex-shrink-0"
+          >
             <div className="sticky top-24 space-y-4 rounded-lg border bg-card p-5 shadow-sm">
               {/* Price */}
               <div className="space-y-1">
@@ -285,14 +332,19 @@ export default function ProductDetailPage() {
                     <span className="text-sm text-muted-foreground line-through">
                       Antes: {formatPrice(product.originalPrice)}
                     </span>
-                    <Badge variant="destructive" className="text-xs">
+                    <Badge variant="destructive" className="badge-soft text-xs">
                       -{discountPercent}%
                     </Badge>
                   </div>
                 )}
-                <p className="text-3xl font-extrabold text-foreground">
+                <motion.p
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  className="text-3xl font-extrabold text-foreground"
+                >
                   {formatPrice(product.price)}
-                </p>
+                </motion.p>
                 {product.priceMayorista && (
                   <p className="text-xs text-muted-foreground">
                     Precio mayorista: {formatPrice(product.priceMayorista)} (6+ unidades)
@@ -323,7 +375,9 @@ export default function ProductDetailPage() {
               {/* Shipping */}
               <div className="space-y-1">
                 <div className="flex items-center gap-2 text-green-400">
-                  <Truck className="h-4 w-4" />
+                  <motion.div animate={{ y: [0, -2, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
+                    <Truck className="h-4 w-4" />
+                  </motion.div>
                   <span className="text-sm font-semibold">
                     Envío GRATIS a Chinchiná
                   </span>
@@ -340,9 +394,13 @@ export default function ProductDetailPage() {
                 <div className="flex items-center justify-between">
                   <Label className="text-sm font-semibold">Talla</Label>
                   {!selectedSize && (
-                    <span className="text-xs text-rose-500">
+                    <motion.span
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-xs text-rose-500"
+                    >
                       Selecciona una talla
-                    </span>
+                    </motion.span>
                   )}
                 </div>
                 <RadioGroup
@@ -350,8 +408,13 @@ export default function ProductDetailPage() {
                   onValueChange={setSelectedSize}
                   className="flex flex-wrap gap-2"
                 >
-                  {product.sizes.map((size) => (
-                    <div key={size}>
+                  {product.sizes.map((size, idx) => (
+                    <motion.div
+                      key={size}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.05 * idx }}
+                    >
                       <RadioGroupItem
                         value={size}
                         id={`size-${size}`}
@@ -359,11 +422,11 @@ export default function ProductDetailPage() {
                       />
                       <Label
                         htmlFor={`size-${size}`}
-                        className="flex h-10 min-w-[48px] cursor-pointer items-center justify-center rounded-md border px-4 text-sm font-semibold transition-colors peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground hover:bg-muted"
+                        className="flex h-10 min-w-[48px] cursor-pointer items-center justify-center rounded-md border px-4 text-sm font-semibold transition-all duration-300 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary peer-data-[state=checked]:text-primary-foreground hover:bg-muted"
                       >
                         {size}
                       </Label>
-                    </div>
+                    </motion.div>
                   ))}
                 </RadioGroup>
               </div>
@@ -373,27 +436,36 @@ export default function ProductDetailPage() {
                 <Label className="text-sm font-semibold">Cantidad</Label>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center overflow-hidden rounded-md border">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 rounded-none"
-                      onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                      disabled={quantity <= 1}
+                    <motion.div whileTap={{ scale: 0.9 }}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-none"
+                        onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                        disabled={quantity <= 1}
+                      >
+                        <Minus className="h-4 w-4" />
+                      </Button>
+                    </motion.div>
+                    <motion.span
+                      key={quantity}
+                      initial={{ scale: 1.2 }}
+                      animate={{ scale: 1 }}
+                      className="flex h-9 w-12 items-center justify-center border-x text-sm font-semibold"
                     >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="flex h-9 w-12 items-center justify-center border-x text-sm font-semibold">
                       {quantity}
-                    </span>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-9 w-9 rounded-none"
-                      onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                      disabled={quantity >= 10}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
+                    </motion.span>
+                    <motion.div whileTap={{ scale: 0.9 }}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-none"
+                        onClick={() => setQuantity((q) => Math.min(10, q + 1))}
+                        disabled={quantity >= 10}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </motion.div>
                   </div>
                   <span className="text-xs text-muted-foreground">
                     Disponible ({product.stockCount} en stock)
@@ -402,65 +474,89 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Add to Cart */}
-              <Button
-                onClick={handleAddToCart}
-                disabled={!selectedSize}
-                className={`w-full gap-2 py-6 text-base font-bold ${
-                  inCart
-                    ? "bg-green-500 hover:bg-green-600"
-                    : "bg-rose-500 hover:bg-rose-600"
-                }`}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                {inCart ? "Actualizar carrito" : "Agregar al carrito"}
-              </Button>
+              <motion.div whileTap={{ scale: 0.98 }}>
+                <Button
+                  onClick={handleAddToCart}
+                  disabled={!selectedSize}
+                  className={`btn-press w-full gap-2 py-6 text-base font-bold transition-all duration-300 ${
+                    inCart
+                      ? "bg-green-500 hover:bg-green-600"
+                      : "bg-rose-500 hover:bg-rose-600"
+                  }`}
+                >
+                  <ShoppingCart className="h-5 w-5" />
+                  {inCart ? "Actualizar carrito" : "Agregar al carrito"}
+                </Button>
+              </motion.div>
               {!selectedSize && (
-                <p className="text-center text-xs text-rose-500">
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center text-xs text-rose-500"
+                >
                   Por favor selecciona una talla
-                </p>
+                </motion.p>
               )}
 
               {/* Buy Now */}
-              <Button
-                variant="outline"
-                className="w-full gap-2 border-orange-500/50 bg-orange-950 py-6 text-base font-bold text-orange-400 hover:bg-orange-900 hover:text-orange-300"
-                disabled={!selectedSize}
-                onClick={handleBuyNow}
-              >
-                Comprar ahora
-              </Button>
+              <motion.div whileTap={{ scale: 0.98 }}>
+                <Button
+                  variant="outline"
+                  className="btn-press w-full gap-2 border-orange-500/50 bg-orange-950 py-6 text-base font-bold text-orange-400 hover:bg-orange-900 hover:text-orange-300"
+                  disabled={!selectedSize}
+                  onClick={handleBuyNow}
+                >
+                  Comprar ahora
+                </Button>
+              </motion.div>
 
               <Separator />
 
               {/* Extra links */}
               <div className="space-y-2">
-                <Link
-                  href="/vender"
-                  className="flex items-center gap-2 text-sm text-primary hover:underline"
-                >
-                  <Store className="h-4 w-4" />
-                  Vender en Miss Semi Fashion
-                </Link>
-                <button
-                  onClick={handleToggleWishlist}
-                  className="flex items-center gap-2 text-sm text-primary hover:underline"
-                >
-                  <Heart
-                    className={`h-4 w-4 ${
-                      isInWishlist ? "fill-red-500 text-red-500" : ""
-                    }`}
-                  />
-                  {isInWishlist
-                    ? "En tu Lista de Deseos"
-                    : "Agregar a Lista de Deseos"}
-                </button>
+                <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+                  <Link
+                    href="/vender"
+                    className="flex items-center gap-2 text-sm text-primary hover:underline"
+                  >
+                    <Store className="h-4 w-4" />
+                    Vender en Miss Semi Fashion
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+                  <button
+                    onClick={handleToggleWishlist}
+                    className="flex items-center gap-2 text-sm text-primary hover:underline"
+                  >
+                    <motion.div
+                      animate={isInWishlist ? { scale: [1, 1.2, 1] } : {}}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Heart
+                        className={`h-4 w-4 transition-all duration-300 ${
+                          isInWishlist ? "fill-red-500 text-red-500" : ""
+                        }`}
+                      />
+                    </motion.div>
+                    {isInWishlist
+                      ? "En tu Lista de Deseos"
+                      : "Agregar a Lista de Deseos"}
+                  </button>
+                </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ── Tabs Section ── */}
-        <div className="mt-10" id="product-tabs">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: smoothEase }}
+          className="mt-10"
+          id="product-tabs"
+        >
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <TabsList className="w-full justify-start">
               <TabsTrigger value="descripcion">Descripción</TabsTrigger>
@@ -472,7 +568,12 @@ export default function ProductDetailPage() {
 
             {/* Description */}
             <TabsContent value="descripcion" className="mt-4">
-              <div className="max-w-3xl space-y-4 text-sm leading-relaxed text-muted-foreground">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-3xl space-y-4 text-sm leading-relaxed text-muted-foreground"
+              >
                 <p>{product.shortDescription}</p>
                 <p>{product.description}</p>
                 {product.fabric && (
@@ -495,12 +596,17 @@ export default function ProductDetailPage() {
                     <li>No retorcer ni exprimir</li>
                   </ul>
                 </div>
-              </div>
+              </motion.div>
             </TabsContent>
 
             {/* Reviews */}
             <TabsContent value="opiniones" className="mt-4">
-              <div className="max-w-3xl space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-3xl space-y-6"
+              >
                 {/* Rating summary */}
                 <div className="flex items-center gap-4 rounded-lg border bg-muted/30 p-4">
                   <div className="text-center">
@@ -531,9 +637,12 @@ export default function ProductDetailPage() {
                             {stars}★
                           </span>
                           <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
-                            <div
+                            <motion.div
+                              initial={{ width: 0 }}
+                              whileInView={{ width: `${percent}%` }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.8, delay: (5 - stars) * 0.1, ease: smoothEase }}
                               className="h-full rounded-full bg-yellow-400"
-                              style={{ width: `${percent}%` }}
                             />
                           </div>
                           <span className="w-8 text-xs text-muted-foreground">
@@ -546,16 +655,26 @@ export default function ProductDetailPage() {
                 </div>
 
                 {/* Individual reviews */}
-                {MOCK_REVIEWS.map((review) => (
-                  <div
+                {MOCK_REVIEWS.map((review, idx) => (
+                  <motion.div
                     key={review.id}
-                    className="space-y-2 rounded-lg border p-4"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.1, ease: smoothEase }}
+                    className="space-y-2 rounded-lg border p-4 transition-colors duration-300 hover:border-[#C6A962]/20"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          whileInView={{ scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.4, delay: idx * 0.1 + 0.2, type: "spring" }}
+                          className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary"
+                        >
                           {review.name.charAt(0)}
-                        </div>
+                        </motion.div>
                         <div>
                           <p className="text-sm font-semibold text-foreground">
                             {review.name}
@@ -568,14 +687,19 @@ export default function ProductDetailPage() {
                       <StarRating rating={review.rating} size="sm" />
                     </div>
                     <p className="text-sm text-muted-foreground">{review.text}</p>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </TabsContent>
 
             {/* Additional Info */}
             <TabsContent value="info" className="mt-4">
-              <div className="max-w-3xl">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-3xl"
+              >
                 <div className="overflow-hidden rounded-lg border">
                   <table className="w-full text-sm">
                     <tbody>
@@ -638,25 +762,31 @@ export default function ProductDetailPage() {
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </motion.div>
             </TabsContent>
           </Tabs>
-        </div>
+        </motion.div>
 
         {/* ── Related Products ── */}
         {relatedProducts.length > 0 && (
-          <div className="mt-12">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: smoothEase }}
+            className="mt-12"
+          >
             <ProductGrid
               products={relatedProducts}
               title="Productos relacionados"
               variant="grid"
             />
-          </div>
+          </motion.div>
         )}
 
         {/* Bottom spacer */}
         <div className="h-8" />
       </div>
-    </div>
+    </motion.div>
   );
 }
