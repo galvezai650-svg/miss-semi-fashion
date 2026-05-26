@@ -94,6 +94,7 @@ export default function HogarPage() {
             src="/images/hero-hogar.png"
             alt="Hogar - Decoración y Textiles"
             fill
+            quality={100}
             className="object-cover"
             priority
           />

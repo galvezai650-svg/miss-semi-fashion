@@ -102,6 +102,7 @@ export default function NinosPage() {
             src="/images/hero-ninos.png"
             alt="Colección Infantil - Miss Semi Fashion"
             fill
+            quality={100}
             className="object-cover"
             priority
           />

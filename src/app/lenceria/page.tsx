@@ -92,6 +92,7 @@ export default function LenceriaPage() {
             src="/images/hero-lenceria.png"
             alt="Lencería Miss Semi Fashion"
             fill
+            quality={100}
             className="object-cover object-center"
             priority
           />
@@ -368,6 +369,7 @@ export default function LenceriaPage() {
                       src={cat.image}
                       alt={cat.name}
                       fill
+                      quality={100}
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     {/* Elegant overlay */}

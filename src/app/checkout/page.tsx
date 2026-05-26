@@ -888,6 +888,7 @@ function CheckoutContent() {
                                   fill
                                   className="object-cover transition-transform group-hover/item:scale-105"
                                   sizes="64px"
+                                  quality={100}
                                 />
                               </div>
                             )}

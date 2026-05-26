@@ -85,6 +85,7 @@ export default function AdornosPage() {
             src="/images/hero-adornos.png"
             alt="Colección Adornos - Miss Semi Fashion"
             fill
+            quality={100}
             className="object-cover object-center"
             priority
           />

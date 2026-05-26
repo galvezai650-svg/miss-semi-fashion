@@ -268,6 +268,7 @@ export default function PedidosPage() {
                               fill
                               className="object-cover"
                               sizes="64px"
+                              quality={100}
                             />
                           </Link>
                         )}

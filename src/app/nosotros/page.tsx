@@ -87,6 +87,7 @@ export default function NosotrosPage() {
             src="/images/about.png"
             alt="Miss Semi Fashion"
             fill
+            quality={100}
             className="object-cover opacity-30"
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -120,6 +121,7 @@ export default function NosotrosPage() {
                 src="/images/about.png"
                 alt="Nuestra historia"
                 fill
+                quality={100}
                 className="object-cover"
               />
             </div>

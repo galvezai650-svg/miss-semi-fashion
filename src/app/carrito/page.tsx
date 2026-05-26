@@ -181,6 +181,7 @@ export default function CartPage() {
                         alt={item.name}
                         fill
                         sizes="144px"
+                        quality={100}
                         className="object-cover"
                       />
                     </Link>
@@ -339,6 +340,7 @@ export default function CartPage() {
                             alt={item.name}
                             fill
                             sizes="80px"
+                            quality={100}
                             className="object-cover"
                           />
                         </Link>

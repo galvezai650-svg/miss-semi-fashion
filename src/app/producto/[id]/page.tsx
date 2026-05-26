@@ -250,7 +250,8 @@ export default function ProductDetailPage() {
                   src={images[selectedImage]}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  sizes="(max-width: 1024px) 100vw, 700px"
+                  quality={100}
                   className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105"
                   priority
                 />
@@ -284,7 +285,8 @@ export default function ProductDetailPage() {
                         src={img}
                         alt={`${product.name} - imagen ${i + 1}`}
                         fill
-                        sizes="64px"
+                        sizes="80px"
+                        quality={100}
                         className="object-cover"
                       />
                     </motion.button>

@@ -226,6 +226,7 @@ export default function HomePage() {
                       alt={cat.name}
                       fill
                       sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16.66vw"
+                      quality={100}
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     {/* Dark overlay */}
@@ -350,6 +351,7 @@ export default function HomePage() {
                   src="/images/hero.png"
                   alt="Colección 2024"
                   fill
+                  quality={100}
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-[#0A0A0A]/10" />

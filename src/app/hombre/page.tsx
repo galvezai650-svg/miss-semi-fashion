@@ -82,6 +82,7 @@ export default function HombrePage() {
           className="object-cover object-center"
           priority
           sizes="100vw"
+          quality={100}
         />
 
         {/* Charcoal Overlay */}
@@ -296,6 +297,7 @@ export default function HombrePage() {
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, 33vw"
+                      quality={100}
                     />
                     {/* Dark Overlay */}
                     <div
