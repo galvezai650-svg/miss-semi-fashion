@@ -237,22 +237,22 @@ export default function ProductDetailPage() {
             className="flex-1"
           >
             {/* Image gallery */}
-            <div className="space-y-3">
+            <div className="space-y-4">
               {/* Main image */}
               <motion.div
                 key={selectedImage}
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: smoothEase }}
-                className="relative aspect-square w-full overflow-hidden rounded-lg border bg-muted"
+                className="relative aspect-[3/4] w-full overflow-hidden rounded-xl border border-[#2A2A2A] bg-[#111111]"
               >
                 <Image
                   src={images[selectedImage]}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 700px"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 60vw, 45vw"
                   quality={100}
-                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105"
+                  className="object-contain transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105"
                   priority
                 />
                 {product.isDeal && (
@@ -267,7 +267,7 @@ export default function ProductDetailPage() {
                 <motion.div
                   variants={fadeUp}
                   custom={0.2}
-                  className="flex gap-2 overflow-x-auto pb-1"
+                  className="flex gap-3 overflow-x-auto pb-1 scrollbar-none"
                 >
                   {images.map((img, i) => (
                     <motion.button
@@ -275,19 +275,19 @@ export default function ProductDetailPage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setSelectedImage(i)}
-                      className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors duration-300 ${
+                      className={`relative h-[84px] w-[84px] flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-300 sm:h-20 sm:w-20 ${
                         selectedImage === i
-                          ? "border-primary"
-                          : "border-transparent hover:border-muted-foreground/30"
+                          ? "border-[#C6A962] ring-1 ring-[#C6A962]/30"
+                          : "border-[#2A2A2A] hover:border-[#C6A962]/40"
                       }`}
                     >
                       <Image
                         src={img}
                         alt={`${product.name} - imagen ${i + 1}`}
                         fill
-                        sizes="80px"
+                        sizes="100px"
                         quality={100}
-                        className="object-cover"
+                        className="object-contain"
                       />
                     </motion.button>
                   ))}

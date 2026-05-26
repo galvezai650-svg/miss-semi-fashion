@@ -89,7 +89,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       className="group relative flex flex-col overflow-hidden border border-white/10 bg-black/50 backdrop-blur-md card-lift hover:border-[#C6A962]/30"
     >
       {/* ── Image Container ── */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-[#151515]">
+      <div className="relative aspect-[3/4] overflow-hidden bg-[#111111]">
         <Link href={`/producto/${product.id}`} className="block h-full w-full">
           <Image
             src={product.image}
@@ -97,7 +97,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             quality={100}
-            className="card-image-zoom object-cover group-hover:scale-105"
+            className="card-image-zoom object-contain group-hover:scale-105"
           />
         </Link>
 
