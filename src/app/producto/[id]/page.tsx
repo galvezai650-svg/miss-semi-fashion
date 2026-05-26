@@ -234,7 +234,7 @@ export default function ProductDetailPage() {
           <motion.div
             initial="hidden"
             animate="visible"
-            className="flex-1"
+            className="w-full lg:w-[460px] lg:flex-shrink-0"
           >
             {/* Image gallery */}
             <div className="space-y-4">
@@ -244,15 +244,15 @@ export default function ProductDetailPage() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: smoothEase }}
-                className="relative aspect-[3/4] w-full overflow-hidden rounded-xl border border-[#2A2A2A] bg-[#111111]"
+                className="relative mx-auto aspect-[3/4] w-full max-w-[420px] overflow-hidden rounded-xl border border-[#2A2A2A] bg-[#111111]"
               >
                 <Image
                   src={images[selectedImage]}
                   alt={product.name}
                   fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 60vw, 45vw"
+                  sizes="(max-width: 640px) 90vw, 420px"
                   quality={100}
-                  className="object-contain transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105"
+                  className="object-contain"
                   priority
                 />
                 {product.isDeal && (
@@ -275,7 +275,7 @@ export default function ProductDetailPage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setSelectedImage(i)}
-                      className={`relative h-[84px] w-[84px] flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-300 sm:h-20 sm:w-20 ${
+                      className={`relative h-[72px] w-[72px] flex-shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-300 sm:h-[76px] sm:w-[76px] ${
                         selectedImage === i
                           ? "border-[#C6A962] ring-1 ring-[#C6A962]/30"
                           : "border-[#2A2A2A] hover:border-[#C6A962]/40"
@@ -285,7 +285,7 @@ export default function ProductDetailPage() {
                         src={img}
                         alt={`${product.name} - imagen ${i + 1}`}
                         fill
-                        sizes="100px"
+                        sizes="90px"
                         quality={100}
                         className="object-contain"
                       />
