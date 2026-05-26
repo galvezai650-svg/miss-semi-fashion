@@ -30,6 +30,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { label: "Inicio", href: "/" },
+  { label: "Mujer", href: "/mujer" },
   { label: "Hombre", href: "/hombre" },
   { label: "Lencería", href: "/lenceria" },
   { label: "Niños", href: "/ninos" },

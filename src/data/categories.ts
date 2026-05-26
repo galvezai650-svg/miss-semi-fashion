@@ -86,6 +86,15 @@ export const categories: Category[] = [
     subcategories: ["Bisutería", "Bolsos", "Cinturones"],
   },
   {
+    slug: "mujer",
+    name: "Mujer",
+    description:
+      "Moda femenina con estilo colombiano. Blusas, vestidos, pijamas y más para la mujer moderna.",
+    image: "/images/hero-mujer.png",
+    productCount: 0,
+    subcategories: ["Blusas", "Pijamas", "Vestidos", "Pantalones", "Ropa Deportiva", "Lencería"],
+  },
+  {
     slug: "hogar",
     name: "Hogar",
     description:
