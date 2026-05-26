@@ -15,6 +15,7 @@ import {
   Eye,
   EyeOff,
   RefreshCw,
+  RotateCcw,
   ChevronDown,
   Search,
   TrendingUp,
@@ -22,6 +23,7 @@ import {
   Layers,
   BarChart3,
   Menu,
+  MessageSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -153,8 +155,8 @@ export default function AdminPage() {
     priceMayorista: "",
     category: "",
     subcategory: "",
-    sizes: "",
-    colors: "",
+    sizes: [] as string[],
+    colors: [] as string[],
     fabric: "",
     stockCount: "0",
     isBestSeller: false,
@@ -263,8 +265,8 @@ export default function AdminPage() {
       priceMayorista: "",
       category: "",
       subcategory: "",
-      sizes: "",
-      colors: "",
+      sizes: [],
+      colors: [],
       fabric: "",
       stockCount: "0",
       isBestSeller: false,
@@ -288,8 +290,8 @@ export default function AdminPage() {
       priceMayorista: p.priceMayorista ? String(p.priceMayorista) : "",
       category: p.category,
       subcategory: p.subcategory,
-      sizes: parseJSON(p.sizes).join(", "),
-      colors: parseJSON(p.colors).join(", "),
+      sizes: parseJSON(p.sizes),
+      colors: parseJSON(p.colors),
       fabric: p.fabric,
       stockCount: String(p.stockCount),
       isBestSeller: p.isBestSeller,
@@ -952,7 +954,7 @@ export default function AdminPage() {
                             <span className="text-[#CCC]">{order.customerEmail || "-"}</span>
                           </div>
                           <div>
-                            <span className="text-[#666]📍</span>{" "}
+                            <span className="text-[#666]">📍</span>{" "}
                             <span className="text-[#CCC]">{order.address}, {order.municipality}</span>
                           </div>
                         </div>
@@ -1135,27 +1137,22 @@ export default function AdminPage() {
               </FormField>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <FormField label="Tallas (separadas por coma)">
-                  <Input
-                    value={productForm.sizes}
-                    onChange={(e) =>
-                      setProductForm({ ...productForm, sizes: e.target.value })
+                <FormField label="Tallas">
+                  <ChipInput
+                    values={productForm.sizes}
+                    onChange={(sizes) =>
+                      setProductForm({ ...productForm, sizes })
                     }
-                    placeholder="S, M, L, XL"
-                    className="border-[#2A2A2A] bg-[#1A1A1A] text-[#E5E5E5]"
+                    placeholder="Ej: S, M, L, XL"
                   />
                 </FormField>
-                <FormField label="Colores (separados por coma)">
-                  <Input
-                    value={productForm.colors}
-                    onChange={(e) =>
-                      setProductForm({
-                        ...productForm,
-                        colors: e.target.value,
-                      })
+                <FormField label="Colores">
+                  <ChipInput
+                    values={productForm.colors}
+                    onChange={(colors) =>
+                      setProductForm({ ...productForm, colors })
                     }
-                    placeholder="Negro, Blanco, Rosa"
-                    className="border-[#2A2A2A] bg-[#1A1A1A] text-[#E5E5E5]"
+                    placeholder="Ej: Negro, Blanco, Rosa"
                   />
                 </FormField>
                 <FormField label="Tela / Material">
@@ -1451,6 +1448,78 @@ function FormField({
         {label} {required && <span className="text-[#C6A962]">*</span>}
       </Label>
       {children}
+    </div>
+  );
+}
+
+function ChipInput({
+  values,
+  onChange,
+  placeholder,
+}: {
+  values: string[];
+  onChange: (values: string[]) => void;
+  placeholder?: string;
+}) {
+  const [inputValue, setInputValue] = useState("");
+
+  function addValue() {
+    const trimmed = inputValue.trim();
+    if (trimmed && !values.some((v) => v.toLowerCase() === trimmed.toLowerCase())) {
+      onChange([...values, trimmed]);
+    }
+    setInputValue("");
+  }
+
+  function removeValue(index: number) {
+    onChange(values.filter((_, i) => i !== index));
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addValue();
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      {values.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {values.map((val, i) => (
+            <span
+              key={`${val}-${i}`}
+              className="inline-flex items-center gap-1.5 rounded-md border border-[#C6A962]/30 bg-[#C6A962]/10 px-2.5 py-1 text-xs font-medium text-[#C6A962]"
+            >
+              {val}
+              <button
+                type="button"
+                onClick={() => removeValue(i)}
+                className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-[#C6A962]/20 hover:text-white"
+              >
+                <X className="h-3 w-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+      <div className="flex gap-2">
+        <Input
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          className="border-[#2A2A2A] bg-[#1A1A1A] text-[#E5E5E5] placeholder:text-[#555]"
+        />
+        <Button
+          type="button"
+          variant="outline"
+          onClick={addValue}
+          className="shrink-0 h-9 px-3 border-[#C6A962]/30 text-[#C6A962] hover:bg-[#C6A962]/10 hover:text-[#C6A962]"
+        >
+          <Plus className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }

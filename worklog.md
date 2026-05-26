@@ -599,3 +599,26 @@ Stage Summary:
 - Product detail page now shows size selector with proper sizes
 - Colors and tags also fixed for all products
 - All changes from admin reflect on both category pages and product detail pages when switching tabs
+
+---
+Task ID: 3
+Agent: Main Agent
+Task: Fix white gap in header logo + replace comma-separated sizes with individual add/remove chips
+
+Work Log:
+- Fixed white gap in AmazonNavbar header: removed `brightness-0 invert` CSS filters from logo Image component (was making entire image area appear white)
+- Changed `object-contain` class added to properly fit logo within allocated space
+- Redesigned admin panel size and color inputs from comma-separated text fields to individual add/remove chip UI
+- Created `ChipInput` sub-component with: text input + Add button, Enter key support, duplicate prevention (case-insensitive), removable gold-styled chips with X buttons
+- Updated `productForm` state types: `sizes` and `colors` changed from `string` to `string[]`
+- Updated `openNewProduct` to initialize with empty arrays
+- Updated `openEditProduct` to parse JSON arrays directly (no longer joining with commas)
+- API already handles arrays natively via `toArray()` helper
+- Fixed pre-existing bugs: missing closing quote on 📍 emoji in admin orders, missing `RotateCcw` and `MessageSquare` imports
+- Lint passes clean with 0 errors
+
+Stage Summary:
+- Updated /src/components/amazon/AmazonNavbar.tsx (removed brightness-0 invert from logo)
+- Updated /src/app/admin/page.tsx (ChipInput component, sizes/colors as arrays, fixed imports)
+- Category pages already use useLiveFetch with visibilitychange - confirmed working
+- Product detail page already has visibilitychange listener - confirmed working

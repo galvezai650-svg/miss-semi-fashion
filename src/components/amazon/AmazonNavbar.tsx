@@ -113,7 +113,7 @@ export default function AmazonNavbar() {
               alt="Miss Semi Fashion"
               width={160}
               height={48}
-              className="h-9 w-auto lg:h-11 brightness-0 invert"
+              className="h-9 w-auto lg:h-11 object-contain"
               priority
             />
           </Link>
